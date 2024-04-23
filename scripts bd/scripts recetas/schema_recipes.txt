@@ -1,0 +1,60 @@
+ nuevo_documento = {
+        'title': '',
+        'URL': '',
+        'source': '',
+        'language_ISO': '',
+        'origin_ISO' : '',
+        'n_diners': '',
+        'dificultad': '',
+        'category': '',
+        'subcategory': '',
+        'minutes': '',
+        'n_ingredients': '',
+        'ingredients': '',   
+        'n_steps': '',
+        'steps': '',
+        'images': [],
+        'interactions': '',
+        'aver_rate': '',
+        'num_interactions': '', # Número de reviews de la receta
+        'tags' : [],
+        'num_tags': '',
+        'nutritional_info_100g': {
+            'energy': '',
+            'car': '',
+            'pro': '',,
+            'fat': '',,         
+            'sat': '',,
+            'trans': '', 
+            'salt': '',,
+            'sug': '',,
+            'fiber': '', 
+        },
+        'nutritional_info_PDV': { # Porcentaje del valor diario de referencia (PDV) por 100 gramos - basado en una dieta de 2000 kcal    
+            'energy': '',,     
+            'fat': '', # 66 gramos de grasas al día
+            'car': '', # 260 gramos de carbohidratos al día
+            'pro': '', # 50 gramos de proteínas al día
+            'sat': '', # 22 gramos de grasas saturadas al día
+            'salt': '', # 5 gramos de sal al día (2 gramos de sodio)
+            'sug': '', # 50 gramos de azúcares al día
+        },
+        'FSA_lights_per100g': {
+            'fat': '',
+            'salt': '',
+            'sat': '',
+            'sug': '',
+            'energy': '',
+            'sod': '',
+            'fiber': '',
+            'pro': '',
+        },
+        'OMS_lights_per100g': {
+            'fat': '',
+            'trans': '',
+            'salt': '',
+            'sug': '',           
+        },
+        'dietary_preferences' : [],
+
+    }
