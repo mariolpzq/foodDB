@@ -28,7 +28,7 @@ router = APIRouter()
     response_model=IngredientCollection,
     response_model_by_alias=False,
 )
-async def list_bedca():
+async def listar_bedca():
     """
     Listar todos los ingredientes de BEDCA.
 
@@ -42,7 +42,7 @@ async def list_bedca():
     response_model=IngredientCollection,
     response_model_by_alias=False,
 )
-async def search_bedca_by_name(nombre: str):
+async def buscar_BEDCA_por_nombre(nombre: str):
     """
     Buscar un ingrediente de BEDCA por su nombre.    
     """

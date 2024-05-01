@@ -15,7 +15,7 @@ from bson import ObjectId
 
 from bedca import router as bedca_router  # Importa el enrutador de BEDCA
 from abuela import router as abuela_router 
-from compounds import router as compounds_router
+from sabores import router as compounds_router
 from ingredientes import router as ingredientes_router
 
 
@@ -39,4 +39,4 @@ app.include_router(abuela_router, prefix="/abuela", tags=["Recetas de la Abuela"
 
 # ---------------------------------------------------- COMPOUNDS ---------------------------------------------------- #
 
-app.include_router(compounds_router, prefix="/compounds", tags=["Compuestos"])
+app.include_router(compounds_router, prefix="/sabores", tags=["Sabores"])

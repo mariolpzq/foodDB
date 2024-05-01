@@ -26,7 +26,7 @@ router = APIRouter() # Enrutador para las recetas de la abuela
     response_model=AbuelaCollection,
     response_model_by_alias=False,
 )
-async def list_abuela():
+async def listar_abuela():
     """
     Listar las recetas de la abuela.
     
@@ -40,7 +40,7 @@ async def list_abuela():
     response_model=AbuelaCollection,
     response_model_by_alias=False,
 )
-async def search_abuela_by_title(titulo: str):
+async def buscar_Abuela_por_titulo(titulo: str):
     """
     Buscar una receta de la abuela por su título.    
     """
@@ -64,7 +64,7 @@ async def search_abuela_by_title(titulo: str):
     response_model=AbuelaCollection,
     response_model_by_alias=False,
 )
-async def search_abuela_by_ingredient(ingrediente: str):
+async def buscar_Abuela_por_ingrediente(ingrediente: str):
     """
     Buscar recetas de la abuela por ingrediente.
     """
@@ -89,7 +89,7 @@ async def search_abuela_by_ingredient(ingrediente: str):
     response_model=AbuelaCollection,
     response_model_by_alias=False,
     )
-async def search_abuela_by_country(pais_ISO: str):
+async def buscar_Abuela_por_pais(pais_ISO: str):
     """
     Buscar recetas de la abuela por país.
     """
@@ -116,7 +116,7 @@ async def search_abuela_by_country(pais_ISO: str):
     response_model_by_alias=False,
 
 )
-async def search_abuela_by_country_and_title(pais_ISO: str, titulo: str):
+async def buscar_Abuela_por_pais_y_titulo(pais_ISO: str, titulo: str):
     """
     Buscar recetas de la abuela por país y título.
     """
@@ -140,7 +140,7 @@ async def search_abuela_by_country_and_title(pais_ISO: str, titulo: str):
     response_model=AbuelaCollection,
     response_model_by_alias=False,
 )
-async def search_abuela_by_country_and_ingredient(pais_ISO: str, ingrediente: str):
+async def buscar_Abuela_por_pais_e_ingrediente(pais_ISO: str, ingrediente: str):
     """
     Buscar recetas de la abuela por país e ingrediente.
     """
