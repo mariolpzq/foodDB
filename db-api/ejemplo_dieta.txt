@@ -1,0 +1,8 @@
+{
+  "appetizerID": "665f6f5f70948767819df149",
+  "main_dishID": "665f6f6070948767819df151",
+  "dessertID": "665f6f5f70948767819df14c",
+  "dietary_preferences": [
+    "vegan"
+  ]
+}

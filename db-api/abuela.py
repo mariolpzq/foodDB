@@ -46,7 +46,6 @@ async def buscar_Abuela_por_titulo(titulo: str):
     """
     
     recetas = []
-    recetas = []
     async for recipe in abuela_collection.find():
         if titulo.lower() in recipe['title'].lower():
             recetas.append(recipe)
@@ -73,7 +72,7 @@ async def buscar_Abuela_por_ingrediente(ingrediente: str):
     #async for receta in abuela_collection.find({"ingredients": {"$regex": ingrediente, "$options": "i"}}):
     #    recetas_encontradas.append(receta)
     
-    async for receta in abuela_collection.find({"ingredients": {"$regex": ingrediente, "$options": "i"}}).limit(100):
+    async for receta in abuela_collection.find({"ingredients.ingredient": {"$regex": ingrediente, "$options": "i"}}).limit(100):
         recetas_encontradas.append(receta)
 
     if recetas_encontradas:
@@ -149,7 +148,7 @@ async def buscar_Abuela_por_pais_e_ingrediente(pais_ISO: str, ingrediente: str):
     # Convertir el código ISO a mayúsculas
     pais_ISO = pais_ISO.upper()
 
-    async for receta in abuela_collection.find({"origin_ISO": pais_ISO, "ingredients": {"$regex": ingrediente, "$options": "i"}}).limit(100):
+    async for receta in abuela_collection.find({"origin_ISO": pais_ISO, "ingredients.ingredient": {"$regex": ingrediente, "$options": "i"}}).limit(100):
         recetas_encontradas.append(receta)
 
     if recetas_encontradas:

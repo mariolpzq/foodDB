@@ -14,9 +14,14 @@ from pymongo import ReturnDocument
 from bson import ObjectId
 
 
+from pydantic import BaseModel, Field
+from typing import List, Union, Dict
+
+
 # Represents an ObjectId field in the database.
 # It will be represented as a `str` on the model so that it can be serialized to JSON.
 PyObjectId = Annotated[str, BeforeValidator(str)]
+
 
 # ---------------------------------------------------- COMPUESTOS ---------------------------------------------------- #
 
@@ -124,6 +129,7 @@ class IngredientModel(BaseModel): # Modelo de ingrediente
         }
     )
     
+    
 class IngredientCollection(BaseModel):
     """
         A container holding a list of `Ingrediente` instances.
@@ -134,6 +140,244 @@ class IngredientCollection(BaseModel):
     ingredientes: List[IngredientModel]
     
     
+class IngredientRecipeModel(BaseModel):
+    ingredient: str
+    ingredientID: Optional[PyObjectId] = None
+    max_similarity: Optional[float] = None
+
+    class Config:
+        json_encoders = {ObjectId: str}
+
+class IngredientRecipeCollection(BaseModel):
+    """
+        A container holding a list of `IngredientRecipeModel` instances.
+
+        This exists because providing a top-level array in a JSON response can be a [vulnerability](https://haacked.com/archive/2009/06/25/json-hijacking.aspx/)
+    """
+
+    ingredientes: List[IngredientRecipeModel]
+
+    
+# ---------------------------------------------------- RECETAS ---------------------------------------------------- #
+
+class RecipeModel(BaseModel): # Se crea el modelo de la receta
+    """
+    Container para una receta.
+    """
+
+    id: Optional[PyObjectId]= Field(alias="_id", default=None)
+    title : Optional[str] = Field(...)
+    url: Optional[Union[dict,str]] = Field(None)
+    URL: Optional[Union[dict,str]] = Field(None)
+    source : Optional[str] = Field(...)
+    language_ISO : Optional[str] = Field(...)
+    origin_ISO : Optional[str] = Field(...)
+    n_diners : Optional[Union[str,int]] = Field(...)
+    dificultad : Optional[str] = Field("")
+    category : Optional[Union[List[str],str]] = Field(...)
+    subcategory : Optional[str] = Field(...)
+    minutes : Optional[Union[str,int]] = Field(...)
+    n_ingredients : Optional[Union[str,int]] = Field(None)
+    ingredients: Optional[ Union[ List[Union[PyObjectId, str, List[str], List[dict], List[IngredientModel]]], str]] = Field(None)
+    n_steps : Optional[int] = Field(...)
+    steps : Optional[Union[List[str], List[dict]]]= Field(...)
+    images : Optional[List[str]] = Field(...)
+    interactions: Optional[Union[List[dict],dict,str]] = Field(None)
+    aver_rate : Optional[Union[dict,float,str]] = Field(None)
+    num_interactions : Optional[int] = Field(None)
+    tags : Optional[List[str]] = Field(None)
+    num_tags : Optional[Union[int,str]] = Field(None)
+    nutritional_info_100g : Optional[dict] = Field({})
+    nutritional_info_PDV : Optional[dict] = Field({})
+    FSA_lights_per100g : Optional[dict] = Field({})
+    OMS_lights_per100g : Optional[dict] = Field({})
+    dietary_preferences : Optional[List[str]] = Field(None)
+
+    model_config = ConfigDict( # Configuración del modelo
+        populate_by_name=True,
+        arbitrary_types_allowed=True,
+        json_schema_extra={
+            "_id": "ObjectID(661fd1ddebd2b08c5500722c)",
+            "title": "Tacos Dorados de Papa",
+            "URL": "https://www.mexicoenmicocina.com/tacos-dorados-de-papa/",
+            "source": "Recetas de la abuela",
+            "language_ISO": "ES",
+            "origin_ISO": "MEX",
+            "n_diners": 6,
+            "dificultad": "",
+            "category": [
+                "vegetarianos"
+            ],
+            "subcategory": "",
+            "minutes": 60,
+            "n_ingredients": 16,
+            "ingredients": {
+                        "original_ingredient": "8 ounces, weight Light Fat Free Vanilla Yogurt (I Used Activia)",
+                        "ingredient": "yogurt, greek, plain, nonfat",
+                        "quantity": "8",
+                        "unit": "ounce",
+                        "weight": 226.796,
+                        "nutr_per_ingredient": {
+                            "fat": 0.8845044000000001,
+                            "nrg": 133.80964,
+                            "pro": 23.110512399999998,
+                            "sat": 0.26535132,
+                            "sod": 81.64656,
+                            "sug": 7.348190400000001
+                        },
+                        "ingredientID": "66261c519801b15acce7afb0"
+            },
+            "n_steps": 24,
+            "steps": [
+                "Pon las papas enteras en una olla mediana y cúbrelas con agua fría",
+                "NO peles ni cortes las papas",
+                "No queremos que las papas absorban demasiada agua, porque luego esa agua se liberará formando burbujas al freírlas y el aceite salpicará",
+                "Pon el fuego a medio alto y cocínalas hasta que estén tiernas (unos 20 a 25 minutos)",
+                "Escurre las papas para quitar el excedente de agua y pásalas a un tazón",
+                "Espera hasta que estén lo suficientemente frías para que puedas tocarlas y quita las cáscaras",
+                "Sazona las papas con sal y pimienta, y machaca hasta que obtengas una consistencia cremosa",
+                "No se verá exactamente como puré, sino más como una pastita",
+                "Deja a un lado",
+                "Calienta aproximadamente ½ taza de aceite en una sartén grande a fuego medio-alto",
+                "Agrega el resto del aceite según sea necesario",
+                "Mientras esperas a que caliente el aceite, calienta ligeramente las tortillas una por una en un comal, para hacerlas más suaves y se puedan doblar fácilmente",
+                "Cúbrelas con una servilleta de cocina",
+                "Ahora, agrega 2 cucharadas de puré de papa sobre la mitad de cada tortilla y dóblala",
+                "Asegura los lados de la tortilla con dos palillos",
+                "A veces, no utilizo palillos, pero eso requiere cierta habilidad para poder presionar firmemente los bordes hacia abajo mientras se fríe; si es la primera vez que los preparas, y para irse a lo seguro, utiliza los palillos",
+                "Coloca el taco doblado en el aceite hirviendo, y cocina por un minuto y medio por cada lado, hasta que esté dorado y crujiente",
+                "Ya que trabajarás en tandas, ten un plato grande preparado y cubi"
+                "Repite el proceso hasta que termines de cocinar todos los taquitos",
+                ", PARA PREPARAR LA SALSA:Mezcla los ingredientes de la salsa en un tazón mediano y sazona con sal",
+                "Deja a un lado",
+                "Puedes tener todos los ingredientes listos un día antes, y sólo combinarlos antes de servir",
+                "Para servir, quita los palillos (con mucho cuidado para evitar romper las tortillas) y decora con col/repollo rallado, queso cotija y Pico de Gallo",
+                "También pueden coronarlos con aguacate y crema"
+            ],
+            "images": [],
+            "interactions": "",
+            "aver_rate": "",
+            "num_interactions": 0,
+            "tags": [],
+            "num_tags": "",
+            "nutritional_info_100g": {
+                "energy": "",
+                "car": "",
+                "pro": "",
+                "fat": "",
+                "sat": "",
+            },
+            "nutritional_info_PDV": {
+                "energy": "",
+                "fat": "",
+                "car": "",
+                "pro": "",
+                "sat": "",
+                "salt": "",
+                "sug": "",
+            },
+            "FSA_lights_per100g": {
+                "fat": "",
+                "salt": "",
+                "sat": "",
+                "sug": "",
+                "energy": "",
+                "sod": "",
+                "fiber": "",
+                "pro": "",
+            },
+            "OMS_lights_per100g": {
+                "fat": "",
+                "trans": "",
+                "salt": "",
+                "sug": "",
+            },
+            "dietary_preferences": [
+                "Alto en calorías",
+                "Alto en grasas",
+                "Alto en sodio"
+            ]
+        }
+    )
+
+
+class RecipeCollection(BaseModel):
+    """
+        A container holding a list of `RecipeModel` instances.
+
+        This exists because providing a top-level array in a JSON response can be a [vulnerability](https://haacked.com/archive/2009/06/25/json-hijacking.aspx/)
+    """
+
+    recetas: List[RecipeModel]
+
+class ShortRecipeModel(BaseModel): # Se crea el modelo de la receta
+    """
+    Container para una receta.
+    """
+
+    id: Optional[PyObjectId]= Field(alias="_id", default=None)
+    title : Optional[str] = Field(...) 
+    category : Optional[Union[List[str],str]] = Field(...)
+
+    model_config = ConfigDict( # Configuración del modelo
+        populate_by_name=True,
+        arbitrary_types_allowed=True,
+        json_schema_extra={
+            "_id": "ObjectID(661fd1ddebd2b08c5500722c)",
+            "title": "Tacos Dorados de Papa",
+            "category": "appetizer"
+        }
+    )
+
+class ShortRecipeCollection(BaseModel):
+
+    recetas: List[ShortRecipeModel]
+
+
+# ---------------------------------------------------- RECETAS DE MEALREC ---------------------------------------------------- #
+
+class MealRECRecipeModel(BaseModel):
+    id: Optional[PyObjectId] = Field(alias="_id", default=None)
+    title: Optional[str] = Field(...)
+    url: Optional[Union[dict, str]] = Field(None)
+    source: Optional[str] = Field(...)
+    language_ISO: Optional[str] = Field(...)
+    origin_ISO: Optional[str] = Field(...)
+    n_diners: Optional[Union[str, int]] = Field(...)
+    dificultad: Optional[str] = Field("")
+    category: Optional[Union[List[str], str]] = Field(...)
+    subcategory: Optional[str] = Field(...)
+    minutes: Optional[Union[str, int]] = Field(...)
+    n_ingredients: Optional[Union[str, int]] = Field(None)
+    ingredients: Optional[List[IngredientRecipeModel]] = Field(None)
+    n_steps: Optional[int] = Field(...)
+    steps: Optional[Union[List[str], List[dict]]] = Field(...)
+    images: Optional[List[str]] = Field(...)
+    interactions: Optional[Union[List[dict], dict, str]] = Field(None)
+    aver_rate: Optional[Union[dict, float, str]] = Field(None)
+    num_interactions: Optional[int] = Field(None)
+    tags: Optional[List[str]] = Field(None)
+    num_tags: Optional[Union[int, str]] = Field(None)
+    nutritional_info_100g: Optional[dict] = Field({})
+    nutritional_info_PDV: Optional[dict] = Field({})
+    FSA_lights_per100g: Optional[dict] = Field({})
+    OMS_lights_per100g: Optional[dict] = Field({})
+    dietary_preferences: Optional[List[str]] = Field(None)
+
+    model_config = ConfigDict(  # Configuración del modelo
+        populate_by_name=True,
+        arbitrary_types_allowed=True,
+    )
+
+class MealRECRecipeCollection(BaseModel):
+    """
+        A container holding a list of `MealRECRecipeModel` instances.
+
+        This exists because providing a top-level array in a JSON response can be a [vulnerability](https://haacked.com/archive/2009/06/25/json-hijacking.aspx/)
+    """
+
+    recetas: List[MealRECRecipeModel]
+            
 # ---------------------------------------------------- RECETAS DE LA ABUELA ---------------------------------------------------- #
     
 """
@@ -185,7 +429,7 @@ class AbuelaModel(BaseModel): # Se crea el modelo de la receta de la abuela
     subcategory : str = Field(...)
     minutes : int = Field(...)
     n_ingredients : int = Field(...)
-    ingredients : List[str] = Field(...)
+    ingredients: Optional[List[IngredientRecipeModel]] = Field(None)
     n_steps : int = Field(...)
     steps : List[str] = Field(...)
     images : List[str] = Field(...)
@@ -286,3 +530,153 @@ class AbuelaCollection(BaseModel):
     
     
     
+# ---------------------------------------------------- MAPEO DE INGREDIENTES ---------------------------------------------------- #
+
+class MappingIngredientsRequest(BaseModel):
+    ingredients_collection: str = Field(..., description="Nombre de la colección de ingredientes")
+    ingredient_field_name: str = Field(..., description="Nombre del campo que contiene el nombre del ingrediente")
+    recipes_collection: str = Field(..., description="Nombre de la colección de recetas")
+    recipe_ingredients_array_name: str = Field(..., description="Nombre del array de ingredientes de la receta")
+    recipe_ingredient_field_name: str = Field(..., description="Nombre del campo que contiene un ingrediente de la receta dentro del array")
+
+    model_config = ConfigDict( # Configuración del modelo
+        populate_by_name=True,
+        arbitrary_types_allowed=True,
+        json_schema_extra={
+            "ingredients_collection": "cofid",
+            "ingredient_field_name": "name_en",
+            "recipes_collection": "recipe1m",
+            "recipe_ingredients_array_name": "ingredients",
+            "recipe_ingredient_field_name": "ingredient"
+        },
+
+    )
+
+
+class MappingCompoundsRequest(BaseModel):
+    ingredients_collection: str = Field(..., description="Nombre de la colección de ingredientes")
+    ingredient_field_name: str = Field(..., description="Nombre del campo que contiene el nombre del ingrediente")
+    compounds_collection: str = Field(..., description="Nombre de la colección de compuestos")
+    compound_ingredient_field_name: str = Field(..., description="Nombre del campo que contiene el nombre del ingrediente")
+
+    model_config = ConfigDict( # Configuración del modelo
+        populate_by_name=True,
+        arbitrary_types_allowed=True,
+        json_schema_extra={
+            "ingredients_collection": "cofid",
+            "ingredient_field_name": "name_en",
+            "compounds_collection": "compounds",
+            "compound_ingredient_field_name": "ingredient"
+        },
+
+    )
+
+class MappingEmissionsRequest(BaseModel):
+    ingredients_collection: str = Field(..., description="Nombre de la colección de ingredientes")
+    ingredient_field_name: str = Field(..., description="Nombre del campo que contiene el nombre del ingrediente")
+    emissions_collection: str = Field(..., description="Nombre de la colección de emisiones")
+    emission_ingredient_field_name: str = Field(..., description="Nombre del campo que contiene el nombre del ingrediente")
+
+    model_config = ConfigDict( # Configuración del modelo
+        populate_by_name=True,
+        arbitrary_types_allowed=True,
+        json_schema_extra={
+            "ingredients_collection": "cofid",
+            "ingredient_field_name": "name_en",
+            "emissions_collection": "emissions",
+            "emission_ingredient_field_name": "name_en"
+        },
+
+    )
+
+
+# ---------------------------------------------------- DIETAS ---------------------------------------------------- #
+
+class DietCreateModel(BaseModel):
+    appetizerID: Optional[PyObjectId] = Field(None, alias="appetizerID")
+    main_dishID: Optional[PyObjectId] = Field(None, alias="main_dishID")
+    dessertID: Optional[PyObjectId] = Field(None, alias="dessertID")
+
+    class Config:
+        allow_population_by_field_name = True
+        json_encoders = {ObjectId: str}
+
+
+class DietModel(BaseModel):
+    appetizerID: Optional[PyObjectId] = Field(None)
+    main_dishID: Optional[PyObjectId] = Field(None)
+    dessertID: Optional[PyObjectId] = Field(None)
+    appetizer_title: Optional[str] = Field(None)
+    main_dish_title: Optional[str] = Field(None)
+    dessert_title: Optional[str] = Field(None)
+    dietary_preferences: List[str] = Field(...)
+
+    class Config:
+        json_encoders = {ObjectId: str}
+
+class DietCollection(BaseModel):
+    diets: List[DietModel]
+
+# ---------------------------------------------------- AUTENTICACIÓN ---------------------------------------------------- #
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    username: Optional[str] = None
+
+
+class UserModel(BaseModel):
+    name: str = Field(...)
+    email: EmailStr = Field(...)
+    password: str = Field(...)
+    gender: str = Field(...)
+    age: int = Field(...)
+    height: float = Field(...)
+    weight: float = Field(...)
+    activity_level: int = Field(...)
+    daily_caloric_intake: int = Field(...)
+    restrictions_kcal: Optional[dict] = Field(default={})
+    restrictions_grams: Optional[dict] = Field(default={})
+    dietary_preferences: Optional[List[str]] = Field(default=[])
+    role: str = Field(default="user")
+    diets: Optional[List[DietModel]] = Field(default_factory=list)  # Cambiado a DietModel
+    
+    model_config = ConfigDict(
+        populate_by_name=True,
+        arbitrary_types_allowed=True,
+        json_encoders={ObjectId: str},  # Convertir ObjectId a str para que pueda ser serializado a JSON
+        json_schema_extra={
+            "name": "Mario López",
+            "email": "mario@egmail.com",
+            "password": "hashed_password",
+            "gender": "male",
+            "age": 22,
+            "height": 189.0,
+            "weight": 75.0,
+            "activity_level": "moderate",
+            "daily_caloric_intake": 2500,
+            "restrictions_kcal": {},
+            "restrictions_grams": {},
+            "dietary_preferences": ["vegan"],
+            "role": "user",  # user, nutritionist, researcher, admin
+            "diets": []
+        }
+    )
+
+    def __str__(self):
+        return self.name
+
+
+class UserCollection(BaseModel):
+    """
+        A container holding a list of `UserModel` instances.
+
+        This exists because providing a top-level array in a JSON response can be a [vulnerability](https://haacked.com/archive/2009/06/25/json-hijacking.aspx/)
+    """
+
+    users: List[UserModel]
+
+
+
