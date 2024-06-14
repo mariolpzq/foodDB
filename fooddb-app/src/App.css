@@ -1,0 +1,687 @@
+
+body{
+  background-color:  #FFF7E5;
+  font-family: Arial, Helvetica, sans-serif; /* Tipo de letra */
+  font-size: 20px;
+  color: white;
+}
+
+h1, h2, h3, p {
+  color: black;
+}
+
+.general-grid {
+  height: 1000px; 
+  display: grid; /* Utilizamos un grid */
+  
+  grid-template-areas: 'header'
+                       'contenido'
+                       'footer';    
+  
+  grid-template-rows: 10% auto 10%;
+  grid-template-columns: auto;
+
+}
+
+@media (max-width: 600px) { /* Si el ancho de la ventana es menor a 600px */
+  .general-grid {
+    grid-template-areas: 'header'
+                         'contenido'
+                         'footer';    
+    grid-template-rows: 20% auto 10%;
+    grid-template-columns: auto;
+  }
+}
+
+
+.cell { /* Estilo general de las cajas del grid */
+  padding: 10px; /* Espacio interior de 10px */
+  font-size: 20px;
+  border: 1px solid #F68080;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Sombreado */
+  border-radius: 5px; /* Bordes redondeados */
+  background-color: #FFE5E5;
+  text-align: center;
+  color: black;
+  position: relative; /* Necesario para el centrado absoluto */
+}
+
+header {
+  grid-area: header; /* Área del grid a la que pertenece*/
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+}
+
+
+/*
+@media (max-width: 600px) {
+  header {
+    grid-template-areas: 'logo'
+                         'titulo'
+                         'menu';
+    grid-template-columns: auto;
+    grid-template-rows: 70% 30% 30%;
+  }
+}
+*/
+
+footer {
+  grid-area: footer;
+  padding: 0;
+  text-align: center;
+}
+
+footer p {
+  margin: 10px 0; /* Espacio de 10px arriba y abajo, y 0 a los lados */
+  padding: 0;
+  color: #F68080;
+}
+
+address a{ /* Estilo de los enlaces de la información de contacto (email) */
+  text-decoration: none;
+  color:   #F68080; 
+}
+
+
+#titulo{
+  grid-area: titulo;
+  font-size: 3em; /* Tamaño de la fuente 3em = 3 veces el tamaño de la fuente predeterminada */
+  padding: 20px;
+}
+
+
+#titulo a{ /* Estilo de los enlaces del título */
+  text-decoration: none; /* Quita la subrayado de los enlaces */
+  color: #F68080;
+}
+
+#menu{
+  grid-area: menu;
+  font-size: 20px; /* Tamaño de la fuente */
+  padding: 20px;
+  color:#F68080;
+}
+
+@media (max-width: 600px) {
+  #menu {
+    visibility: hidden;
+  }
+}
+
+#menu nav { /* Estilo de la barra de navegación */
+  font-size: 20px; 
+  text-align: left;
+
+
+}
+
+#menu nav ul { /* Estilo de la lista de la barra de navegación */
+  list-style-type: none; /* Quita los estilos de viñeta de la lista */
+  margin: 0; /* Elimina el margen predeterminado de la lista */
+  padding: 0; /* Elimina el relleno predeterminado de la lista */
+  
+}
+
+#menu nav li { /* Estilo de los elementos de la lista de la barra de navegación */
+  display: inline; /* Muestra los elementos de lista en línea */
+  margin-right: 30px; /* Espacio entre los elementos de lista */
+
+}
+
+#menu nav a { /* Estilo de los enlaces de la barra de navegación */
+  text-decoration: none; /* Quita la subrayado de los enlaces */
+  color:#F68080;/* Color de texto */
+}
+
+#menu nav a:hover { /* Efecto al pasar el ratón por encima de los enlaces de la barra de navegación */
+  color: black; /* Cambia el color del texto a verde */
+}
+
+.main-cell { /* Estilo general de las cajas del grid */
+  padding: 10px; /* Espacio interior de 10px */
+  font-size: 20px;
+  text-align: center;
+  align-items: center;
+}
+
+.home-background {
+  background-image: url('components/img/landing-page.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.default-background {
+  background-color:  #FFF7E5;
+}
+
+/* Estilo general para los formularios */
+form {
+  background-color: #FFE5E5; /* Fondo blanco para los formularios */
+  padding: 20px; /* Relleno interno */
+  border-radius: 5px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para dar un efecto de elevación */
+  max-width: 400px; /* Ancho máximo del formulario */
+  margin: 20px auto; /* Margen automático para centrar el formulario */
+  border: 1px solid #F68080;
+}
+
+/* Estilo para los títulos de los formularios */
+form h1 {
+  font-size: 2em; /* Tamaño de fuente del título */
+  color: #333; /* Color del texto del título */
+  text-align: center; /* Alineación centrada */
+  margin-bottom: 20px; /* Espacio inferior */
+}
+
+/* Estilo para los inputs y selects de los formularios */
+form input, form select {
+  width: 100%; /* Ancho del input y select */
+  padding: 10px; /* Relleno interno */
+  margin-bottom: 10px; /* Espacio inferior */
+  border: 1px solid #ccc; /* Borde */
+  border-radius: 5px; /* Bordes redondeados */
+  font-size: 1em; /* Tamaño de fuente */
+  background-color: #f9f9f9; /* Fondo claro para inputs y selects */
+  box-sizing: border-box; /* Asegurar que el padding no exceda el ancho total */
+}
+
+/* Estilo para los botones de los formularios */
+form button {
+  width: 100%; /* Ancho del botón */
+  padding: 10px; /* Relleno interno */
+  background-color: #F68080; /* Color de fondo */
+  border: none; /* Sin borde */
+  border-radius: 5px; /* Bordes redondeados */
+  color: white; /* Color del texto */
+  font-size: 1em; /* Tamaño de fuente */
+  cursor: pointer; /* Cursor de puntero */
+  transition: background-color 0.3s ease; /* Transición para el cambio de color de fondo */
+}
+
+/* Efecto hover para los botones */
+form button:hover {
+  background-color: #F46565; /* Color de fondo al pasar el ratón */
+}
+
+/* Estilo para los inputs y selects en pantallas pequeñas */
+@media (max-width: 600px) {
+  form input, form select {
+    width: 100%; /* Ancho del input y select */
+  }
+}
+
+#enlace-registro {
+  color:black;
+}
+
+#enlace-registro a {
+  text-decoration: none;
+  color: #F68080;
+}
+
+#enlace-registro a:hover {
+  color: #F46565;
+}
+.home{
+  text-align: left;
+  padding: 20px;
+  color: black;
+}
+
+
+/* Estilo para la barra de búsqueda */
+.search-bar {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.search-bar input {
+  width: 30%;
+  padding: 10px;
+  border: 2px solid #F68080;
+  border-radius: 25px;
+  font-size: 1em;
+  background-color: #ffe5e5; /* Fondo rosa pastel */
+  color: #333; /* Color del texto */
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.search-bar input::placeholder {
+  color: #F68080; /* Color del texto del placeholder */
+}
+
+.search-bar input:focus {
+  border-color: #f49fbc; /* Color del borde al enfocar */
+}
+
+/* Estilo para el botón */
+.button-style {
+  padding: 10px 20px;
+  margin-left: 75px;
+  border: 2px solid #F68080;
+  border-radius: 25px;
+  font-size: 1em;
+  background-color: #ffe5e5; /* Fondo rosa pastel */
+  color: #333; /* Color del texto */
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.3s ease;
+  text-align: center; /* Alinear texto al centro */
+  display: inline-block; /* Asegurar que el botón se comporte como un botón */
+}
+
+.button-style:hover {
+  border-color: #f49fbc; /* Color del borde al pasar el mouse */
+}
+
+.button-style:focus {
+  border-color: #f49fbc; /* Color del borde al enfocar */
+}
+
+.perfil {
+  width: 50%; /* Ancho del perfil */
+  margin: 50px auto; /* Centrar el perfil horizontalmente */
+  padding: 20px; /* Espaciado interno */
+  border-radius: 20px; /* Bordes redondeados */
+  background-color: #ffe5e5; /* Color de fondo rosa */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  text-align: center; /* Alinear texto al centro */
+}
+
+.perfil h2 {
+  margin-bottom: 20px; /* Espaciado inferior para el título */
+  color: #F68080;
+}
+
+.perfil h3 {
+  margin-bottom: 10px; /* Espaciado inferior para el subtítulo */
+  color: #F68080;
+}
+
+
+.perfil p {
+  margin-bottom: 10px; /* Espaciado inferior para los párrafos */
+  color: #1B0202;
+}
+
+.perfil strong {
+  font-weight: bold; /* Texto en negrita */
+}
+
+
+.recetas-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.recetas-titulo{
+  color: black;
+}
+
+.column {
+  background-color: #ffe5e5; /* Fondo rosado */
+  border-radius: 10px; /* Bordes redondeados */
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  color: black;
+  border: 1px solid #F68080; /* Borde */
+}
+
+.column ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.column li {
+  margin-bottom: 10px;
+}
+
+.column h2 {
+  text-align: center;
+  color: #F68080; /* Color del texto del encabezado */
+}
+
+.recetas-search-bar {
+  margin:20px;
+}
+
+.recetas-search-bar input,
+.individual-search-bar input
+{
+  width: 80%;
+  padding: 10px;
+  border: 2px solid #F68080;
+  border-radius: 25px;
+  font-size: 1em;
+  background-color: #ffe5e5; /* Fondo rosado pastel */
+  color: #333; /* Color del texto */
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.recetas-search-bar input::placeholder,
+.individual-search-bar input::placeholder {
+  color: #F68080; /* Color del texto del placeholder */
+}
+
+.recetas-search-bar input:focus,
+.individual-search-bar input:focus{
+  border-color: #f49fbc; /* Color del borde al enfocar */
+}
+
+.recetas-container a {
+  text-decoration: none;
+  color: black;
+
+}
+
+.recetas-container a:hover {
+  color: #F68080;
+}
+
+
+#titulo-receta {
+  font-size: 2em;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.oms-container {
+  position: absolute; /* Permite posicionar los indicadores */
+  right: 10px; /* Ajusta según sea necesario */
+  top: 10px; /* Ajusta según sea necesario */
+  display: flex;
+  flex-direction: column;
+}
+
+
+.receta-detalles h1 {
+  text-align: center;
+  color: #F68080;
+}
+
+.receta-detalles p {
+  margin-bottom: 10px;
+}
+
+.receta-detalles .listado-ingredientes p {
+  margin-left: 60px;
+  text-align: left;
+}
+.receta-detalles .listado-ingredientes ul {
+  list-style-type: none;
+  padding: 0;
+  text-align: center; /* Asegura que el contenido del ul esté centrado */
+
+}
+
+.receta-detalles .listado-ingredientes ul li {
+  display: inline-block;
+  background: #ffe4e1;
+  box-shadow: #F68080 2px 2px 5px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  margin: 10px 10px;
+}
+
+.receta-detalles .listado-ingredientes ul li a {
+  text-decoration: none;
+  color: black;
+}
+
+.receta-detalles .listado-ingredientes ul li a:hover {
+  color: #F68080;
+}
+
+.receta-detalles .steps {
+  margin-top: 20px;
+  text-align: left;
+  padding: 5px 10px;
+  background: #ffe4e1;
+  box-shadow: #F68080 2px 2px 5px;
+  border-radius: 10px;
+  margin: 30px 30px;
+}
+
+.receta-detalles .steps p{
+  margin-left: 20px;
+}
+
+
+
+.receta-detalles .steps ul {
+  list-style-type: none;
+  padding: 0;
+  margin-left: 20px;
+}
+
+.receta-detalles .steps ul li {
+  margin-bottom: 10px;
+}
+
+
+.receta-detalles .reviews{
+  text-align: left;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+
+.receta-detalles .reviews p{
+  margin-left: 20px;
+}
+
+.receta-detalles .reviews ul {
+  list-style-type: none;
+  padding: 0;
+  margin-left: 20px;
+
+}
+
+.receta-detalles .reviews ul li {
+  margin-top: 20px;
+  text-align: left;
+  padding: 5px 10px;
+  background: #F3FDE8;
+  box-shadow: #F68080 2px 2px 5px;
+  border-radius: 10px;
+  margin: 30px 30px;
+}
+
+.receta-detalles .reviews ul li strong {
+  color: #F68080;
+}
+
+.receta-detalles h3{
+  text-align: center;
+  color: #F68080;
+  margin-top: 50px;
+}
+
+.receta-item {
+  cursor: pointer;
+  color: black;
+  transition: color 0.3s ease;
+  border-bottom: 1px solid #F68080; /* Línea separadora rosa */
+  padding-bottom: 10px;
+}
+
+.receta-item:hover {
+  color: #F68080;
+}
+
+.receta-item:last-child {
+  border-bottom: none; /* Quitar la línea separadora del último elemento */
+}
+
+.oms-container h3 {
+  margin-top : 20px;
+}
+
+
+
+.ingrediente-detalles {
+  background-color: #ffe4e1; /* Color rosita de fondo */
+  padding: 20px;
+  border-radius: 10px;
+  color: #000; /* Color negro para las letras */
+}
+
+.ingrediente-detalles h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.ingrediente-detalles p {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.ingrediente-detalles ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.ingrediente-detalles li {
+  margin-bottom: 10px;
+}
+
+
+.dietas-container {
+  padding: 20px;
+  background-color: #FFE5E5;
+  border-radius: 10px;
+  border: 1px solid #F68080; /* Borde */
+}
+
+.dietas-container h2 {
+  text-align: center;
+  color: #F68080;
+
+}
+
+.new-dieta-btn {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #F68080;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.new-dieta-btn:hover {
+  background-color: #F46565;
+}
+
+.diet-list {
+  margin-top: 20px;
+  color: black;
+}
+
+
+.diet-item {
+  background-color: #ffe5e5;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.diet-item h3 {
+  margin-top: 0;
+  color: #F68080;
+  text-align: left;
+  margin-left: 20px;
+}
+
+.dish-row {
+  display: flex;
+
+}
+
+.dish {
+  background-color: #f8d7da;
+  padding: 10px;
+  border-radius: 10px;
+  flex: 1 1 calc(33.333% - 10px);
+  margin: 5px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dish p {
+  margin: 0;
+}
+
+.dish p + p {
+  margin-top: 10px; /* Añadir espacio entre las líneas */
+}
+
+.dish a {
+  text-decoration: none;
+  color: black;
+  transition: color 0.3s ease;
+}
+
+.dish a:hover {
+  color: #F68080;
+}
+
+.restricciones-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.restricciones-tabla th,
+.restricciones-tabla td {
+  border: 1px solid #F68080;
+  padding: 10px;
+  text-align: center;
+}
+
+.restricciones-tabla th {
+  background-color: #F68080;
+  color: white;
+}
+
+.restricciones-tabla tbody tr:nth-child(even) {
+  background-color: #ffe5e5;
+}
+
+.nutritional-info-table {
+  width: 60%; 
+  margin: 20px auto; 
+  border-collapse: collapse;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+.nutritional-info-table th,
+.nutritional-info-table td {
+  padding: 10px;
+  text-align: center;
+}
+
+.nutritional-info-table th {
+  background-color: #F68080;
+  color: white;
+}
+
+.nutritional-info-table td {
+  border-bottom: 1px solid #ddd;
+}
+
+.nutritional-info-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.nutritional-info-table tr:hover {
+  background-color: #f5f5f5;
+}
