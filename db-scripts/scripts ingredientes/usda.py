@@ -89,7 +89,7 @@ alimento_esquema = {
     'name_en': "",
     'langual': "",
     'origin_ISO': 'USA',
-    'source': 'FDC',    
+    'source': 'USDA',    
     'category_esp': "",
     'category_en': "", 
     'edible': "",            
@@ -227,7 +227,7 @@ for alimento in alimentos_dict.values():
       
 #---------- # Insertar documentos en la colección ------------------------------------------------------------------------------------------------------------------------------------------------------
 
-fdc = list(alimentos_dict.values())
-db.fdc.insert_many(fdc)
+usda = list(alimentos_dict.values())
+db.fdc.insert_many(usda)
 
 print("Datos insertados correctamente en la colección 'fdc' de la base de datos MongoDB.")
