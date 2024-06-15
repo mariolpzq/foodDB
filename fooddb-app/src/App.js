@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import Login from './components/Login';
 import Recetas from './components/Recetas';
-import RecetaDetalle from './components/RecetaDetalle';
+import RecetaDetalleESP from './components/RecetaDetalleESP';
+import RecetaDetalleEN from './components/RecetaDetalleEN';
 import IngredienteDetalle from './components/IngredienteDetalle';
 import Register from './components/Register';
 import Logout from './components/Logout';
@@ -39,7 +40,8 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/recetas" element={<Recetas />} />
-              <Route path="/receta/:id" element={<RecetaDetalle />} />
+              <Route path="/recipe/:id" element={<RecetaDetalleEN />} />
+              <Route path="/receta/:id" element={<RecetaDetalleESP />} />
               <Route path="/ingredient/:id" element={<IngredienteDetalle />} /> 
               <Route path="/dietas" element={<Dietas />} />
               <Route path="/create-dieta" element={<CreateDieta />} />

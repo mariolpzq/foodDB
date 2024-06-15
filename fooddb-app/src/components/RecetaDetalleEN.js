@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
 import AuthContext from '../Auth';
 
-function RecetaDetalle() {
+function RecetaDetalleEN() {
   const { id } = useParams();
   const [receta, setReceta] = useState(null);
   const { user } = useContext(AuthContext);
@@ -11,9 +11,16 @@ function RecetaDetalle() {
   useEffect(() => {
     const fetchReceta = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/recetas/mealrec/${id}`, {
-          withCredentials: true // Enviar cookies de sesión o tokens
+        const token = localStorage.getItem('token');
+        let response;
+
+        response = await axios.get(`http://localhost:8000/recetas/mealrec/${id}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+          withCredentials: true 
         });
+      
 
         setReceta(response.data);
       } catch (error) {
@@ -22,11 +29,12 @@ function RecetaDetalle() {
     };
 
     fetchReceta();
-  }, [id]);
+  }, [id, user]);
 
   const renderOMS_Lights = (omsLights) => {
     if (!omsLights) {
-      return <p>No data available</p>;
+
+      return <p>No disponible</p>;
     }
 
     const getColor = (value) => {
@@ -45,13 +53,13 @@ function RecetaDetalle() {
     const getKey = (value) => {
       switch (value) {
         case 'fat':
-          return 'Grasas';
+          return 'Fats';
         case 'trans':
-          return 'Grasas trans';
+          return 'Trans fats';
         case 'salt':
-          return 'Sal';
+          return 'Salt';
         case 'sug':
-          return 'Azúcares';
+          return 'Sugars';
         default: 
           return value;
       }
@@ -76,17 +84,17 @@ function RecetaDetalle() {
   const formatCategory = (category) => {
     switch (category) {
       case 'appetizer':
-        return 'Entrante';
+        return 'Appetizer';
       case 'main-dish':
-        return 'Plato principal';
+        return 'Main dish';
       case 'dessert':
-        return 'Postre';
+        return 'Dessert';
       default:
         return category;
     }
   };
 
-  const getUnit = (key) => {
+  const getUnidad = (key) => {
     switch (key) {
       case 'fat':
       case 'pro':
@@ -105,6 +113,30 @@ function RecetaDetalle() {
     }
   };
 
+  const formatearNutriente = (key) => {
+    switch (key) {
+      case 'Car':
+        return 'Carbohydrates';
+      case 'Pro':
+        return 'Proteins';
+      case 'Fat':
+        return 'Fats';
+      case 'Sat':
+        return 'Saturated fats';
+      case 'Trans':
+        return 'Trans fats';
+      case 'Sug':
+        return 'Sugars';
+      default:
+        return key; 
+    }
+  }
+
+
+  const primeraLetraMayúscula = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
   if (!receta) {
     return <div>Cargando...</div>;
   }
@@ -115,61 +147,59 @@ function RecetaDetalle() {
   return (
     <div className="cell receta-detalles">
       <div className='oms-container'>
-        <h3>Semáforo nutricional</h3>
+        <h3>OMS Nutritional lights</h3>
         <div>{renderOMS_Lights(receta.OMS_lights_per100g)}</div>
       </div>
 
       <h1 id='titulo-receta'>{receta.title}</h1>
-      {user && user.role !== "user" && receta.source && <p><strong>Fuente:</strong> {receta.source}</p>}
-      {receta.language && <p><strong>Idioma:</strong> {receta.language}</p>}
-      {receta.origin && <p><strong>Origen:</strong> {receta.origin}</p>}
-      {receta.n_diners && <p><strong>Número de comensales:</strong> {receta.n_diners}</p>}
-      {receta.difficulty && <p><strong>Dificultad:</strong> {receta.difficulty}</p>}
-      {receta.category && <p><strong>Categoría:</strong> {formatCategory(receta.category)}</p>}
-      {receta.subcategory && <p><strong>Subcategoría:</strong> {receta.subcategory}</p>}
-      {receta.minutes && <p><strong>Tiempo de preparación:</strong> {receta.minutes}</p>}
+      {user && user.role !== "user" && receta.source && <p><strong>Source:</strong> {receta.source}</p>}
+      {receta.language && <p><strong>Language:</strong> {receta.language}</p>}
+      {receta.n_diners && <p><strong>Number of diners:</strong> {receta.n_diners}</p>}
+      {receta.origin_ISO && <p><strong>Country of origin:</strong> {receta.origin_ISO}</p>}
+      {receta.difficulty && <p><strong>Difficulty:</strong> {receta.difficulty}</p>}
+      {receta.category && <p><strong>Category:</strong> {formatCategory(receta.category)}</p>}
+      {receta.subcategory && <p><strong>Subcategory:</strong> {receta.subcategory}</p>}
+      {receta.minutes && <p><strong>Preparation time:</strong> {receta.minutes}</p>}
       
-      {user && user.role !== "user" && (
-        <>
-          <h3><strong>Información Nutricional</strong></h3>
-          <table className="nutritional-info-table">
-            <thead>
-              <tr>
-                <th>Nutriente</th>
-                <th>Por 100g</th>
-                <th><i>PDV</i></th>
-              </tr>
-            </thead>
-            <tbody>
-              {nutritionalInfo && Object.keys(nutritionalInfo).map((key) => (
-                <tr key={key}>
-                  <td>{key.charAt(0).toUpperCase() + key.slice(1)}</td>
-                  <td>{nutritionalInfo[key] ? `${nutritionalInfo[key]} ${getUnit(key)}` : '-'}</td>
-                  <td>{nutritionalInfoPDV[key] ? `${nutritionalInfoPDV[key]} %` : '-'}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </>
-      )}
 
-      <h3><strong>Ingredientes</strong></h3>
+      <h3><strong>Nutritional information</strong></h3>
+      <table className="nutritional-info-table">
+        <thead>
+          <tr>
+            <th>Nutrient</th>
+            <th>Per 100g</th>
+            <th><i>PDV</i></th>
+          </tr>
+        </thead>
+        <tbody>
+          {nutritionalInfo && Object.keys(nutritionalInfo).map((key) => (
+            <tr key={key}>
+              <td>{formatearNutriente(key.charAt(0).toUpperCase() + key.slice(1))}</td>
+              <td>{nutritionalInfo[key] ? `${nutritionalInfo[key]} ${getUnidad(key)}` : '-'}</td>
+              <td>{nutritionalInfoPDV[key] ? `${nutritionalInfoPDV[key]} %` : '-'}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+
+      <h3><strong>Ingredients</strong></h3>
       {receta.ingredients && (
         <div className='listado-ingredientes'>
           <ul>
             {receta.ingredients.map((ing, index) => (
               <li key={index}>
                 {ing.ingredientID ? (
-                    <Link to={`/ingredient/${ing.ingredientID}`}>{ing.ingredient}</Link>
+                    <Link to={`/ingredient/${ing.ingredientID}`}>{primeraLetraMayúscula(ing.ingredient)}</Link>
                 ) : (
-                  <span>{ing.ingredient}</span>
+                  <span>{primeraLetraMayúscula(ing.ingredient)}</span>
                 )}
               </li>
             ))}
           </ul>
         </div>
       )}
-      <h3><strong>Instrucciones de preparación</strong></h3>
+      <h3><strong>Steps</strong></h3>
       {receta.steps && (
         <div className='steps'>
           <ul>
@@ -180,12 +210,12 @@ function RecetaDetalle() {
         </div>
       )}
       <h3><strong>Reviews</strong></h3>
-      {receta.num_interactions > 0 && (
+      {receta.num_interactions > 0 && receta.interactions && (
         <div className='reviews'>
           <ul>
             {receta.interactions.map((interaction, index) => (
               <li key={index}>
-                <p> <strong>Valoración: </strong>{interaction.rating}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Fecha:</strong> {interaction.date}</p>
+                <p> <strong>Rating: </strong>{interaction.rating}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Date:</strong> {interaction.date}</p>
                 <p>"{interaction.review}"</p>
               </li>
             ))}
@@ -197,4 +227,4 @@ function RecetaDetalle() {
   );
 }
 
-export default RecetaDetalle;
+export default RecetaDetalleEN;

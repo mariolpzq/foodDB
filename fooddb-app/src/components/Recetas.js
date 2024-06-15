@@ -9,41 +9,128 @@ function Recetas() {
   const [appetizerSearch, setAppetizerSearch] = useState('');
   const [mainDishSearch, setMainDishSearch] = useState('');
   const [dessertSearch, setDessertSearch] = useState('');
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const fetchRecetas = async () => {
+    const fetchUser = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/recetas/mealrec');
-        setRecetas(response.data.recetas);
+        const token = localStorage.getItem('token');
+        if (token) {
+          const response = await axios.get('http://localhost:8000/auth/users/me', { // Ajusta el endpoint según tu API
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+          setUser(response.data);
+        }
       } catch (error) {
-        console.error('Error al obtener las recetas:', error);
+        console.error('Error al obtener el usuario:', error);
       }
     };
 
-    fetchRecetas();
+    fetchUser();
   }, []);
 
-  const filterRecetas = (recetas, categorySearch) => {
+  useEffect(() => {
+    const fetchRecetas = async () => {
+      if (user) {
+        const languages = user.preferences.languages;
+        const token = localStorage.getItem('token');
+        if (token) {
+          try {
+            let allRecetas = [];
+            
+            // Incluir recetas en inglés si el idioma está presente
+            if (languages.includes('EN')) {
+              const englishResponse = await axios.get('http://localhost:8000/recetas/mealrec', {
+                headers: {
+                  'Authorization': `Bearer ${token}`
+                }
+              });
+              allRecetas = allRecetas.concat(englishResponse.data.recetas);
+            }
+
+            // Incluir recetas en español si el idioma está presente
+            if (languages.includes('ES')) {
+              if (user.preferences.cuisines && user.preferences.cuisines.length > 0) {
+                const promises = user.preferences.cuisines.map((cuisine) =>
+                  axios.get(`http://localhost:8000/abuela/pais/${cuisine}`, {
+                    headers: {
+                      'Authorization': `Bearer ${token}`
+                    },
+                    withCredentials: true
+                  })
+                );
+                const responses = await Promise.all(promises);
+                const spanishRecetas = responses.flatMap(res => res.data.recetas);
+                allRecetas = allRecetas.concat(spanishRecetas);
+              } else {
+                const spanishResponse = await axios.get('http://localhost:8000/abuela', {
+                  headers: {
+                    'Authorization': `Bearer ${token}`
+                  },
+                  withCredentials: true
+                });
+                allRecetas = allRecetas.concat(spanishResponse.data.recetas);
+              }
+            }
+
+            setRecetas(allRecetas);
+          } catch (error) {
+            console.error('Error al obtener las recetas:', error);
+          }
+        }
+      }
+    };
+      
+
+
+
+    fetchRecetas();
+  }, [user]);
+
+  const filterRecetas = (recetas, categorySearch, language) => {
+    const categories = language === 'EN'
+      ? {
+          'appetizer': ['appetizer', 'entrante'],
+          'main-dish': ['main-dish', 'plato principal'],
+          'dessert': ['dessert', 'postre']
+        }
+      : {
+          'entrante': ['appetizer', 'entrante'],
+          'plato principal': ['main-dish', 'plato principal'],
+          'postre': ['dessert', 'postre']
+        };
+
     return recetas.filter(receta =>
-      receta.category === categorySearch &&
+      categories[categorySearch].includes(receta.category) &&
       receta.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
   };
 
-  const appetizers = filterRecetas(recetas, 'appetizer').filter(receta =>
-    receta.title.toLowerCase().includes(appetizerSearch.toLowerCase())
-  );
-  const mainDishes = filterRecetas(recetas, 'main-dish').filter(receta =>
-    receta.title.toLowerCase().includes(mainDishSearch.toLowerCase())
-  );
-  const desserts = filterRecetas(recetas, 'dessert').filter(receta =>
-    receta.title.toLowerCase().includes(dessertSearch.toLowerCase())
-  );
+  const primeraLetraMayúscula = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
 
+  const appetizers = filterRecetas(recetas, 'appetizer', 'EN');
+  const mainDishes = filterRecetas(recetas, 'main-dish', 'EN');
+  const desserts = filterRecetas(recetas, 'dessert', 'EN');
+
+  const getLink = (receta) => {
+    if (receta.language_ISO === 'ES') {
+      return `/receta/${receta.id}`;
+    } else {
+      return `/recipe/${receta.id}`;
+    }
+  };
+
+  const idiomas = user ? user.preferences.languages : [];
   return (
     <div>
       <div className="recetas-titulo">
-      <h1>Recetas</h1>
+        {idiomas.length === 2 && <h1>Recipes / Recetas </h1> }
+        {idiomas.length === 1 && idiomas[0] === 'EN' && <h1>Recipes</h1>}
+        {idiomas.length === 1 && idiomas[0] === 'ES' && <h1>Recetas</h1>}
       </div>
       <div className="recetas-search-bar">
         <input
@@ -55,7 +142,9 @@ function Recetas() {
       </div>
       <div className="recetas-container">
         <div className="column">
-          <h2>Entrantes</h2>
+          {idiomas.length === 2 && <h2>Appetizers / Entrantes </h2> }
+          {idiomas.length === 1 && idiomas[0] === 'EN' && <h2>Appetizers</h2>}
+          {idiomas.length === 1 && idiomas[0] === 'ES' && <h2>Entrantes</h2>}
           <div className="individual-search-bar">
             <input
               type="text"
@@ -65,15 +154,19 @@ function Recetas() {
             />
           </div>
           <ul>
-            {appetizers.map((receta) => (
+            {appetizers.filter(receta =>
+              receta.title.toLowerCase().includes(appetizerSearch.toLowerCase())
+            ).map((receta) => (
               <li key={receta.id}>
-                <Link to={`/receta/${receta.id}`}>{receta.title}</Link>
+                <Link to={getLink(receta)}>{primeraLetraMayúscula(receta.title)}</Link>
               </li>
             ))}
           </ul>
         </div>
         <div className="column">
-          <h2>Platos principales</h2>
+          {idiomas.length === 2 && <h2>Main dishes / Platos principales </h2> }
+          {idiomas.length === 1 && idiomas[0] === 'EN' && <h2>Main dishes</h2>}
+          {idiomas.length === 1 && idiomas[0] === 'ES' && <h2>Platos principales</h2>}
           <div className="individual-search-bar">
             <input
               type="text"
@@ -83,15 +176,19 @@ function Recetas() {
             />
           </div>
           <ul>
-            {mainDishes.map((receta) => (
+            {mainDishes.filter(receta =>
+              receta.title.toLowerCase().includes(mainDishSearch.toLowerCase())
+            ).map((receta) => (
               <li key={receta.id}>
-                <Link to={`/receta/${receta.id}`}>{receta.title}</Link>
+                <Link to={getLink(receta)}>{primeraLetraMayúscula(receta.title)}</Link>
               </li>
             ))}
           </ul>
         </div>
         <div className="column">
-          <h2>Postres</h2>
+          {idiomas.length === 2 && <h2>Desserts / Postres </h2> }
+          {idiomas.length === 1 && idiomas[0] === 'EN' && <h2>Desserts</h2>}
+          {idiomas.length === 1 && idiomas[0] === 'ES' && <h2>Postres</h2>}
           <div className="individual-search-bar">
             <input
               type="text"
@@ -101,9 +198,11 @@ function Recetas() {
             />
           </div>
           <ul>
-            {desserts.map((receta) => (
+            {desserts.filter(receta =>
+              receta.title.toLowerCase().includes(dessertSearch.toLowerCase())
+            ).map((receta) => (
               <li key={receta.id}>
-                <Link to={`/receta/${receta.id}`}>{receta.title}</Link>
+                <Link to={getLink(receta)}>{primeraLetraMayúscula(receta.title)}</Link>
               </li>
             ))}
           </ul>
