@@ -1,6 +1,36 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Select from 'react-select';
+import '../App.css';  // Asegúrate de importar tu archivo CSS
+
+const cuisineOptions = [
+    { value: 'PAN', label: 'Panamá' },
+    { value: 'ARG', label: 'Argentina' },
+    { value: 'VEN', label: 'Venezuela' },
+    { value: 'URY', label: 'Uruguay' },
+    { value: 'SLV', label: 'El Salvador' },
+    { value: 'PRI', label: 'Puerto Rico' },
+    { value: 'CHL', label: 'Chile' },
+    { value: 'CRI', label: 'Costa Rica' },
+    { value: 'NIC', label: 'Nicaragua' },
+    { value: 'MEX', label: 'México' },
+    { value: 'DOM', label: 'República Dominicana' },
+    { value: 'HND', label: 'Honduras' },
+    { value: 'COL', label: 'Colombia' },
+    { value: 'ESP', label: 'España' },
+    { value: 'GTM', label: 'Guatemala' },
+    { value: 'PER', label: 'Perú' },
+    { value: 'PRY', label: 'Paraguay' },
+    { value: 'ECU', label: 'Ecuador' },
+    { value: 'BOL', label: 'Bolivia' },
+    { value: 'CUB', label: 'Cuba' }
+];
+
+const languageOptions = [
+    { value: 'EN', label: 'English' },
+    { value: 'ES', label: 'Español' }
+];
 
 function Register() {
     const [name, setName] = useState('');
@@ -11,13 +41,16 @@ function Register() {
     const [height, setHeight] = useState('');
     const [weight, setWeight] = useState('');
     const [activityLevel, setActivityLevel] = useState('');
-    const [dietaryPreferences, setDietaryPreferences] = useState([]);
+    const [dietaryPreferences, setDietaryPreferences] = useState('');
+    const [selectedLanguages, setSelectedLanguages] = useState([]);
+    const [selectedCuisines, setSelectedCuisines] = useState([]);
+    const [showCuisines, setShowCuisines] = useState(false);
     const navigate = useNavigate();
 
     const calculateDailyCaloricIntake = (gender, age, height, weight, activityLevel) => {
         let MB; // Metabolismo Basal
         if (gender === 'Hombre') {
-            MB =  (10 * weight) + (6.25 * height) - (5 * age) + 5;
+            MB = (10 * weight) + (6.25 * height) - (5 * age) + 5;
         } else if (gender === 'Mujer') {
             MB = (10 * weight) + (6.25 * height) - (5 * age) - 161;
         } else {
@@ -60,22 +93,22 @@ function Register() {
             const restrictions = {
                 fats: {
                     total: Math.round(dailyCaloricIntake * 0.3), // 30% de las calorías totales provienen de las grasas
-                    sat: Math.round(dailyCaloricIntake * 0.1 ), // 10% de las calorías totales provienen de grasas saturadas
+                    sat: Math.round(dailyCaloricIntake * 0.1), // 10% de las calorías totales provienen de grasas saturadas
                     trans: Math.round(dailyCaloricIntake * 0.01) // 1% de las calorías totales provienen de grasas trans
                 },
                 sugars: Math.round(dailyCaloricIntake * 0.1) // 10% de las calorías totales provienen de azúcares
             };
-    
+
             if (lowerCaseDietaryPreferences.includes('diabetes')) {
                 restrictions.sugars = 0;
             }
-    
+
             return restrictions;
         }
     };
 
     const calculateRestrictionsGrams = (dailyCaloricIntake, dietaryPreferences) => {
-        if (dailyCaloricIntake === 0){
+        if (dailyCaloricIntake === 0) {
             return {
                 fats: {
                     total: 0,
@@ -93,7 +126,7 @@ function Register() {
             const restrictions = {
                 fats: {
                     total: Math.round(dailyCaloricIntake * 0.3 / 9), // Cada gramo de grasa tiene 9 calorías
-                    sat: Math.round(dailyCaloricIntake * 0.1 / 9), 
+                    sat: Math.round(dailyCaloricIntake * 0.1 / 9),
                     trans: Math.round(dailyCaloricIntake * 0.01 / 9)
                 },
                 sugars: Math.round(dailyCaloricIntake * 0.1 / 4), // Cada gramo de azúcar tiene 4 calorías
@@ -113,8 +146,14 @@ function Register() {
 
             return restrictions;
         }
-    }
-    
+    };
+
+    const handleLanguageChange = (selectedOptions) => {
+        setSelectedLanguages(selectedOptions);
+        const languages = selectedOptions.map(option => option.value);
+        setShowCuisines(languages.includes('ES'));
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -137,7 +176,11 @@ function Register() {
                 restrictions_grams: restrictionsGrams,
                 dietary_preferences: dietary_Preferences,
                 role: 'user', // Valor por defecto
-                diets: [] // Lista vacía por defecto
+                diets: [], // Lista vacía por defecto
+                preferences: {
+                    languages: selectedLanguages.map(option => option.value),
+                    cuisines: selectedCuisines.map(option => option.value)
+                }
             });
             console.log(response.data);
             navigate('/login');
@@ -145,7 +188,7 @@ function Register() {
             console.error('Error en el registro:', error.response ? error.response.data : error.message);
         }
     };
-    
+
     return (
         <div>
             <h1>Registro</h1>
@@ -213,6 +256,32 @@ function Register() {
                     value={dietaryPreferences}
                     onChange={(e) => setDietaryPreferences(e.target.value)}
                 />
+                <div className="selector-idiomas">
+                <p>Idiomas preferidos:</p>
+                <Select
+                    isMulti
+                    options={languageOptions}
+                    onChange={handleLanguageChange}
+                    className="react-select-container"
+                    classNamePrefix="react-select"
+                />
+                </div>
+
+                <div className="selector-cocinas">
+                {showCuisines && (
+                    <>
+                        <p>Gastronomía preferida:</p>
+                        <Select
+                            isMulti
+                            options={cuisineOptions}
+                            onChange={setSelectedCuisines}
+                            className="react-select-container"
+                            classNamePrefix="react-select"
+                        />
+                    </>
+                )}
+                </div>
+
                 <button type="submit">Registrarse</button>
             </form>
         </div>

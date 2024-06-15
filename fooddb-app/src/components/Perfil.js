@@ -2,6 +2,34 @@ import React, { useContext, useEffect, useState } from 'react';
 import AuthContext from '../Auth';
 import axios from 'axios';
 
+const languageMap = {
+    EN: 'English',
+    ES: 'Español'
+};
+
+const cuisineMap = {
+    PAN: 'Panamá',
+    ARG: 'Argentina',
+    VEN: 'Venezuela',
+    URY: 'Uruguay',
+    SLV: 'El Salvador',
+    PRI: 'Puerto Rico',
+    CHL: 'Chile',
+    CRI: 'Costa Rica',
+    NIC: 'Nicaragua',
+    MEX: 'México',
+    DOM: 'República Dominicana',
+    HND: 'Honduras',
+    COL: 'Colombia',
+    ESP: 'España',
+    GTM: 'Guatemala',
+    PER: 'Perú',
+    PRY: 'Paraguay',
+    ECU: 'Ecuador',
+    BOL: 'Bolivia',
+    CUB: 'Cuba'
+};
+
 const Perfil = () => {
     const { isAuthenticated } = useContext(AuthContext);
     const [user, setUser] = useState(null);
@@ -111,7 +139,30 @@ const Perfil = () => {
                     </tbody>
                 </table>
             </div>
-            
+
+            {/* Mostrar preferencias de idiomas si el array no está vacío */}
+            {user.preferences?.languages?.length > 0 && (
+                <div>
+                    <h3>Idiomas preferidos</h3>
+                    <ul>
+                        {user.preferences.languages.map((language, index) => (
+                            <li key={index}>{languageMap[language]}</li>
+                        ))}
+                    </ul>
+                </div>
+            )}
+
+            {/* Mostrar preferencias de gastronomía si el array no está vacío */}
+            {user.preferences?.cuisines?.length > 0 && (
+                <div>
+                    <h3>Gastronomías preferidas</h3>
+                    <ul>
+                        {user.preferences.cuisines.map((cuisine, index) => (
+                            <li key={index}>{cuisineMap[cuisine]}</li>
+                        ))}
+                    </ul>
+                </div>
+            )}
         </div>
     );
 };
