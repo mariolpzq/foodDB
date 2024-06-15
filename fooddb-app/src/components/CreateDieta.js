@@ -108,6 +108,7 @@ const CreateDieta = () => {
         try {
             const token = localStorage.getItem('token');
             if (token) {
+                console.log('selectedRecipes:', selectedRecipes);
                 await axios.post('http://localhost:8000/dietas', selectedRecipes, {
                     headers: {
                         'Authorization': `Bearer ${token}`

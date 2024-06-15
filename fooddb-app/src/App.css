@@ -166,6 +166,7 @@ form {
   max-width: 400px; /* Ancho máximo del formulario */
   margin: 20px auto; /* Margen automático para centrar el formulario */
   border: 1px solid #F68080;
+  color: black;
 }
 
 /* Estilo para los títulos de los formularios */
@@ -589,31 +590,34 @@ form button:hover {
 
 .diet-item {
   background-color: #ffe5e5;
-  padding: 15px;
+  padding: 15px 20px; /* Añadir padding extra en los lados */
   border-radius: 10px;
   margin-bottom: 20px;
+  position: relative; /* Necesario para la posición absoluta del botón */
 }
 
-.diet-item h3 {
-  margin-top: 0;
-  color: #F68080;
-  text-align: left;
-  margin-left: 20px;
+.diet-item:last-child {
+  margin-bottom: 0; /* Quitar el margen inferior del último elemento */
 }
 
 .dish-row {
   display: flex;
-
+  justify-content: space-between;
 }
 
 .dish {
   background-color: #f8d7da;
   padding: 10px;
   border-radius: 10px;
-  flex: 1 1 calc(33.333% - 10px);
+  flex: 1 1 calc(33.333% - 20px); /* Ajustar el margen para asegurar espacio */
   margin: 5px;
   text-align: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.dish:last-child {
+  margin-right: 60px; /* Asegurar espacio para el botón de eliminación */
 }
 
 .dish p {
@@ -634,6 +638,27 @@ form button:hover {
   color: #F68080;
 }
 
+.delete-button {
+  position: absolute; /* Para situar el botón en la esquina derecha */
+  top: 50%;
+  right: 20px; /* Ajusta según sea necesario */
+  transform: translateY(-50%); /* Para centrar verticalmente el botón */
+  background-color: #dc3545; /* Color rojo */
+  color: white;
+  border: none;
+  border-radius: 5px; /* Bordes redondeados */
+  width: 40px; /* Tamaño cuadrado */
+  height: 40px; /* Tamaño cuadrado */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+  background-color: #c82333; /* Color rojo oscuro al pasar el ratón */
+}
 .restricciones-tabla {
   width: 100%;
   border-collapse: collapse;
@@ -685,3 +710,64 @@ form button:hover {
 .nutritional-info-table tr:hover {
   background-color: #f5f5f5;
 }
+
+/* Estilo para los selectores de idiomas y gastronomías */
+.react-select-container .react-select__control {
+  background-color: #f9f9f9; /* Fondo claro para el control */
+  border: 1px solid #ccc; /* Borde del control */
+  border-radius: 5px; /* Bordes redondeados */
+  padding: 10px; /* Relleno interno */
+  margin-bottom: 10px; /* Espacio inferior */
+  font-size: 1em; /* Tamaño de fuente */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.react-select-container .react-select__control:hover {
+  border-color: #F68080; /* Color del borde al pasar el ratón */
+}
+
+.react-select-container .react-select__menu {
+  background-color: #FFE5E5; /* Fondo claro para el menú */
+  border: 1px solid #ccc; /* Borde del menú */
+  border-radius: 5px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para el menú */
+}
+
+.react-select-container .react-select__option {
+  padding: 10px; /* Relleno interno para las opciones */
+  color: #333; /* Color del texto */
+}
+
+.react-select-container .react-select__option--is-selected {
+  background-color: #F68080; /* Fondo para la opción seleccionada */
+  color: white; /* Color del texto para la opción seleccionada */
+}
+
+.react-select-container .react-select__option--is-focused {
+  background-color: #f9f9f9; /* Fondo para la opción enfocada */
+  color: #333; /* Color del texto para la opción enfocada */
+}
+
+.react-select-container .react-select__multi-value {
+  background-color: #FFE5E5; /* Fondo para las etiquetas de selección múltiple */
+  border: 1px solid #F68080; /* Borde para las etiquetas */
+  border-radius: 5px; /* Bordes redondeados */
+  padding: 5px; /* Relleno interno */
+  margin: 2px; /* Espacio entre las etiquetas */
+}
+
+.react-select-container .react-select__multi-value__label {
+  color: #333; /* Color del texto para las etiquetas */
+}
+
+.react-select-container .react-select__multi-value__remove {
+  color: #F68080; /* Color del icono de eliminación */
+  cursor: pointer; /* Cursor de puntero */
+}
+
+.react-select-container .react-select__multi-value__remove:hover {
+  background-color: #F46565; /* Fondo para el icono de eliminación al pasar el ratón */
+  color: white; /* Color del texto del icono de eliminación al pasar el ratón */
+}
+
+
