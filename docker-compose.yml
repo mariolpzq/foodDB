@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  mongo:
+    container_name: tfg
+    image: mongo:latest
+    command: mongod --port 27029
+    ports:
+      - "27022:27029"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=mongoadmin
+      - MONGO_INITDB_ROOT_PASSWORD=4qJp8wDxA7
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
+    driver: local
