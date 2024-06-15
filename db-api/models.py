@@ -592,24 +592,28 @@ class MappingEmissionsRequest(BaseModel):
 
 # ---------------------------------------------------- DIETAS ---------------------------------------------------- #
 
-class DietCreateModel(BaseModel):
+
+class DietCompleteModel(BaseModel):
+    id: Optional[PyObjectId] = Field(None, alias="_id")
     appetizerID: Optional[PyObjectId] = Field(None, alias="appetizerID")
     main_dishID: Optional[PyObjectId] = Field(None, alias="main_dishID")
     dessertID: Optional[PyObjectId] = Field(None, alias="dessertID")
+    appetizer: Optional[MealRECRecipeModel] = Field(None)
+    main_dish: Optional[MealRECRecipeModel] = Field(None)
+    dessert: Optional[MealRECRecipeModel] = Field(None)
+    dietary_preferences: List[str] = Field(...)
 
     class Config:
         allow_population_by_field_name = True
         json_encoders = {ObjectId: str}
 
+class DietCompleteCollection(BaseModel):
+    diets: List[DietCompleteModel]
 
 class DietModel(BaseModel):
     appetizerID: Optional[PyObjectId] = Field(None)
     main_dishID: Optional[PyObjectId] = Field(None)
     dessertID: Optional[PyObjectId] = Field(None)
-    appetizer_title: Optional[str] = Field(None)
-    main_dish_title: Optional[str] = Field(None)
-    dessert_title: Optional[str] = Field(None)
-    dietary_preferences: List[str] = Field(...)
 
     class Config:
         json_encoders = {ObjectId: str}
@@ -627,6 +631,7 @@ class TokenData(BaseModel):
     username: Optional[str] = None
 
 
+
 class UserModel(BaseModel):
     name: str = Field(...)
     email: EmailStr = Field(...)
@@ -641,8 +646,9 @@ class UserModel(BaseModel):
     restrictions_grams: Optional[dict] = Field(default={})
     dietary_preferences: Optional[List[str]] = Field(default=[])
     role: str = Field(default="user")
-    diets: Optional[List[DietModel]] = Field(default_factory=list)  # Cambiado a DietModel
-    
+    diets: Optional[List[DietModel]] = Field(default_factory=list)
+    preferences: Optional[dict] = Field(default=None)
+
     model_config = ConfigDict(
         populate_by_name=True,
         arbitrary_types_allowed=True,
@@ -661,7 +667,11 @@ class UserModel(BaseModel):
             "restrictions_grams": {},
             "dietary_preferences": ["vegan"],
             "role": "user",  # user, nutritionist, researcher, admin
-            "diets": []
+            "diets": [],
+            "preferences": {
+                "languages": ["en"],
+                "cuisines": ["esp", "mex", "arg"],
+            },
         }
     )
 
@@ -677,6 +687,5 @@ class UserCollection(BaseModel):
     """
 
     users: List[UserModel]
-
 
 
