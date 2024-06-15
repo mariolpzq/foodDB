@@ -32,7 +32,24 @@ async def listar_abuela():
     
     La respuesta está limitada a 100 resultados.
     """
-    return AbuelaCollection(abuela=await abuela_collection.find().to_list(100))
+    return AbuelaCollection(recetas=await abuela_collection.find().to_list(None))
+
+
+@router.get(
+    "/{id}",
+    response_description="Buscar una receta de la abuela por ID",
+    response_model=AbuelaModel,
+    response_model_by_alias=False,
+)
+async def buscar_Abuela_por_id(id: str):
+    """
+    Buscar una receta de la abuela por su ID.
+    """
+    receta = await abuela_collection.find_one({"_id": ObjectId(id)})
+    if receta:
+        return receta
+
+    raise HTTPException(status_code=404, detail=f"No se encontró la receta de la abuela con el ID {id}")
 
 @router.get(
     "/titulo/{titulo}",
@@ -52,7 +69,7 @@ async def buscar_Abuela_por_titulo(titulo: str):
 
     print("Recetas encontradas: ", len(recetas))
     if len(recetas) > 0:
-        return AbuelaCollection(abuela=recetas)
+        return AbuelaCollection(recetas=recetas)
 
     raise HTTPException(status_code=404, detail=f"No se encontraron recetas con el nombre {titulo}")
 
@@ -76,7 +93,7 @@ async def buscar_Abuela_por_ingrediente(ingrediente: str):
         recetas_encontradas.append(receta)
 
     if recetas_encontradas:
-        return AbuelaCollection(abuela=recetas_encontradas)
+        return AbuelaCollection(recetas=recetas_encontradas)
     else:
         raise HTTPException(status_code=404, detail=f"No se encontraron recetas que contengan el ingrediente {ingrediente}")
     
@@ -103,7 +120,7 @@ async def buscar_Abuela_por_pais(pais_ISO: str):
         recetas_encontradas.append(receta)
 
     if recetas_encontradas:
-        return AbuelaCollection(abuela=recetas_encontradas)
+        return AbuelaCollection(recetas=recetas_encontradas)
     else:
         raise HTTPException(status_code=404, detail=f"No se encontraron recetas originadas en el país {pais_ISO}")
     
@@ -128,7 +145,7 @@ async def buscar_Abuela_por_pais_y_titulo(pais_ISO: str, titulo: str):
         recetas_encontradas.append(receta)
 
     if recetas_encontradas:
-        return AbuelaCollection(abuela=recetas_encontradas)
+        return AbuelaCollection(recetas=recetas_encontradas)
     else:
         raise HTTPException(status_code=404, detail=f"No se encontraron recetas originadas en el país {pais_ISO} con el título {titulo}")
     
@@ -152,6 +169,6 @@ async def buscar_Abuela_por_pais_e_ingrediente(pais_ISO: str, ingrediente: str):
         recetas_encontradas.append(receta)
 
     if recetas_encontradas:
-        return AbuelaCollection(abuela=recetas_encontradas)
+        return AbuelaCollection(recetas=recetas_encontradas)
     else:
         raise HTTPException(status_code=404, detail=f"No se encontraron recetas originadas en el país {pais_ISO} que contengan el ingrediente {ingrediente}")

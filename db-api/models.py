@@ -425,15 +425,15 @@ class AbuelaModel(BaseModel): # Se crea el modelo de la receta de la abuela
     origin_ISO : str = Field(...)
     n_diners : Union[str,int] = Field(...)
     dificultad : str = Field(...)
-    category : List[str] = Field(...)
-    subcategory : str = Field(...)
+    category : str = Field(...)
+    subcategory : List[str] = Field(...)
     minutes : int = Field(...)
     n_ingredients : int = Field(...)
     ingredients: Optional[List[IngredientRecipeModel]] = Field(None)
     n_steps : int = Field(...)
     steps : List[str] = Field(...)
     images : List[str] = Field(...)
-    interactions : str = Field(...)
+    interactions: Optional[Union[List[dict], dict, str]] = Field(None)
     aver_rate : Union[float,str] = Field(...)
     num_interactions : int = Field(...)
     tags : List[str] = Field(...)
@@ -526,7 +526,7 @@ class AbuelaCollection(BaseModel):
         This exists because providing a top-level array in a JSON response can be a [vulnerability](https://haacked.com/archive/2009/06/25/json-hijacking.aspx/)
     """
 
-    abuela: List[AbuelaModel]
+    recetas: List[AbuelaModel]
     
     
     
