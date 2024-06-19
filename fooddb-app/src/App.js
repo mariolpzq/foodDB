@@ -5,7 +5,8 @@ import Login from './components/Login';
 import Recetas from './components/Recetas';
 import RecetaDetalleESP from './components/RecetaDetalleESP';
 import RecetaDetalleEN from './components/RecetaDetalleEN';
-import IngredienteDetalle from './components/IngredienteDetalle';
+import IngredienteDetalleESP from './components/IngredienteDetalleESP';
+import IngredienteDetalleEN from './components/IngredienteDetalleEN';
 import Register from './components/Register';
 import Logout from './components/Logout';
 import Perfil from './components/Perfil';
@@ -16,6 +17,7 @@ import Dietas from './components/Dietas';
 import CreateDieta from './components/CreateDieta';
 
 function App() {
+
   const [backgroundClass, setBackgroundClass] = useState('default-background');
 
   return (
@@ -42,7 +44,8 @@ function App() {
               <Route path="/recetas" element={<Recetas />} />
               <Route path="/recipe/:id" element={<RecetaDetalleEN />} />
               <Route path="/receta/:id" element={<RecetaDetalleESP />} />
-              <Route path="/ingredient/:id" element={<IngredienteDetalle />} /> 
+              <Route path="/ingrediente/:id" element={<IngredienteDetalleESP />} /> 
+              <Route path="/ingredient/:id" element={<IngredienteDetalleEN />} />
               <Route path="/dietas" element={<Dietas />} />
               <Route path="/create-dieta" element={<CreateDieta />} />
               <Route path="/perfil" element={<Perfil />} />
