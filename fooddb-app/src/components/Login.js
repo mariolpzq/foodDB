@@ -2,10 +2,10 @@ import React, { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import AuthContext from '../Auth'; 
 
-
 function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
     const { login } = useContext(AuthContext);
 
@@ -16,6 +16,7 @@ function Login() {
             navigate('/recetas');
         } catch (error) {
             console.error('Error en el login:', error);
+            setErrorMessage('Correo electrónico o contraseña incorrectos');
         }
     };
 
@@ -36,6 +37,7 @@ function Login() {
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <button type="submit">Login</button>
+                {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
                 <div id="enlace-registro">
                     <p>¿No estás registrado? <Link to="/register">Hazlo aquí</Link></p> 
                 </div>

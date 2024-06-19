@@ -45,6 +45,7 @@ function Register() {
     const [selectedLanguages, setSelectedLanguages] = useState([]);
     const [selectedCuisines, setSelectedCuisines] = useState([]);
     const [showCuisines, setShowCuisines] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
 
     const calculateDailyCaloricIntake = (gender, age, height, weight, activityLevel) => {
@@ -156,6 +157,13 @@ function Register() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setErrorMessage(''); // Reset error message
+
+        if (selectedLanguages.length === 0) {
+            setErrorMessage('Debe seleccionar al menos un idioma preferido.');
+            return;
+        }
+
         try {
             const dietary_Preferences = dietaryPreferences && dietaryPreferences.length > 0 ? dietaryPreferences.split(',').map(pref => pref.trim()) : [];
             const dailyCaloricIntake = calculateDailyCaloricIntake(gender, parseInt(age) || 0, parseFloat(height) || 0.0, parseFloat(weight) || 0.0, parseInt(activityLevel) || 0);
@@ -186,6 +194,11 @@ function Register() {
             navigate('/login');
         } catch (error) {
             console.error('Error en el registro:', error.response ? error.response.data : error.message);
+            if (error.response && error.response.status === 400) {
+                setErrorMessage('El correo electrónico ya está en uso');
+            } else {
+                setErrorMessage('Ocurrió un error durante el registro. Por favor, inténtelo de nuevo.');
+            }
         }
     };
 
@@ -257,32 +270,33 @@ function Register() {
                     onChange={(e) => setDietaryPreferences(e.target.value)}
                 />
                 <div className="selector-idiomas">
-                <p>Idiomas preferidos:</p>
-                <Select
-                    isMulti
-                    options={languageOptions}
-                    onChange={handleLanguageChange}
-                    className="react-select-container"
-                    classNamePrefix="react-select"
-                />
+                    <p>Idiomas preferidos:</p>
+                    <Select
+                        isMulti
+                        options={languageOptions}
+                        onChange={handleLanguageChange}
+                        className="react-select-container"
+                        classNamePrefix="react-select"
+                    />
                 </div>
 
                 <div className="selector-cocinas">
-                {showCuisines && (
-                    <>
-                        <p>Gastronomía preferida:</p>
-                        <Select
-                            isMulti
-                            options={cuisineOptions}
-                            onChange={setSelectedCuisines}
-                            className="react-select-container"
-                            classNamePrefix="react-select"
-                        />
-                    </>
-                )}
+                    {showCuisines && (
+                        <>
+                            <p>Gastronomía preferida:</p>
+                            <Select
+                                isMulti
+                                options={cuisineOptions}
+                                onChange={setSelectedCuisines}
+                                className="react-select-container"
+                                classNamePrefix="react-select"
+                            />
+                        </>
+                    )}
                 </div>
 
                 <button type="submit">Registrarse</button>
+                {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
             </form>
         </div>
     );
