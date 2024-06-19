@@ -4,6 +4,7 @@ import { useParams, Link } from 'react-router-dom';
 import AuthContext from '../Auth';
 
 function RecetaDetalleESP() {
+  const { isAuthenticated } = useContext(AuthContext);
   const { id } = useParams();
   const [receta, setReceta] = useState(null);
   const { user } = useContext(AuthContext);
@@ -14,7 +15,7 @@ function RecetaDetalleESP() {
         const token = localStorage.getItem('token');
         let response;
 
-        response = await axios.get(`http://localhost:8000/abuela/${id}`, {
+        response = await axios.get(`http://localhost:8000/recetas/abuela/${id}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           },
@@ -184,6 +185,13 @@ function RecetaDetalleESP() {
     return <div>Cargando...</div>;
   }
 
+  if (!isAuthenticated) {
+    return (
+    <div id='enlace-registro'>
+       <p>No estás autenticado. Por favor, <Link to="/login">inicia sesión</Link></p>
+    </div>);
+  }
+
 
   return (
     <div className="cell receta-detalles">
@@ -215,7 +223,7 @@ function RecetaDetalleESP() {
             {receta.ingredients.map((ing, index) => (
               <li key={index}>
                 {ing.ingredientID ? (
-                    <Link to={`/ingredient/${ing.ingredientID}`}>{eliminarComillas(ing.ingredient)}</Link>
+                    <Link to={`/ingrediente/${ing.ingredientID}`}>{eliminarComillas(ing.ingredient)}</Link>
                 ) : (
                   <span>{ing.ingredient}</span>
                 )}

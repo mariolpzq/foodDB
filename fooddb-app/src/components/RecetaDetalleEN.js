@@ -4,6 +4,7 @@ import { useParams, Link } from 'react-router-dom';
 import AuthContext from '../Auth';
 
 function RecetaDetalleEN() {
+  const { isAuthenticated } = useContext(AuthContext);
   const { id } = useParams();
   const [receta, setReceta] = useState(null);
   const { user } = useContext(AuthContext);
@@ -101,13 +102,12 @@ function RecetaDetalleEN() {
       case 'sat':
       case 'sug':
       case 'fiber':
+      case 'car':
         return 'g';
       case 'salt':
         return 'mg';
       case 'energy':
         return 'kcal';
-      case 'car':
-        return 'g';
       default:
         return '';
     }
@@ -143,6 +143,14 @@ function RecetaDetalleEN() {
 
   const nutritionalInfo = receta.nutritional_info_100g;
   const nutritionalInfoPDV = receta.nutritional_info_PDV || {};
+
+
+  if (!isAuthenticated) {
+    return (
+    <div id='enlace-registro'>
+       <p>No estás autenticado. Por favor, <Link to="/login">inicia sesión</Link></p>
+    </div>);
+  }
 
   return (
     <div className="cell receta-detalles">

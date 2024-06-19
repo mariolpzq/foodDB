@@ -386,7 +386,8 @@ form button:hover {
 }
 
 
-#titulo-receta {
+#titulo-receta,
+#titulo-ingrediente {
   font-size: 2em;
   margin-bottom: 20px;
   text-align: center;
@@ -401,12 +402,14 @@ form button:hover {
 }
 
 
-.receta-detalles h1 {
+.receta-detalles h1,
+.ingrediente-detalles h1 {
   text-align: center;
   color: #F68080;
 }
 
-.receta-detalles p {
+.receta-detalles p,
+.ingrediente-detalles p {
   margin-bottom: 10px;
 }
 
@@ -497,7 +500,8 @@ form button:hover {
   color: #F68080;
 }
 
-.receta-detalles h3{
+.receta-detalles h3,
+.ingrediente-detalles h3 {
   text-align: center;
   color: #F68080;
   margin-top: 50px;
@@ -521,35 +525,9 @@ form button:hover {
 
 .oms-container h3 {
   margin-top : 20px;
+  color: #F68080;
 }
 
-
-
-.ingrediente-detalles {
-  background-color: #ffe4e1; /* Color rosita de fondo */
-  padding: 20px;
-  border-radius: 10px;
-  color: #000; /* Color negro para las letras */
-}
-
-.ingrediente-detalles h1 {
-  font-size: 2em;
-  margin-bottom: 20px;
-}
-
-.ingrediente-detalles p {
-  font-size: 1.2em;
-  margin-bottom: 10px;
-}
-
-.ingrediente-detalles ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.ingrediente-detalles li {
-  margin-bottom: 10px;
-}
 
 
 .dietas-container {
@@ -659,29 +637,10 @@ form button:hover {
 .delete-button:hover {
   background-color: #c82333; /* Color rojo oscuro al pasar el ratón */
 }
+
+
+.nutritional-info-table,
 .restricciones-tabla {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 20px 0;
-}
-
-.restricciones-tabla th,
-.restricciones-tabla td {
-  border: 1px solid #F68080;
-  padding: 10px;
-  text-align: center;
-}
-
-.restricciones-tabla th {
-  background-color: #F68080;
-  color: white;
-}
-
-.restricciones-tabla tbody tr:nth-child(even) {
-  background-color: #ffe5e5;
-}
-
-.nutritional-info-table {
   width: 60%; 
   margin: 20px auto; 
   border-collapse: collapse;
@@ -689,25 +648,31 @@ form button:hover {
 }
 
 .nutritional-info-table th,
-.nutritional-info-table td {
+.nutritional-info-table td,
+.restricciones-tabla th,
+.restricciones-tabla td {
   padding: 10px;
   text-align: center;
 }
 
-.nutritional-info-table th {
+.nutritional-info-table th,
+.restricciones-tabla th {
   background-color: #F68080;
   color: white;
 }
 
-.nutritional-info-table td {
+.nutritional-info-table td,
+.restricciones-tabla td {
   border-bottom: 1px solid #ddd;
 }
 
-.nutritional-info-table tr:nth-child(even) {
+.nutritional-info-table tr:nth-child(even),
+.restricciones-tabla tr:nth-child(even){
   background-color: #f2f2f2;
 }
 
-.nutritional-info-table tr:hover {
+.nutritional-info-table tr:hover,
+.restricciones-tabla tr:hover {
   background-color: #f5f5f5;
 }
 
@@ -771,3 +736,35 @@ form button:hover {
 }
 
 
+.listado-idiomas-gastro p {
+  margin-left: 60px;
+  text-align: left;
+}
+.listado-idiomas-gastro ul {
+  list-style-type: none;
+  padding: 0;
+  text-align: center; /* Asegura que el contenido del ul esté centrado */
+
+}
+
+.listado-idiomas-gastro ul li {
+  display: inline-block;
+  background: #ffe4e1;
+  box-shadow: #F68080 2px 2px 5px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  margin: 10px 10px;
+}
+
+.listado-idiomas-gastro ul li a {
+  text-decoration: none;
+  color: black;
+}
+
+.listado-idiomas-gastro ul li a:hover {
+  color: #F68080;
+}
+
+.listado-idiomas-gastro h3{
+  margin-top: 30px;
+}
