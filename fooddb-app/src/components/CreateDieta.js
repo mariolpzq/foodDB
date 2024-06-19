@@ -2,8 +2,12 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../App.css';
+import { useContext } from 'react';
+import AuthContext from '../Auth';
+import { Link } from 'react-router-dom';
 
 const CreateDieta = () => {
+  const { isAuthenticated } = useContext(AuthContext);
   const [recetas, setRecetas] = useState([]);
   const [appetizerSearch, setAppetizerSearch] = useState('');
   const [mainDishSearch, setMainDishSearch] = useState('');
@@ -127,7 +131,7 @@ const CreateDieta = () => {
             if (languages.includes('ES')) {
               if (user.preferences.cuisines && user.preferences.cuisines.length > 0) {
                 const promises = user.preferences.cuisines.map((cuisine) =>
-                  axios.get(`http://localhost:8000/abuela/pais/${cuisine}`, {
+                  axios.get(`http://localhost:8000/recetas/abuela/pais/${cuisine}`, {
                     headers: {
                       'Authorization': `Bearer ${token}`
                     },
@@ -138,7 +142,7 @@ const CreateDieta = () => {
                 const spanishRecetas = responses.flatMap(res => res.data.recetas);
                 allRecetas = allRecetas.concat(spanishRecetas);
               } else {
-                const spanishResponse = await axios.get('http://localhost:8000/abuela', {
+                const spanishResponse = await axios.get('http://localhost:8000/recetas/abuela/', {
                   headers: {
                     'Authorization': `Bearer ${token}`
                   },
@@ -293,6 +297,12 @@ const CreateDieta = () => {
   const mainDishes = filterRecetas(recetas, 'main-dish', mainDishSearch);
   const desserts = filterRecetas(recetas, 'dessert', dessertSearch);
 
+  if (!isAuthenticated) {
+    return (
+    <div id='enlace-registro'>
+       <p>No estás autenticado. Por favor, <Link to="/login">inicia sesión</Link></p>
+    </div>);
+  }
   return (
     <div>
       <h1>Crear una nueva dieta</h1>

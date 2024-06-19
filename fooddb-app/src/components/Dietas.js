@@ -116,7 +116,7 @@ const Dietas = () => {
     const fetchReceta = async (recetaID) => {
       let receta = await fetchRecetaDetails(recetaID, 'recetas/mealrec');
       if (!receta) {
-        receta = await fetchRecetaDetails(recetaID, 'abuela');
+        receta = await fetchRecetaDetails(recetaID, 'recetas/abuela');
       }
       return receta;
     };
