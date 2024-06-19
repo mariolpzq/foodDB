@@ -10,9 +10,10 @@ const Navigation = () => {
     <div id="menu">
       <nav>
         <ul>
-          <li><Link to="/recetas">Recetas</Link></li>
+          
           {isAuthenticated ? (
             <>
+              <li><Link to="/recetas">Recetas</Link></li>
               <li><Link to="/dietas">Dietas</Link></li>
               <li><Link to="/perfil">Perfil</Link></li>
               <li><Link to="/logout">Logout</Link></li>
