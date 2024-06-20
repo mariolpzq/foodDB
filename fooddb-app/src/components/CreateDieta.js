@@ -7,7 +7,7 @@ import AuthContext from '../Auth';
 import { Link } from 'react-router-dom';
 
 const CreateDieta = () => {
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, user } = useContext(AuthContext);
   const [recetas, setRecetas] = useState([]);
   const [appetizerSearch, setAppetizerSearch] = useState('');
   const [mainDishSearch, setMainDishSearch] = useState('');
@@ -24,7 +24,14 @@ const CreateDieta = () => {
     dessert: null
   });
 
-  const [user, setUser] = useState(null);
+  const [nutrientCounts, setNutrientCounts] = useState({
+    calories: 0,
+    fat: 0,
+    saturates: 0,
+    salt: 0,
+    sugar: 0
+  });
+
   const navigate = useNavigate();
 
   const cualidadesBuenas = [
@@ -91,26 +98,6 @@ const CreateDieta = () => {
   ];
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        if (token) {
-          const response = await axios.get('http://localhost:8000/auth/users/me', {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          });
-          setUser(response.data);
-        }
-      } catch (error) {
-        console.error('Error al obtener el usuario:', error);
-      }
-    };
-
-    fetchUser();
-  }, []);
-
-  useEffect(() => {
     const fetchRecetas = async () => {
       if (user) {
         const languages = user.preferences.languages;
@@ -162,6 +149,53 @@ const CreateDieta = () => {
 
     fetchRecetas();
   }, [user]);
+
+  useEffect(() => {
+    const calculateNutrientCounts = () => {
+      let fat = 0, saturates = 0, salt = 0, sugar = 0, calories = 0;
+   
+      const recipes = [selectedRecipeDetails.appetizer, selectedRecipeDetails.main_dish, selectedRecipeDetails.dessert];
+   
+      recipes.forEach(recipe => {
+        if (recipe && recipe.nutritional_info_100g) {
+          fat += recipe.nutritional_info_100g.fat || 0;
+          saturates += recipe.nutritional_info_100g.sat || 0;
+          salt += recipe.nutritional_info_100g.salt || 0;
+          sugar += recipe.nutritional_info_100g.sug || 0;
+          calories += recipe.nutritional_info_100g.energy || 0;
+        }
+      });
+   
+      setNutrientCounts({
+        calories: { value: parseFloat(calories.toFixed(2)), exceeds: false },
+        fat: { value: parseFloat(fat.toFixed(2)), exceeds: false },
+        saturates: { value: parseFloat(saturates.toFixed(2)), exceeds: false },
+        salt: { value: parseFloat(salt.toFixed(2)), exceeds: false },
+        sugar: { value: parseFloat(sugar.toFixed(2)), exceeds: false }
+      });
+    };
+
+    calculateNutrientCounts();
+  }, [selectedRecipeDetails]);
+
+  useEffect(() => {
+    const checkRestrictions = () => {
+      const restrictions = user.restrictions_grams;
+      const dailyCaloricIntake = user.daily_caloric_intake;
+  
+      setNutrientCounts(prevCounts => {
+        return {
+          calories: { ...prevCounts.calories, exceeds: prevCounts.calories.value > dailyCaloricIntake },
+          fat: { ...prevCounts.fat, exceeds: prevCounts.fat.value > restrictions.fats.total },
+          saturates: { ...prevCounts.saturates, exceeds: prevCounts.saturates.value > restrictions.fats.sat },
+          salt: { ...prevCounts.salt, exceeds: prevCounts.salt.value > restrictions.salt },
+          sugar: { ...prevCounts.sugar, exceeds: prevCounts.sugar.value > restrictions.sugars }
+        };
+      });
+    };
+  
+    checkRestrictions();
+  }, [nutrientCounts, user]);
 
   const renderOMS_Lights = (omsLights) => {
     if (!omsLights) {
@@ -272,6 +306,17 @@ const CreateDieta = () => {
     });
   };
 
+  const handleDeselectRecipe = (categoryID, categoryTitle) => {
+    setSelectedRecipes({
+      ...selectedRecipes,
+      [categoryID]: ''
+    });
+    setSelectedRecipeDetails({
+      ...selectedRecipeDetails,
+      [categoryTitle]: null
+    });
+  };
+
   const handleCreateDiet = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -303,39 +348,77 @@ const CreateDieta = () => {
        <p>No estás autenticado. Por favor, <Link to="/login">inicia sesión</Link></p>
     </div>);
   }
+
   return (
     <div>
       <h1>Crear una nueva dieta</h1>
       <div className='diet-item'>
         <div className="dish-row selected-recipes">
-          <div className="dish selected-recipe">
+          <div className="create-dish selected-recipe">
             <p><strong>Entrante:</strong></p>
             <p>{selectedRecipeDetails.appetizer?.title || 'Selecciona un entrante'}</p>
             <div>{selectedRecipeDetails.appetizer?.source === 'MealREC'
               ? renderOMS_Lights(selectedRecipeDetails.appetizer?.OMS_lights_per100g)
               : renderDietaryPreferences(selectedRecipeDetails.appetizer?.dietary_preferences)
             }</div>
+            {selectedRecipeDetails.appetizer && (
+              <button className="delete-button" onClick={() => handleDeselectRecipe('appetizerID', 'appetizer')}>
+                ✕
+              </button>
+            )}
           </div>
-          <div className="dish selected-recipe">
+          <div className="create-dish selected-recipe">
             <p><strong>Plato principal:</strong></p>
             <p>{selectedRecipeDetails.main_dish?.title || 'Selecciona un plato principal'}</p>
             <div>{selectedRecipeDetails.main_dish?.source === 'MealREC'
               ? renderOMS_Lights(selectedRecipeDetails.main_dish?.OMS_lights_per100g)
               : renderDietaryPreferences(selectedRecipeDetails.main_dish?.dietary_preferences)
             }</div>
+            {selectedRecipeDetails.main_dish && (
+              <button className="delete-button" onClick={() => handleDeselectRecipe('main_dishID', 'main_dish')}>
+                ✕
+              </button>
+            )}
           </div>
-          <div className="dish selected-recipe">
+          <div className="create-dish selected-recipe">
             <p><strong>Postre:</strong></p>
             <p>{selectedRecipeDetails.dessert?.title || 'Selecciona un postre'}</p>
             <div>{selectedRecipeDetails.dessert?.source === 'MealREC'
               ? renderOMS_Lights(selectedRecipeDetails.dessert?.OMS_lights_per100g)
               : renderDietaryPreferences(selectedRecipeDetails.dessert?.dietary_preferences)
             }</div>
+            {selectedRecipeDetails.dessert && (
+              <button className="delete-button" onClick={() => handleDeselectRecipe('dessertID', 'dessert')}>
+                ✕
+              </button>
+            )}
           </div>
         </div>
       </div>
 
       <button className="new-dieta-btn" onClick={handleCreateDiet}>Crear dieta</button>
+
+      {user.preferences.languages.length === 1 && user.preferences.languages[0] === 'EN' && (
+        <div className="nutrient-counter">
+          <h3>Contador de nutrientes seleccionados</h3>
+          <p className={nutrientCounts.calories.exceeds ? 'exceeds-limit' : ''}>
+            <strong>Calorías:</strong> {nutrientCounts.calories.value} kcal
+          </p>
+          <p className={nutrientCounts.fat.exceeds ? 'exceeds-limit' : ''}>
+            <strong>Grasas:</strong> {nutrientCounts.fat.value} g
+          </p>
+          <p className={nutrientCounts.saturates.exceeds ? 'exceeds-limit' : ''}>
+            <strong>Grasas saturadas:</strong> {nutrientCounts.saturates.value} g
+          </p>
+          <p className={nutrientCounts.sugar.exceeds ? 'exceeds-limit' : ''}>
+            <strong>Azúcares:</strong> {nutrientCounts.sugar.value} g
+          </p>
+          <p className={nutrientCounts.salt.exceeds ? 'exceeds-limit' : ''}>
+            <strong>Sal:</strong> {nutrientCounts.salt.value} g
+          </p>
+        </div>
+      )}
+
       <div className="recetas-container">
         <div className="column">
           <h2>Entrantes</h2>
