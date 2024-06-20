@@ -242,20 +242,7 @@ function RecetaDetalleESP() {
           </ul>
         </div>
       )}
-      <h3><strong>Reviews</strong></h3>
-      {receta.num_interactions > 0 && receta.interactions && (
-        <div className='reviews'>
-          <ul>
-            {receta.interactions.map((interaction, index) => (
-              <li key={index}>
-                <p> <strong>Valoración: </strong>{interaction.rating}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Fecha:</strong> {interaction.date}</p>
-                <p>"{interaction.review}"</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-      
+     
     </div>
   );
 }
