@@ -49,34 +49,38 @@ function Register() {
     const navigate = useNavigate();
 
     const calculateDailyCaloricIntake = (gender, age, height, weight, activityLevel) => {
-        let MB; // Metabolismo Basal
-        if (gender === 'Hombre') {
-            MB = (10 * weight) + (6.25 * height) - (5 * age) + 5;
-        } else if (gender === 'Mujer') {
-            MB = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+        if(age === 0 || height === 0.0 || weight === 0.0 || activityLevel === 0) {
+            return 0;
         } else {
-            MB = 0;
-        }
+            let MB; // Metabolismo Basal
+            if (gender === 'Hombre') {
+                MB = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+            } else if (gender === 'Mujer') {
+                MB = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+            } else {
+                MB = 0;
+            }
 
-        let multiplicadorPorActividad;
-        switch (activityLevel) {
-            case 1:
-                multiplicadorPorActividad = 1.2;
-                break;
-            case 2:
-                multiplicadorPorActividad = 1.375;
-                break;
-            case 3:
-                multiplicadorPorActividad = 1.55;
-                break;
-            case 4:
-                multiplicadorPorActividad = 1.725;
-                break;
-            default:
-                multiplicadorPorActividad = 1.0;
-        }
+            let multiplicadorPorActividad;
+            switch (activityLevel) {
+                case 1:
+                    multiplicadorPorActividad = 1.2;
+                    break;
+                case 2:
+                    multiplicadorPorActividad = 1.375;
+                    break;
+                case 3:
+                    multiplicadorPorActividad = 1.55;
+                    break;
+                case 4:
+                    multiplicadorPorActividad = 1.725;
+                    break;
+                default:
+                    multiplicadorPorActividad = 1.0;
+            }
 
-        return Math.round(MB * multiplicadorPorActividad);
+            return Math.round(MB * multiplicadorPorActividad);
+        }
     };
 
     const calculateRestrictionsKcal = (dailyCaloricIntake, dietaryPreferences) => {
