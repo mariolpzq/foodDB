@@ -1,7 +1,6 @@
-
-body{
-  background-color:  #FFF7E5;
-  font-family: Arial, Helvetica, sans-serif; /* Tipo de letra */
+body {
+  background-color: #FFF7E5;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 20px;
   color: white;
 }
@@ -11,61 +10,47 @@ h1, h2, h3, p {
 }
 
 .general-grid {
-  height: 1000px; 
-  display: grid; /* Utilizamos un grid */
-  
-  grid-template-areas: 'header'
-                       'contenido'
-                       'footer';    
-  
+  height: 1000px;
+  display: grid;
+  grid-template-areas: 'header' 'contenido' 'footer';
   grid-template-rows: 10% auto 10%;
   grid-template-columns: auto;
-
 }
 
-@media (max-width: 600px) { /* Si el ancho de la ventana es menor a 600px */
+@media (max-width: 600px) {
   .general-grid {
-    grid-template-areas: 'header'
-                         'contenido'
-                         'footer';    
+    grid-template-areas: 
+      'header'
+      'contenido'
+      'footer';    
     grid-template-rows: 20% auto 10%;
-    grid-template-columns: auto;
+    grid-template-columns: 100%;
+    text-align: center; /* Centra el texto en pantallas pequeñas */
   }
 }
 
-
-.cell { /* Estilo general de las cajas del grid */
-  padding: 10px; /* Espacio interior de 10px */
+#mensaje-bienvenida{
+  background-color: #F68080;
+}
+.cell {
+  padding: 10px;
   font-size: 20px;
   border: 1px solid #F68080;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Sombreado */
-  border-radius: 5px; /* Bordes redondeados */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
   background-color: #FFE5E5;
   text-align: center;
   color: black;
-  position: relative; /* Necesario para el centrado absoluto */
+  position: relative;
 }
 
 header {
-  grid-area: header; /* Área del grid a la que pertenece*/
+  grid-area: header;
   align-items: center;
   display: flex;
   justify-content: space-between;
   padding: 10px 20px;
 }
-
-
-/*
-@media (max-width: 600px) {
-  header {
-    grid-template-areas: 'logo'
-                         'titulo'
-                         'menu';
-    grid-template-columns: auto;
-    grid-template-rows: 70% 30% 30%;
-  }
-}
-*/
 
 footer {
   grid-area: footer;
@@ -74,73 +59,69 @@ footer {
 }
 
 footer p {
-  margin: 10px 0; /* Espacio de 10px arriba y abajo, y 0 a los lados */
+  margin: 10px 0;
   padding: 0;
   color: #F68080;
 }
 
-address a{ /* Estilo de los enlaces de la información de contacto (email) */
+address a {
   text-decoration: none;
-  color:   #F68080; 
-}
-
-
-#titulo{
-  grid-area: titulo;
-  font-size: 3em; /* Tamaño de la fuente 3em = 3 veces el tamaño de la fuente predeterminada */
-  padding: 20px;
-}
-
-
-#titulo a{ /* Estilo de los enlaces del título */
-  text-decoration: none; /* Quita la subrayado de los enlaces */
   color: #F68080;
 }
 
-#menu{
-  grid-area: menu;
-  font-size: 20px; /* Tamaño de la fuente */
+#titulo {
+  grid-area: titulo;
+  font-size: 3em;
   padding: 20px;
-  color:#F68080;
+}
+
+#titulo a {
+  text-decoration: none;
+  color: #F68080;
+}
+
+#menu {
+  grid-area: header;
+  font-size: 20px;
+  padding: 20px;
+  color: #F68080;
+}
+
+#menu nav {
+  font-size: 20px;
+  text-align: center; /* Centra el texto en la barra de navegación */
+}
+
+#menu nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#menu nav li {
+  display: inline-block;
+  margin-right: 30px;
 }
 
 @media (max-width: 600px) {
-  #menu {
-    visibility: hidden;
+  #menu nav li {
+    display: block;
+    margin-right: 0;
+    margin-bottom: 10px;
   }
 }
 
-#menu nav { /* Estilo de la barra de navegación */
-  font-size: 20px; 
-  text-align: left;
-
-
+#menu nav a {
+  text-decoration: none;
+  color: #F68080;
 }
 
-#menu nav ul { /* Estilo de la lista de la barra de navegación */
-  list-style-type: none; /* Quita los estilos de viñeta de la lista */
-  margin: 0; /* Elimina el margen predeterminado de la lista */
-  padding: 0; /* Elimina el relleno predeterminado de la lista */
-  
+#menu nav a:hover {
+  color: black;
 }
 
-#menu nav li { /* Estilo de los elementos de la lista de la barra de navegación */
-  display: inline; /* Muestra los elementos de lista en línea */
-  margin-right: 30px; /* Espacio entre los elementos de lista */
-
-}
-
-#menu nav a { /* Estilo de los enlaces de la barra de navegación */
-  text-decoration: none; /* Quita la subrayado de los enlaces */
-  color:#F68080;/* Color de texto */
-}
-
-#menu nav a:hover { /* Efecto al pasar el ratón por encima de los enlaces de la barra de navegación */
-  color: black; /* Cambia el color del texto a verde */
-}
-
-.main-cell { /* Estilo general de las cajas del grid */
-  padding: 10px; /* Espacio interior de 10px */
+.main-cell {
+  padding: 10px;
   font-size: 20px;
   text-align: center;
   align-items: center;
@@ -154,68 +135,62 @@ address a{ /* Estilo de los enlaces de la información de contacto (email) */
 }
 
 .default-background {
-  background-color:  #FFF7E5;
+  background-color: #FFF7E5;
 }
 
-/* Estilo general para los formularios */
 form {
-  background-color: #FFE5E5; /* Fondo blanco para los formularios */
-  padding: 20px; /* Relleno interno */
-  border-radius: 5px; /* Bordes redondeados */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para dar un efecto de elevación */
-  max-width: 400px; /* Ancho máximo del formulario */
-  margin: 20px auto; /* Margen automático para centrar el formulario */
+  background-color: #FFE5E5;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 20px auto;
   border: 1px solid #F68080;
   color: black;
 }
 
-/* Estilo para los títulos de los formularios */
 form h1 {
-  font-size: 2em; /* Tamaño de fuente del título */
-  color: #333; /* Color del texto del título */
-  text-align: center; /* Alineación centrada */
-  margin-bottom: 20px; /* Espacio inferior */
+  font-size: 2em;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-/* Estilo para los inputs y selects de los formularios */
 form input, form select {
-  width: 100%; /* Ancho del input y select */
-  padding: 10px; /* Relleno interno */
-  margin-bottom: 10px; /* Espacio inferior */
-  border: 1px solid #ccc; /* Borde */
-  border-radius: 5px; /* Bordes redondeados */
-  font-size: 1em; /* Tamaño de fuente */
-  background-color: #f9f9f9; /* Fondo claro para inputs y selects */
-  box-sizing: border-box; /* Asegurar que el padding no exceda el ancho total */
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+  background-color: #f9f9f9;
+  box-sizing: border-box;
 }
 
-/* Estilo para los botones de los formularios */
 form button {
-  width: 100%; /* Ancho del botón */
-  padding: 10px; /* Relleno interno */
-  background-color: #F68080; /* Color de fondo */
-  border: none; /* Sin borde */
-  border-radius: 5px; /* Bordes redondeados */
-  color: white; /* Color del texto */
-  font-size: 1em; /* Tamaño de fuente */
-  cursor: pointer; /* Cursor de puntero */
-  transition: background-color 0.3s ease; /* Transición para el cambio de color de fondo */
+  width: 100%;
+  padding: 10px;
+  background-color: #F68080;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-/* Efecto hover para los botones */
 form button:hover {
-  background-color: #F46565; /* Color de fondo al pasar el ratón */
+  background-color: #F46565;
 }
 
-/* Estilo para los inputs y selects en pantallas pequeñas */
 @media (max-width: 600px) {
   form input, form select {
-    width: 100%; /* Ancho del input y select */
+    width: 100%;
   }
 }
 
 #enlace-registro {
-  color:black;
+  color: black;
 }
 
 #enlace-registro a {
@@ -226,14 +201,26 @@ form button:hover {
 #enlace-registro a:hover {
   color: #F46565;
 }
-.home{
+
+.home {
   text-align: left;
   padding: 20px;
   color: black;
 }
 
+@media (max-width: 800px) {
+  .home {
+    text-align: center;
+  }
 
-/* Estilo para la barra de búsqueda */
+  .home h1 {
+    font-size: 2em;
+    color: white;
+    background-color: #F68080;
+    border-radius: 10px;
+  }
+}
+
 .search-bar {
   margin-top: 20px;
   text-align: left;
@@ -245,74 +232,84 @@ form button:hover {
   border: 2px solid #F68080;
   border-radius: 25px;
   font-size: 1em;
-  background-color: #ffe5e5; /* Fondo rosa pastel */
-  color: #333; /* Color del texto */
+  background-color: #ffe5e5;
+  color: #333;
   outline: none;
   transition: border-color 0.3s ease;
 }
 
 .search-bar input::placeholder {
-  color: #F68080; /* Color del texto del placeholder */
+  color: #F68080;
 }
 
 .search-bar input:focus {
-  border-color: #f49fbc; /* Color del borde al enfocar */
+  border-color: #f49fbc;
 }
 
-/* Estilo para el botón */
 .button-style {
   padding: 10px 20px;
   margin-left: 75px;
   border: 2px solid #F68080;
   border-radius: 25px;
   font-size: 1em;
-  background-color: #ffe5e5; /* Fondo rosa pastel */
-  color: #333; /* Color del texto */
+  background-color: #ffe5e5;
+  color: #333;
   cursor: pointer;
   outline: none;
   transition: border-color 0.3s ease;
-  text-align: center; /* Alinear texto al centro */
-  display: inline-block; /* Asegurar que el botón se comporte como un botón */
+  text-align: center;
+  display: inline-block;
+}
+
+@media (max-width: 800px) {
+  .button-style {
+    margin-left: 0;
+  }
 }
 
 .button-style:hover {
-  border-color: #f49fbc; /* Color del borde al pasar el mouse */
+  border-color: #f49fbc;
 }
 
 .button-style:focus {
-  border-color: #f49fbc; /* Color del borde al enfocar */
+  border-color: #f49fbc;
 }
 
 .perfil {
-  width: 50%; /* Ancho del perfil */
-  margin: 50px auto; /* Centrar el perfil horizontalmente */
-  padding: 20px; /* Espaciado interno */
-  border-radius: 20px; /* Bordes redondeados */
-  background-color: #ffe5e5; /* Color de fondo rosa */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
-  text-align: center; /* Alinear texto al centro */
+  width: 75%;
+  margin: 50px auto;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: #ffe5e5;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .perfil {
+    width: 90%;
+    padding: 10px;
+  }
 }
 
 .perfil h2 {
-  margin-bottom: 20px; /* Espaciado inferior para el título */
+  margin-bottom: 20px;
   color: #F68080;
 }
 
 .perfil h3 {
-  margin-bottom: 10px; /* Espaciado inferior para el subtítulo */
+  margin-bottom: 10px;
   color: #F68080;
 }
 
-
 .perfil p {
-  margin-bottom: 10px; /* Espaciado inferior para los párrafos */
+  margin-bottom: 10px;
   color: #1B0202;
 }
 
 .perfil strong {
-  font-weight: bold; /* Texto en negrita */
+  font-weight: bold;
 }
-
 
 .recetas-container {
   display: grid;
@@ -320,17 +317,29 @@ form button:hover {
   gap: 20px;
 }
 
-.recetas-titulo{
+@media (max-width: 800px) {
+  .recetas-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .recetas-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.recetas-titulo {
   color: black;
 }
 
 .column {
-  background-color: #ffe5e5; /* Fondo rosado */
-  border-radius: 10px; /* Bordes redondeados */
+  background-color: #ffe5e5;
+  border-radius: 10px;
   padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   color: black;
-  border: 1px solid #F68080; /* Borde */
+  border: 1px solid #F68080;
 }
 
 .column ul {
@@ -344,47 +353,44 @@ form button:hover {
 
 .column h2 {
   text-align: center;
-  color: #F68080; /* Color del texto del encabezado */
+  color: #F68080;
 }
 
 .recetas-search-bar {
-  margin:20px;
+  margin: 20px;
 }
 
 .recetas-search-bar input,
-.individual-search-bar input
-{
+.individual-search-bar input {
   width: 80%;
   padding: 10px;
   border: 2px solid #F68080;
   border-radius: 25px;
   font-size: 1em;
-  background-color: #ffe5e5; /* Fondo rosado pastel */
-  color: #333; /* Color del texto */
+  background-color: #ffe5e5;
+  color: #333;
   outline: none;
   transition: border-color 0.3s ease;
 }
 
 .recetas-search-bar input::placeholder,
 .individual-search-bar input::placeholder {
-  color: #F68080; /* Color del texto del placeholder */
+  color: #F68080;
 }
 
 .recetas-search-bar input:focus,
-.individual-search-bar input:focus{
-  border-color: #f49fbc; /* Color del borde al enfocar */
+.individual-search-bar input:focus {
+  border-color: #f49fbc;
 }
 
 .recetas-container a {
   text-decoration: none;
   color: black;
-
 }
 
 .recetas-container a:hover {
   color: #F68080;
 }
-
 
 #titulo-receta,
 #titulo-ingrediente {
@@ -394,13 +400,21 @@ form button:hover {
 }
 
 .oms-container {
-  position: absolute; /* Permite posicionar los indicadores */
-  right: 10px; /* Ajusta según sea necesario */
-  top: 10px; /* Ajusta según sea necesario */
+  position: absolute;
+  right: 10px;
+  top: 10px;
   display: flex;
   flex-direction: column;
 }
 
+@media (max-width: 600px) {
+  .oms-container {
+    position: relative;
+    right: 0;
+    top: 0;
+    margin-top: 20px;
+  }
+}
 
 .receta-detalles h1,
 .ingrediente-detalles h1 {
@@ -417,11 +431,11 @@ form button:hover {
   margin-left: 60px;
   text-align: left;
 }
+
 .receta-detalles .listado-ingredientes ul {
   list-style-type: none;
   padding: 0;
-  text-align: center; /* Asegura que el contenido del ul esté centrado */
-
+  text-align: center;
 }
 
 .receta-detalles .listado-ingredientes ul li {
@@ -452,11 +466,9 @@ form button:hover {
   margin: 30px 30px;
 }
 
-.receta-detalles .steps p{
+.receta-detalles .steps p {
   margin-left: 20px;
 }
-
-
 
 .receta-detalles .steps ul {
   list-style-type: none;
@@ -468,14 +480,13 @@ form button:hover {
   margin-bottom: 10px;
 }
 
-
-.receta-detalles .reviews{
+.receta-detalles .reviews {
   text-align: left;
   padding: 5px 10px;
   border-radius: 10px;
 }
 
-.receta-detalles .reviews p{
+.receta-detalles .reviews p {
   margin-left: 20px;
 }
 
@@ -483,7 +494,6 @@ form button:hover {
   list-style-type: none;
   padding: 0;
   margin-left: 20px;
-
 }
 
 .receta-detalles .reviews ul li {
@@ -511,7 +521,7 @@ form button:hover {
   cursor: pointer;
   color: black;
   transition: color 0.3s ease;
-  border-bottom: 1px solid #F68080; /* Línea separadora rosa */
+  border-bottom: 1px solid #F68080;
   padding-bottom: 10px;
 }
 
@@ -520,27 +530,24 @@ form button:hover {
 }
 
 .receta-item:last-child {
-  border-bottom: none; /* Quitar la línea separadora del último elemento */
+  border-bottom: none;
 }
 
 .oms-container h3 {
-  margin-top : 20px;
+  margin-top: 20px;
   color: #F68080;
 }
-
-
 
 .dietas-container {
   padding: 20px;
   background-color: #FFE5E5;
   border-radius: 10px;
-  border: 1px solid #F68080; /* Borde */
+  border: 1px solid #F68080;
 }
 
 .dietas-container h2 {
   text-align: center;
   color: #F68080;
-
 }
 
 .new-dieta-btn {
@@ -565,17 +572,16 @@ form button:hover {
   color: black;
 }
 
-
 .diet-item {
   background-color: #ffe5e5;
-  padding: 15px 20px; /* Añadir padding extra en los lados */
+  padding: 15px 20px;
   border-radius: 10px;
   margin-bottom: 20px;
-  position: relative; /* Necesario para la posición absoluta del botón */
+  position: relative;
 }
 
 .diet-item:last-child {
-  margin-bottom: 0; /* Quitar el margen inferior del último elemento */
+  margin-bottom: 0;
 }
 
 .dish-row {
@@ -583,11 +589,19 @@ form button:hover {
   justify-content: space-between;
 }
 
-.dish {
+@media (max-width: 800px) {
+  .dish-row {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.dish,
+.create-dish {
   background-color: #f8d7da;
   padding: 10px;
   border-radius: 10px;
-  flex: 1 1 calc(33.333% - 20px); /* Ajustar el margen para asegurar espacio */
+  flex: 1 1 calc(33.333% - 20px);
   margin: 5px;
   text-align: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -595,7 +609,24 @@ form button:hover {
 }
 
 .dish:last-child {
-  margin-right: 60px; /* Asegurar espacio para el botón de eliminación */
+  margin-right: 60px;
+}
+
+@media (max-width: 600px){
+  .dish:last-child {
+    background-color: #f8d7da;
+    padding: 10px;
+    border-radius: 10px;
+    flex: 1 1 calc(33.333% - 20px);
+    margin: 5px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+}
+
+.create-dish:last-child {
+  margin-right: 0;
 }
 
 .dish p {
@@ -603,7 +634,7 @@ form button:hover {
 }
 
 .dish p + p {
-  margin-top: 10px; /* Añadir espacio entre las líneas */
+  margin-top: 10px;
 }
 
 .dish a {
@@ -617,16 +648,16 @@ form button:hover {
 }
 
 .delete-button {
-  position: absolute; /* Para situar el botón en la esquina derecha */
+  position: absolute;
   top: 50%;
-  right: 20px; /* Ajusta según sea necesario */
-  transform: translateY(-50%); /* Para centrar verticalmente el botón */
-  background-color: #dc3545; /* Color rojo */
+  right: 20px;
+  transform: translateY(-50%);
+  background-color: #dc3545;
   color: white;
   border: none;
-  border-radius: 5px; /* Bordes redondeados */
-  width: 40px; /* Tamaño cuadrado */
-  height: 40px; /* Tamaño cuadrado */
+  border-radius: 5px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -634,17 +665,32 @@ form button:hover {
   transition: background-color 0.3s ease;
 }
 
+
 .delete-button:hover {
-  background-color: #c82333; /* Color rojo oscuro al pasar el ratón */
+  background-color: #c82333;
 }
 
+@media (max-width: 600px) {
+  .delete-button {
+    position: static;
+    margin: 10px auto 0; /* Centra el botón y añade margen superior */
+    transform: none; /* Resetea la transformación */
+  }
+}
 
 .nutritional-info-table,
 .restricciones-tabla {
-  width: 60%; 
-  margin: 20px auto; 
+  width: 60%;
+  margin: 20px auto;
   border-collapse: collapse;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 600px) {
+  .nutritional-info-table,
+  .restricciones-tabla {
+    width: 90%;
+  }
 }
 
 .nutritional-info-table th,
@@ -667,7 +713,7 @@ form button:hover {
 }
 
 .nutritional-info-table tr:nth-child(even),
-.restricciones-tabla tr:nth-child(even){
+.restricciones-tabla tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
@@ -676,75 +722,73 @@ form button:hover {
   background-color: #f5f5f5;
 }
 
-/* Estilo para los selectores de idiomas y gastronomías */
 .react-select-container .react-select__control {
-  background-color: #f9f9f9; /* Fondo claro para el control */
-  border: 1px solid #ccc; /* Borde del control */
-  border-radius: 5px; /* Bordes redondeados */
-  padding: 10px; /* Relleno interno */
-  margin-bottom: 10px; /* Espacio inferior */
-  font-size: 1em; /* Tamaño de fuente */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 1em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .react-select-container .react-select__control:hover {
-  border-color: #F68080; /* Color del borde al pasar el ratón */
+  border-color: #F68080;
 }
 
 .react-select-container .react-select__menu {
-  background-color: #FFE5E5; /* Fondo claro para el menú */
-  border: 1px solid #ccc; /* Borde del menú */
-  border-radius: 5px; /* Bordes redondeados */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para el menú */
+  background-color: #FFE5E5;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .react-select-container .react-select__option {
-  padding: 10px; /* Relleno interno para las opciones */
-  color: #333; /* Color del texto */
+  padding: 10px;
+  color: #333;
 }
 
 .react-select-container .react-select__option--is-selected {
-  background-color: #F68080; /* Fondo para la opción seleccionada */
-  color: white; /* Color del texto para la opción seleccionada */
+  background-color: #F68080;
+  color: white;
 }
 
 .react-select-container .react-select__option--is-focused {
-  background-color: #f9f9f9; /* Fondo para la opción enfocada */
-  color: #333; /* Color del texto para la opción enfocada */
+  background-color: #f9f9f9;
+  color: #333;
 }
 
 .react-select-container .react-select__multi-value {
-  background-color: #FFE5E5; /* Fondo para las etiquetas de selección múltiple */
-  border: 1px solid #F68080; /* Borde para las etiquetas */
-  border-radius: 5px; /* Bordes redondeados */
-  padding: 5px; /* Relleno interno */
-  margin: 2px; /* Espacio entre las etiquetas */
+  background-color: #FFE5E5;
+  border: 1px solid #F68080;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 2px;
 }
 
 .react-select-container .react-select__multi-value__label {
-  color: #333; /* Color del texto para las etiquetas */
+  color: #333;
 }
 
 .react-select-container .react-select__multi-value__remove {
-  color: #F68080; /* Color del icono de eliminación */
-  cursor: pointer; /* Cursor de puntero */
+  color: #F68080;
+  cursor: pointer;
 }
 
 .react-select-container .react-select__multi-value__remove:hover {
-  background-color: #F46565; /* Fondo para el icono de eliminación al pasar el ratón */
-  color: white; /* Color del texto del icono de eliminación al pasar el ratón */
+  background-color: #F46565;
+  color: white;
 }
-
 
 .listado-idiomas-gastro p {
   margin-left: 60px;
   text-align: left;
 }
+
 .listado-idiomas-gastro ul {
   list-style-type: none;
   padding: 0;
-  text-align: center; /* Asegura que el contenido del ul esté centrado */
-
+  text-align: center;
 }
 
 .listado-idiomas-gastro ul li {
@@ -765,6 +809,38 @@ form button:hover {
   color: #F68080;
 }
 
-.listado-idiomas-gastro h3{
+.listado-idiomas-gastro h3 {
   margin-top: 30px;
+}
+
+.nutrient-counter {
+  background-color: #FFE5E5;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #F68080;
+  margin: 20px auto;
+  text-align: center;
+  max-width: 800px;
+  color: black;
+}
+
+@media (max-width: 600px) {
+  .nutrient-counter {
+    max-width: 90%;
+    padding: 10px;
+  }
+}
+
+.nutrient-counter h3 {
+  color: #F68080;
+  margin-bottom: 20px;
+}
+
+.nutrient-counter p {
+  margin: 10px 0;
+}
+
+.exceeds-limit {
+  color: red;
 }
