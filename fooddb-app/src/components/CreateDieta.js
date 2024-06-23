@@ -34,6 +34,9 @@ const CreateDieta = () => {
 
   const navigate = useNavigate();
 
+  const idiomas = user.preferences.languages;
+
+
   const cualidadesBuenas = [
     'Buen contenido de fibra',
     'Bueno en grasas',
@@ -216,20 +219,37 @@ const CreateDieta = () => {
     };
 
     const getKey = (value) => {
-      switch (value) {
-        case 'fat':
-          return 'Grasas';
-        case 'trans':
-          return 'Grasas trans';
-        case 'salt':
-          return 'Sal';
-        case 'sug':
-          return 'Azúcares';
-        default:
-          return value;
-      }
-    }
+      if (idiomas.length === 1 && idiomas[0] === 'EN'){
+        switch (value) {
+            case 'fat':
+              return 'Fats';
+            case 'trans':
+              return 'Trans';
+            case 'salt':
+              return 'Salt';
+            case 'sug':
+              return 'Sugars';
+            default:
+              return value;
+        }
+      } else {
 
+        switch (value) {
+          case 'fat':
+            return 'Grasas';
+          case 'trans':
+            return 'Grasas trans';
+          case 'salt':
+            return 'Sal';
+          case 'sug':
+            return 'Azúcares';
+          default:
+            return value;
+        }
+
+      }
+      
+    }
     return Object.keys(omsLights).map((key) => (
       omsLights[key] && (
         <div key={key} style={{
@@ -249,7 +269,11 @@ const CreateDieta = () => {
 
   const renderDietaryPreferences = (qualities) => {
     if (!qualities) {
-      return <p>No disponible</p>;
+      if (idiomas.length === 1 && idiomas[0] === 'EN') {
+        return <p>Nutritional indicator not available</p>;
+      } else {
+        return <p>Indicador nutricional no disponible</p>;
+      }
     }
 
     for (let i = 0; i < qualities.length; i++) {
@@ -342,6 +366,7 @@ const CreateDieta = () => {
   const mainDishes = filterRecetas(recetas, 'main-dish', mainDishSearch);
   const desserts = filterRecetas(recetas, 'dessert', dessertSearch);
 
+  
   if (!isAuthenticated) {
     return (
     <div id='enlace-registro'>
@@ -351,12 +376,12 @@ const CreateDieta = () => {
 
   return (
     <div>
-      <h1>Crear una nueva dieta</h1>
+      <h1> { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Create a diet' : 'Crear una dieta' } </h1>
       <div className='diet-item'>
         <div className="dish-row selected-recipes">
           <div className="create-dish selected-recipe">
-            <p><strong>Entrante:</strong></p>
-            <p>{selectedRecipeDetails.appetizer?.title || 'Selecciona un entrante'}</p>
+            <p><strong> { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Appetizer' : 'Entrante' }:</strong></p>
+            <p>{selectedRecipeDetails.appetizer?.title || (idiomas.length === 1 && idiomas[0] === 'EN' ? 'Select an appetizer' : 'Selecciona un entrante') }</p>
             <div>{selectedRecipeDetails.appetizer?.source === 'MealREC'
               ? renderOMS_Lights(selectedRecipeDetails.appetizer?.OMS_lights_per100g)
               : renderDietaryPreferences(selectedRecipeDetails.appetizer?.dietary_preferences)
@@ -368,8 +393,8 @@ const CreateDieta = () => {
             )}
           </div>
           <div className="create-dish selected-recipe">
-            <p><strong>Plato principal:</strong></p>
-            <p>{selectedRecipeDetails.main_dish?.title || 'Selecciona un plato principal'}</p>
+            <p><strong> { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Main dish' : 'Plato principal' }:</strong></p>
+            <p>{selectedRecipeDetails.main_dish?.title || (idiomas.length === 1 && idiomas[0] === 'EN' ? 'Select a main dish' : 'Selecciona un plato principal') }</p>
             <div>{selectedRecipeDetails.main_dish?.source === 'MealREC'
               ? renderOMS_Lights(selectedRecipeDetails.main_dish?.OMS_lights_per100g)
               : renderDietaryPreferences(selectedRecipeDetails.main_dish?.dietary_preferences)
@@ -381,8 +406,8 @@ const CreateDieta = () => {
             )}
           </div>
           <div className="create-dish selected-recipe">
-            <p><strong>Postre:</strong></p>
-            <p>{selectedRecipeDetails.dessert?.title || 'Selecciona un postre'}</p>
+            <p><strong> { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Dessert' : 'Postre' }:</strong></p>
+            <p>{selectedRecipeDetails.dessert?.title || (idiomas.length === 1 && idiomas[0] === 'EN' ? 'Select a dessert' : 'Selecciona un postre') }</p>
             <div>{selectedRecipeDetails.dessert?.source === 'MealREC'
               ? renderOMS_Lights(selectedRecipeDetails.dessert?.OMS_lights_per100g)
               : renderDietaryPreferences(selectedRecipeDetails.dessert?.dietary_preferences)
@@ -396,36 +421,36 @@ const CreateDieta = () => {
         </div>
       </div>
 
-      <button className="new-dieta-btn" onClick={handleCreateDiet}>Crear dieta</button>
+      <button className="new-dieta-btn" onClick={handleCreateDiet}> { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Create diet' : 'Crear dieta' } </button>
 
-      {user.preferences.languages.length === 1 && user.preferences.languages[0] === 'EN' && (
+      {user.preferences.languages.length === 1 && user.preferences.languages[0] === 'EN' && user.dailyCaloricIntake !== 0 && (
         <div className="nutrient-counter">
-          <h3>Contador de nutrientes seleccionados</h3>
+          <h3> { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Nutrient counts' : 'Conteo de nutrientes' } </h3>
           <p className={nutrientCounts.calories.exceeds ? 'exceeds-limit' : ''}>
-            <strong>Calorías:</strong> {nutrientCounts.calories.value} kcal
+            <strong> { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Calories' : 'Calorías' }:</strong> {nutrientCounts.calories.value} kcal
           </p>
           <p className={nutrientCounts.fat.exceeds ? 'exceeds-limit' : ''}>
-            <strong>Grasas:</strong> {nutrientCounts.fat.value} g
+            <strong> { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Fats' : 'Grasas' }:</strong> {nutrientCounts.fat.value} g
           </p>
           <p className={nutrientCounts.saturates.exceeds ? 'exceeds-limit' : ''}>
-            <strong>Grasas saturadas:</strong> {nutrientCounts.saturates.value} g
+            <strong> { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Saturates' : 'Saturadas' }:</strong> {nutrientCounts.saturates.value} g
           </p>
           <p className={nutrientCounts.sugar.exceeds ? 'exceeds-limit' : ''}>
-            <strong>Azúcares:</strong> {nutrientCounts.sugar.value} g
+            <strong> { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Sugars' : 'Azúcar' }:</strong> {nutrientCounts.sugar.value} g
           </p>
           <p className={nutrientCounts.salt.exceeds ? 'exceeds-limit' : ''}>
-            <strong>Sal:</strong> {nutrientCounts.salt.value} g
+            <strong> { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Salt' : 'Sal' }:</strong> {nutrientCounts.salt.value} g
           </p>
         </div>
       )}
 
       <div className="recetas-container">
         <div className="column">
-          <h2>Entrantes</h2>
+          <h2> { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Appetizers' : 'Entrantes' } </h2>
           <div className="individual-search-bar">
             <input
               type="text"
-              placeholder="Buscar entrantes..."
+              placeholder= { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Search appetizers...' : 'Buscar entrantes...' }
               value={appetizerSearch}
               onChange={(e) => setAppetizerSearch(e.target.value)}
             />
@@ -445,11 +470,11 @@ const CreateDieta = () => {
           </ul>
         </div>
         <div className="column">
-          <h2>Platos principales</h2>
+          <h2> { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Main dishes' : 'Platos principales' } </h2>
           <div className="individual-search-bar">
             <input
               type="text"
-              placeholder="Buscar platos principales..."
+              placeholder= { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Search main dishes...' : 'Buscar platos principales...' }
               value={mainDishSearch}
               onChange={(e) => setMainDishSearch(e.target.value)}
             />
@@ -469,11 +494,11 @@ const CreateDieta = () => {
           </ul>
         </div>
         <div className="column">
-          <h2>Postres</h2>
+          <h2> { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Desserts' : 'Postres' } </h2>
           <div className="individual-search-bar">
             <input
               type="text"
-              placeholder="Buscar postres..."
+              placeholder= { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Search desserts...' : 'Buscar postres...' }
               value={dessertSearch}
               onChange={(e) => setDessertSearch(e.target.value)}
             />

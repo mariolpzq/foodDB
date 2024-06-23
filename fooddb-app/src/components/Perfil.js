@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import AuthContext from '../Auth';
-import axios from 'axios';
 
 const languageMap = {
     EN: 'English',
@@ -31,28 +30,8 @@ const cuisineMap = {
 };
 
 const Perfil = () => {
-    const { isAuthenticated } = useContext(AuthContext);
-    const [user, setUser] = useState(null);
+    const { isAuthenticated, user } = useContext(AuthContext);
 
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const token = localStorage.getItem('token');
-                if (token) {
-                    const response = await axios.get('http://localhost:8000/auth/users/me', {
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
-                    });
-                    setUser(response.data);
-                }
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-            }
-        };
-
-        fetchUserData();
-    }, []);
 
     if (!isAuthenticated) {
         return <p>No estás autenticado. Por favor, inicia sesión.</p>;
@@ -62,78 +41,112 @@ const Perfil = () => {
         return <p>Cargando información del usuario...</p>;
     }
 
+    const idiomas = user.preferences?.languages || [];
+
     // Función para obtener el mensaje del nivel de actividad
     const getActivityMessage = () => {
-        if (user.activity_level === 1) {
-            return "No muy activo. Actividad predominantemente sedentaria, con poca actividad física.";
-        } else if (user.activity_level === 2) {
-            return "Medianamente activo. Participación ocasional en actividades que requieren estar de pie o movimientos ligeros.";
-        } else if (user.activity_level === 3) {
-            return "Activo. Involucrado en actividades que incluyen caminar o realizar tareas domésticas regulares.";
-        } else if (user.activity_level === 4) {
-            return "Muy activo. Participación en actividades físicas intensas, como deportes o trabajo físico.";
-        } else {
-            return "Inactivo.";
+
+        if (idiomas.length === 1 && idiomas[0] === 'EN'){
+            if (user.activity_level === 1) {
+                return "Not very active. Predominantly sedentary activity, with little physical activity.";
+            } else if (user.activity_level === 2) {
+                return "Moderately active. Occasional participation in activities that require standing or light movements.";
+            } else if (user.activity_level === 3) {
+                return "Active. Involved in activities that include walking or regular household tasks.";
+            } else if (user.activity_level === 4) {
+                return "Very active. Participation in intense physical activities, such as sports or physical work.";
+            } else {
+                return "Inactive.";
+            }
+        } else{
+
+            
+            if (user.activity_level === 1) {
+                return "No muy activo. Actividad predominantemente sedentaria, con poca actividad física.";
+            } else if (user.activity_level === 2) {
+                return "Medianamente activo. Participación ocasional en actividades que requieren estar de pie o movimientos ligeros.";
+            } else if (user.activity_level === 3) {
+                return "Activo. Involucrado en actividades que incluyen caminar o realizar tareas domésticas regulares.";
+            } else if (user.activity_level === 4) {
+                return "Muy activo. Participación en actividades físicas intensas, como deportes o trabajo físico.";
+            } else {
+                return "Inactivo.";
+            }
         }
     };
 
+    const getGenero = () => {
+        if (idiomas.length === 1 && idiomas[0] === 'EN') {
+            if (user.gender === 'Hombre'){
+                return 'Male'
+            } else {
+                return 'Female'
+            }
+        }
+
+        return user.gender;
+    }
+
     return (
         <div className='cell perfil'>
-            <h2>Perfil de {user.name}</h2>
-            <p><strong>Nombre:</strong> {user.name}</p>
+            <h2>
+            {idiomas.length === 1 && idiomas[0] === 'EN' 
+                ? `${user.name}'s profile` 
+                : `Perfil de ${user.name}`}
+            </h2>
             <p><strong>Email:</strong> {user.email}</p>
-            {user.gender && <p><strong>Género:</strong> {user.gender}</p>}
-            {user.age > 0 && <p><strong>Edad:</strong> {user.age} años</p>}
-            {user.height > 0 && <p><strong>Altura:</strong> {user.height} cm</p>}
-            {user.weight > 0 && <p><strong>Peso:</strong> {user.weight} kg</p>}
-            {user.activity_level > 0 && <p><strong>Nivel de actividad:</strong> {user.activity_level} - {getActivityMessage()}</p>}
-            {user.daily_caloric_intake > 0 && <p><strong>Ingesta calórica diaria recomendada:</strong> {user.daily_caloric_intake} kcal</p>}
+            {user.gender && <p><strong>{ idiomas.length === 1 && idiomas[0] === 'EN' ? 'Gender' : 'Género'}: </strong>{getGenero()}</p>}
+            {user.age > 0 && <p><strong>{ idiomas.length === 1 && idiomas[0] === 'EN' ? 'Age' : 'Edad'}: </strong>{user.age}</p>}
+            {user.height > 0 && <p><strong> { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Height' : 'Altura'}: </strong>{user.height} cm</p>}
+            {user.weight > 0 && <p><strong> { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Weight' : 'Peso'}: </strong>{user.weight} kg</p>}
+            {user.activity_level > 0 && <p><strong> { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Activity level' : 'Nivel de actividad'}: </strong>{getActivityMessage()}</p>}
+            {user.daily_caloric_intake > 0 && <p><strong> { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Daily caloric intake' : 'Ingesta calórica diaria'}: </strong>{user.daily_caloric_intake} kcal</p>}
             
             {/* Mostrar restricciones en una tabla si la ingesta calórica diaria recomendada es mayor que 0 */}
             {user.daily_caloric_intake > 0 && (
                 <div>
-                    <h3>Restricciones nutricionales</h3>
+                    <h3> { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Nutritional restrictions' : 'Restricciones nutricionales'}</h3>
                     <table className="restricciones-tabla">
                         <thead>
                             <tr>
-                                <th>Nutriente</th>
-                                <th>Calorías (kcal)</th>
-                                <th>Gramos (g)</th>
+                                <th> { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Nutrient' : 'Nutriente'}</th>
+                                <th> { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Calories (kcal)' : 'Calorías (kcal)'}</th>
+                                <th> { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Grams (g)' : 'Gramos (g)'}</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Grasas totales</td>
+                                <td> { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Proteins' : 'Proteínas'}</td>
                                 <td>{user.restrictions_kcal?.fats?.total || '-'}</td>
                                 <td>{user.restrictions_grams?.fats?.total || '0'}</td>
                             </tr>
                             <tr>
-                                <td>Grasas saturadas</td>
+                                <td> { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Fats' : 'Grasas'}</td>
                                 <td>{user.restrictions_kcal?.fats?.sat || '-'}</td>
                                 <td>{user.restrictions_grams?.fats?.sat || '0'}</td>
                             </tr>
                             <tr>
-                                <td>Grasas trans</td>
+                                <td> { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Saturated fats' : 'Grasas saturadas'}</td>
                                 <td>{user.restrictions_kcal?.fats?.trans || '-'}</td>
                                 <td>{user.restrictions_grams?.fats?.trans || '0'}</td>
                             </tr>
                             <tr>
-                                <td>Azúcares</td>
+                                <td> { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Sugars' : 'Azúcares'}</td>
                                 <td>{user.restrictions_kcal?.sugars || '-'}</td>
                                 <td>{user.restrictions_grams?.sugars || '0'}</td>
                             </tr>
                             <tr>
-                                <td>Sodio</td>
+                                <td> { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Sodium' : 'Sodio'}</td>
                                 <td>-</td>
                                 <td>{user.restrictions_grams?.sodium || '0'}</td>
                             </tr>
                             <tr>
-                                <td>Sal</td>
+                                <td> { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Salt' : 'Sal'}</td>
                                 <td>-</td>
                                 <td>{user.restrictions_grams?.salt || '0'}</td>
                             </tr>
                             <tr>
-                                <td>Potasio</td>
+                                <td> { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Potassium' : 'Potasio'}</td>
                                 <td>-</td>
                                 <td>{user.restrictions_grams?.potassium || '0'}</td>
                             </tr>
@@ -145,7 +158,7 @@ const Perfil = () => {
             {/* Mostrar preferencias de idiomas si el array no está vacío */}
             {user.preferences?.languages?.length > 0 && (
                 <div className='listado-idiomas-gastro'>
-                    <h3>Idiomas preferidos</h3>
+                    <h3> { idiomas.length === 1 && idiomas[0] === 'EN' ? 'Preferred languages' : 'Idiomas preferidos'}</h3>
                     <ul>
                         {user.preferences.languages.map((language, index) => (
                             <li key={index}>{languageMap[language]}</li>

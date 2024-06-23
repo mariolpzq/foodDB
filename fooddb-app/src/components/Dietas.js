@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const Dietas = () => {
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, user } = useContext(AuthContext);
   const [dietas, setDietas] = useState([]);
   const [recetaDetails, setRecetaDetails] = useState({});
   const navigate = useNavigate();
@@ -179,18 +179,36 @@ const Dietas = () => {
     };
 
     const getKey = (value) => {
-      switch (value) {
-        case 'fat':
-          return 'Grasas';
-        case 'trans':
-          return 'Grasas trans';
-        case 'salt':
-          return 'Sal';
-        case 'sug':
-          return 'Azúcares';
-        default:
-          return value;
+      if (idiomas.length === 1 && idiomas[0] === 'EN'){
+        switch (value) {
+            case 'fat':
+              return 'Fats';
+            case 'trans':
+              return 'Trans';
+            case 'salt':
+              return 'Salt';
+            case 'sug':
+              return 'Sugars';
+            default:
+              return value;
+        }
+      } else {
+
+        switch (value) {
+          case 'fat':
+            return 'Grasas';
+          case 'trans':
+            return 'Grasas trans';
+          case 'salt':
+            return 'Sal';
+          case 'sug':
+            return 'Azúcares';
+          default:
+            return value;
+        }
+
       }
+      
     }
 
     return Object.keys(omsLights).map((key) => (
@@ -257,18 +275,20 @@ const Dietas = () => {
     return <p>No estás autenticado. Por favor, inicia sesión.</p>;
   }
 
+  const idiomas = user ? user.preferences.languages : [];
+
   return (
     <div>
-      <h1>Dietas</h1>
+      <h1>{idiomas.length === 1 && idiomas[0] === 'EN' ? "My diets" : "Mis dietas"}</h1>
       <div className="dietas-container">
-        <button className="new-dieta-btn" onClick={() => navigate('/create-dieta')}>Nueva dieta</button>
+        <button className="new-dieta-btn" onClick={() => navigate('/create-dieta')}>{idiomas.length === 1 && idiomas[0] === 'EN' ? "New diet" : "Nueva dieta"}</button>
         <div className="diet-list">
           {dietas.map((dieta, index) => (
             <div key={index} className="diet-item">
               <div className="dish-row">
                 {dieta.appetizerID && recetaDetails[dieta.appetizerID] && (
                   <div className="dish">
-                    <p><strong>Entrante:</strong></p>
+                    <p><strong>{ idiomas.length === 1 && idiomas[0] === 'EN' ? "Appetizer" : "Entrante" }</strong></p>
                     <p><Link to={getLink(recetaDetails[dieta.appetizerID])}>{recetaDetails[dieta.appetizerID].title}</Link></p>
                     <div>
                       {recetaDetails[dieta.appetizerID].source === 'MealREC'
@@ -280,7 +300,7 @@ const Dietas = () => {
                 )}
                 {dieta.main_dishID && recetaDetails[dieta.main_dishID] && (
                   <div className="dish">
-                    <p><strong>Plato principal:</strong></p>
+                    <p><strong>{ idiomas.length === 1 && idiomas[0] === 'EN' ? "Main dish" : "Plato principal" }</strong></p>
                     <p><Link to={getLink(recetaDetails[dieta.main_dishID])}>{recetaDetails[dieta.main_dishID].title}</Link></p>
                     <div>
                       {recetaDetails[dieta.main_dishID].source === 'MealREC'
@@ -292,7 +312,7 @@ const Dietas = () => {
                 )}
                 {dieta.dessertID && recetaDetails[dieta.dessertID] && (
                   <div className="dish">
-                    <p><strong>Postre:</strong></p>
+                    <p><strong>{ idiomas.length === 1 && idiomas[0] === 'EN' ? "Dessert" : "Postre" }</strong></p>
                     <p><Link to={getLink(recetaDetails[dieta.dessertID])}>{recetaDetails[dieta.dessertID].title}</Link></p>
                     <div>
                       {recetaDetails[dieta.dessertID].source === 'MealREC'

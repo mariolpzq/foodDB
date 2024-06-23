@@ -149,7 +149,7 @@ function Recetas() {
       <div className="recetas-search-bar">
         <input
           type="text"
-          placeholder="Buscar en todas las recetas..."
+          placeholder={idiomas.length === 1 && idiomas[0] === 'EN'  ? "Search recipes..." : "Buscar recetas..."}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -162,7 +162,7 @@ function Recetas() {
           <div className="individual-search-bar">
             <input
               type="text"
-              placeholder="Buscar entrantes..."
+              placeholder={idiomas.length === 1 && idiomas[0] === 'EN'  ? "Search appetizers..." : "Buscar entrantes..."}
               value={appetizerSearch}
               onChange={(e) => setAppetizerSearch(e.target.value)}
             />
@@ -184,7 +184,7 @@ function Recetas() {
           <div className="individual-search-bar">
             <input
               type="text"
-              placeholder="Buscar platos principales..."
+              placeholder={idiomas.length === 1 && idiomas[0] === 'EN'  ? "Search main dishes..." : "Buscar platos principales..."}
               value={mainDishSearch}
               onChange={(e) => setMainDishSearch(e.target.value)}
             />
@@ -206,7 +206,7 @@ function Recetas() {
           <div className="individual-search-bar">
             <input
               type="text"
-              placeholder="Buscar postres..."
+              placeholder={idiomas.length === 1 && idiomas[0] === 'EN'  ? "Search desserts..." : "Buscar postres..."}
               value={dessertSearch}
               onChange={(e) => setDessertSearch(e.target.value)}
             />

@@ -197,7 +197,7 @@ function RecetaDetalleESP() {
     <div className="cell receta-detalles">
 
       <h1 id='titulo-receta'>{primeraLetraMayúscula(receta.title)}</h1>
-      {user && user.role !== "user" && receta.source && <p><strong>Fuente:</strong> {receta.source}</p>}
+      {user && user.role !== "user" && user.role !== 'nutritionist' && receta.source && <p><strong>Fuente:</strong> {receta.source}</p>}
       {receta.language && <p><strong>Idioma:</strong> {receta.language}</p>}
       {receta.n_diners && <p><strong>Número de comensales:</strong> {receta.n_diners}</p>}
       {receta.origin_ISO && <p><strong>País de origen:</strong> {formatOrigin_ISO(receta.origin_ISO)}</p>}
