@@ -212,21 +212,21 @@ function Register() {
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
-                    placeholder="Nombre"
+                    placeholder="Nombre *"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
                 />
                 <input
                     type="email"
-                    placeholder="Correo electrónico"
+                    placeholder="Correo electrónico *"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
                 />
                 <input
                     type="password"
-                    placeholder="Contraseña"
+                    placeholder="Contraseña *"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
@@ -274,7 +274,7 @@ function Register() {
                     onChange={(e) => setDietaryPreferences(e.target.value)}
                 />
                 <div className="selector-idiomas">
-                    <p>Idiomas preferidos:</p>
+                    <p>Idiomas preferidos *</p>
                     <Select
                         isMulti
                         options={languageOptions}
@@ -301,6 +301,7 @@ function Register() {
 
                 <button type="submit">Registrarse</button>
                 {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+                <p style={{ color: 'red' }}>* Campos obligatorios</p>
             </form>
         </div>
     );
