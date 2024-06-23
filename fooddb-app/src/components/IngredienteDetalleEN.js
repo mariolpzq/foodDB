@@ -9,6 +9,7 @@ function IngredienteDetalleEN() {
   const { isAuthenticated, user } = useContext(AuthContext);
   const { id } = useParams();
   const [ingrediente, setIngrediente] = useState(null);
+  const [emision, setEmision] = useState(null);
 
   useEffect(() => {
     const fetchIngrediente = async () => {
@@ -17,6 +18,13 @@ function IngredienteDetalleEN() {
           withCredentials: true
         });
         setIngrediente(response.data);
+
+        if (response.data.emissionsID) {
+          const emisionResponse = await axios.get(`http://localhost:8000/emisiones/${response.data.emissionsID}`, {
+            withCredentials: true
+          });
+          setEmision(emisionResponse.data);
+        }
       } catch (error) {
         console.error('Error al obtener el ingrediente:', error);
       }
@@ -46,13 +54,13 @@ function IngredienteDetalleEN() {
     const getKey = (value) => {
       switch (value) {
         case 'total_fat':
-          return 'Grasas';
+          return 'Fats';
         case 'trans':
-          return 'Grasas trans';
+          return 'Trans';
         case 'salt':
-          return 'Sal';
+          return 'Salt';
         case 'sug':
-          return 'Azúcares';
+          return 'Sugars';
         default:
           return value;
       }
@@ -179,14 +187,14 @@ function IngredienteDetalleEN() {
 
       {ingrediente.oms_lights && (
         <div className='oms-container'>
-          <h3>Indicadores nutricionales de la OMS</h3>
+          <h3>OMS nutritional lights</h3>
           <div>{renderOMS_Lights(ingrediente.oms_lights)}</div>
         </div>
       )}
 
-<h1 id='titulo-ingrediente'>{ingrediente.name_en}</h1>
+      <h1 id='titulo-ingrediente'>{ingrediente.name_en}</h1>
       
-{ingrediente.category_esp && <p><strong>Category:</strong> {ingrediente.category_en}</p>}
+      {ingrediente.category_esp && <p><strong>Category:</strong> {ingrediente.category_en}</p>}
       {ingrediente.origin_ISO && <p><strong>Origin:</strong> {getOrigen(ingrediente.origin_ISO)}</p>}
       {user && user.role !== 'user' && ingrediente.source && <p><strong>Source:</strong> {ingrediente.source}</p>}
       {user && user.role !== 'user' && ingrediente.langual && (
@@ -199,17 +207,17 @@ function IngredienteDetalleEN() {
       
       {ingrediente.nutritional_info_100g && (
         <div>
-          <h3>Información nutricional por 100g</h3>
+          <h3>Nutritional info per 100g</h3>
           <table className="nutritional-info-table">
             <thead>
               <tr>
-                <th>Nutriente</th>
-                <th>Cantidad</th>
+                <th>Nutrient</th>
+                <th>Quantity</th>
               </tr>
             </thead>
             <tbody>
               {Object.entries(ingrediente.nutritional_info_100g).map(([key, value]) => {
-                if (value !== null) { // Verifica si no es null
+                if (value !== null && value !== '') { // Verifica si no es null
                   if (key === 'fats' && typeof value === 'object') {
                     return (
                       Object.entries(value).map(([fatKey, fatValue]) => (
@@ -236,7 +244,209 @@ function IngredienteDetalleEN() {
           </table>
         </div>
       )}
-      
+
+      {user && (user.role === 'nutritionist' || user.role === 'researcher') && ingrediente.compounds && ingrediente.compounds.length > 0 && (
+        <div>
+          <h3>Compounds</h3>
+          <ul style={{ listStyleType: 'none', padding: 0 }}>
+            {ingrediente.compounds.map((compound, index) => (
+              <li key={index}>
+                <div>
+                  {compound.compounds.map((comp, i) => (
+                    <span key={i} className="compound-item">
+                      {comp}
+                    </span>
+                  ))}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {user && (user.role === 'researcher') && emision && (
+        <div>
+          <h3>Emissions per kg</h3>
+          <table className="nutritional-info-table">
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              {emision.land_use_change !== null && (
+                <tr>
+                  <td>Land use change</td>
+                  <td>{emision.land_use_change} Kg CO2</td>
+                </tr>
+              )}
+              {emision.animal_feed !== null && (
+                <tr>
+                  <td>Animal feed</td>
+                  <td>{emision.animal_feed} Kg CO2</td>
+                </tr>
+              )}
+              {emision.farm !== null && (
+                <tr>
+                  <td>Farm</td>
+                  <td>{emision.farm} Kg CO2</td>
+                </tr>
+              )}
+              {emision.processing !== null && (
+                <tr>
+                  <td>Processing</td>
+                  <td>{emision.processing} Kg CO2</td>
+                </tr>
+              )}
+              {emision.transport !== null && (
+                <tr>
+                  <td>Transport</td>
+                  <td>{emision.transport} Kg CO2</td>
+                </tr>
+              )}
+              {emision.packaging !== null && (
+                <tr>
+                  <td>Packaging</td>
+                  <td>{emision.packaging} Kg CO2</td>
+                </tr>
+              )}
+              {emision.retail !== null && (
+                <tr>
+                  <td>Retail</td>
+                  <td>{emision.retail} Kg CO2</td>
+                </tr>
+              )}
+              {emision.total_emissions !== null && (
+                <tr>
+                  <td>Total emissions</td>
+                  <td>{emision.total_emissions} Kg CO2</td>
+                </tr>
+              )}
+              {(emision.euto.euto_1000kcal !== null || emision.euto.euto_100gr_protein !== null || emision.euto.euto_kilogram !== null) && (
+                <>
+                  <tr>
+                    <td colSpan="2"><strong>Eutrophication</strong></td>
+                  </tr>
+                  {emision.euto.euto_1000kcal !== null && (
+                    <tr>
+                      <td>Per 1000 kcal</td>
+                      <td>{emision.euto.euto_1000kcal} gPO<sub>4</sub>eq</td>
+                    </tr>
+                  )}
+                  {emision.euto.euto_100gr_protein !== null && (
+                    <tr>
+                      <td>Per 100g protein</td>
+                      <td>{emision.euto.euto_100gr_protein} gPO<sub>4</sub>eq</td>
+                    </tr>
+                  )}
+                  {emision.euto.euto_kilogram !== null && (
+                    <tr>
+                      <td>Per kilogram</td>
+                      <td>{emision.euto.euto_kilogram} gPO<sub>4</sub>eq</td>
+                    </tr>
+                  )}
+                </>
+              )}
+              {(emision.withdrawals.withdrawals_1000kcal !== null || emision.withdrawals.withdrawals_100gr_protein !== null || emision.withdrawals.withdrawals_kilogram !== null) && (
+                <>
+                  <tr>
+                    <td colSpan="2"><strong>Withdrawals</strong></td>
+                  </tr>
+                  {emision.withdrawals.withdrawals_1000kcal !== null && (
+                    <tr>
+                      <td>Per 1000 kcal</td>
+                      <td>{emision.withdrawals.withdrawals_1000kcal} L</td>
+                    </tr>
+                  )}
+                  {emision.withdrawals.withdrawals_100gr_protein !== null && (
+                    <tr>
+                      <td>Per 100g protein</td>
+                      <td>{emision.withdrawals.withdrawals_100gr_protein} L</td>
+                    </tr>
+                  )}
+                  {emision.withdrawals.withdrawals_kilogram !== null && (
+                    <tr>
+                      <td>Per kilogram</td>
+                      <td>{emision.withdrawals.withdrawals_kilogram} L</td>
+                    </tr>
+                  )}
+                </>
+              )}
+              {(emision.greenhouse.greenhouse_1000kcal !== null || emision.greenhouse.greenhouse_100gr_protein !== null) && (
+                <>
+                  <tr>
+                    <td colSpan="2"><strong>Greenhouse</strong></td>
+                  </tr>
+                  {emision.greenhouse.greenhouse_1000kcal !== null && (
+                    <tr>
+                      <td>Per 1000 kcal</td>
+                      <td>{emision.greenhouse.greenhouse_1000kcal} Kg CO2</td>
+                    </tr>
+                  )}
+                  {emision.greenhouse.greenhouse_100gr_protein !== null && (
+                    <tr>
+                      <td>Per 100g protein</td>
+                      <td>{emision.greenhouse.greenhouse_100gr_protein} Kg CO2</td>
+                    </tr>
+                  )}
+                </>
+              )}
+              {(emision.land_use.land_use_1000kcal !== null || emision.land_use.land_use_100gr_protein !== null || emision.land_use.land_use_kilogram !== null) && (
+                <>
+                  <tr>
+                    <td colSpan="2"><strong>Land use</strong></td>
+                  </tr>
+                  {emision.land_use.land_use_1000kcal !== null && (
+                    <tr>
+                      <td>Per 1000 kcal</td>
+                      <td>{emision.land_use.land_use_1000kcal} m&sup2;</td>
+                    </tr>
+                  )}
+                  {emision.land_use.land_use_100gr_protein !== null && (
+                    <tr>
+                      <td>Per 100g protein</td>
+                      <td>{emision.land_use.land_use_100gr_protein} m&sup2;</td>
+                    </tr>
+                  )}
+                  {emision.land_use.land_use_kilogram !== null && (
+                    <tr>
+                      <td>Per kilogram</td>
+                      <td>{emision.land_use.land_use_kilogram} m&sup2;</td>
+                    </tr>
+                  )}
+                </>
+              )}
+              {(emision.scarcity_water_use.scarcity_water_use_1000kcal !== null || emision.scarcity_water_use.scarcity_water_use_100gr_protein !== null || emision.scarcity_water_use.scarcity_water_use_kilogram !== null) && (
+                <>
+                  <tr>
+                    <td colSpan="2"><strong>Scarcity water use</strong></td>
+                  </tr>
+                  {emision.scarcity_water_use.scarcity_water_use_1000kcal !== null && (
+                    <tr>
+                      <td>Per 1000 kcal</td>
+                      <td>{emision.scarcity_water_use.scarcity_water_use_1000kcal} L</td>
+                    </tr>
+                  )}
+                  {emision.scarcity_water_use.scarcity_water_use_100gr_protein !== null && (
+                    <tr>
+                      <td>Per 100g protein</td>
+                      <td>{emision.scarcity_water_use.scarcity_water_use_100gr_protein} L</td>
+                    </tr>
+                  )}
+                  {emision.scarcity_water_use.scarcity_water_use_kilogram !== null && (
+                    <tr>
+                      <td>Per kilogram</td>
+                      <td>{emision.scarcity_water_use.scarcity_water_use_kilogram} L</td>
+                    </tr>
+                  )}
+                </>
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
+
     </div>
   );
 }
