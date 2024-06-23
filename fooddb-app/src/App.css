@@ -844,3 +844,13 @@ form button:hover {
 .exceeds-limit {
   color: red;
 }
+
+
+.compound-item {
+  display: inline-block;
+  background: #ffe4e1;
+  box-shadow: #F68080 2px 2px 5px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  margin: 10px 10px;
+}
