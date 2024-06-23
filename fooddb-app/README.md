@@ -1,8 +1,7 @@
-# Mi Aplicación React
+# Aplicación FoodDB
 
 ## Descripción
-Esta es una aplicación construida con React.js que [describe brevemente la funcionalidad principal de tu aplicación].
-
+Esta es una aplicación construida con React.js que permite la elaboración y gestión de dietas y la consulta de la información almacenada en nuestra base de datos.
 ## Requisitos
 Antes de comenzar, asegúrate de tener instalado lo siguiente:
 - [Node.js](https://nodejs.org/) (que incluye npm)
@@ -47,12 +46,12 @@ fooddb-app/
 ├── node_modules/
 ├── public/
 ├── src/
-│ ├── components/
-│ ├── App.js
-│ ├── App.css
-│ ├── Auth.js
-│ ├── index.js
-│ └── ...
+│   ├── components/
+│   ├── App.js
+│   ├── App.css
+│   ├── Auth.js
+│   ├── index.js
+│   └── ...
 ├── .gitignore
 ├── README.md
 ├── package.json
