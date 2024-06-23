@@ -82,6 +82,7 @@ class IngredientModel(BaseModel): # Modelo de ingrediente
     compounds : List[CompoundModel] = Field(...)
     nutritional_info_100g : dict = Field(...)
     oms_lights : dict = Field(...)
+    emissionsID: Optional[PyObjectId] = Field(None, alias="emissionsID")
     
     model_config = ConfigDict( # Configuración del modelo
         populate_by_name=True,
@@ -126,6 +127,7 @@ class IngredientModel(BaseModel): # Modelo de ingrediente
                 "total_fat": "orange",
                 "trans": ""
             },
+            "emissionsID": "ObjectID(66261bfd6f790019dbc6b221)"
         }
     )
     
@@ -689,3 +691,97 @@ class UserCollection(BaseModel):
     users: List[UserModel]
 
 
+# ---------------------------------------------------- EMISIONES ---------------------------------------------------- #
+
+
+class EutoModel(BaseModel):
+    euto_1000kcal: Optional[Union[float, None]] = Field(None)
+    euto_100gr_protein: Optional[Union[float, None]] = Field(None)
+    euto_kilogram: Optional[Union[float, None]] = Field(None)
+
+class WithdrawalsModel(BaseModel):
+    withdrawals_1000kcal: Optional[Union[float, None]] = Field(None)
+    withdrawals_100gr_protein: Optional[Union[float, None]] = Field(None)
+    withdrawals_kilogram: Optional[Union[float, None]] = Field(None)
+
+class GreenhouseModel(BaseModel):
+    greenhouse_1000kcal: Optional[Union[float, None]] = Field(None)
+    greenhouse_100gr_protein: Optional[Union[float, None]] = Field(None)
+
+class LandUseModel(BaseModel):
+    land_use_1000kcal: Optional[Union[float, None]] = Field(None)
+    land_use_100gr_protein: Optional[Union[float, None]] = Field(None)
+    land_use_kilogram: Optional[Union[float, None]] = Field(None)
+
+class ScarcityWaterUseModel(BaseModel):
+    scarcity_water_use_1000kcal: Optional[Union[float, None]] = Field(None)
+    scarcity_water_use_100gr_protein: Optional[Union[float, None]] = Field(None)
+    scarcity_water_use_kilogram: Optional[Union[float, None]] = Field(None)
+
+class EmissionModel(BaseModel):
+    id: Optional[PyObjectId] = Field(alias="_id", default=None)  # Usamos alias para el campo _id
+    name_esp: str = Field(...)
+    name_en: str = Field(...)
+    land_use_change: float = Field(...)
+    animal_feed: float = Field(...)
+    farm: float = Field(...)
+    processing: float = Field(...)
+    transport: float = Field(...)
+    packaging: float = Field(...)
+    retail: float = Field(...)
+    total_emissions: float = Field(...)
+
+    euto: EutoModel = Field(...)
+    withdrawals: WithdrawalsModel = Field(...)
+    greenhouse: GreenhouseModel = Field(...)
+    land_use: LandUseModel = Field(...)
+    scarcity_water_use: ScarcityWaterUseModel = Field(...)
+
+    class Config:
+        arbitrary_types_allowed = True
+        json_schema_extra = {
+            "_id": "ObjectID(6615bacf457fd231f7d62d02)",
+            "name_esp": "Trigo y centeno (pan)",
+            "name_en": "Wheat & Rye (Bread)",
+            "land_use_change": 0.1,
+            "animal_feed": 0,
+            "farm": 0.8,
+            "processing": 0.2,
+            "transport": 0.1,
+            "packaging": 0.1,
+            "retail": 0.1,
+            "total_emissions": 1.4,
+            "euto": {
+                "euto_1000kcal": None,
+                "euto_100gr_protein": None,
+                "euto_kilogram": None
+            },
+            "withdrawals": {
+                "withdrawals_1000kcal": None,
+                "withdrawals_100gr_protein": None,
+                "withdrawals_kilogram": None
+            },
+            "greenhouse": {
+                "greenhouse_1000kcal": None,
+                "greenhouse_100gr_protein": None
+            },
+            "land_use": {
+                "land_use_1000kcal": None,
+                "land_use_100gr_protein": None,
+                "land_use_kilogram": None
+            },
+            "scarcity_water_use": {
+                "scarcity_water_use_1000kcal": None,
+                "scarcity_water_use_100gr_protein": None,
+                "scarcity_water_use_kilogram": None
+            }
+        }
+
+class EmissionCollection(BaseModel):
+    """
+        A container holding a list of `EmissionModel` instances.
+
+        This exists because providing a top-level array in a JSON response can be a [vulnerability](https://haacked.com/archive/2009/06/25/json-hijacking.aspx/)
+    """
+
+    emissions: List[EmissionModel]
