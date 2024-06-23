@@ -42,6 +42,7 @@ En el directorio del proyecto, puedes ejecutar los siguientes scripts:
 
 Aquí hay una breve descripción de la estructura del proyecto:
 
+```
 fooddb-app/
 ├── node_modules/
 ├── public/
@@ -56,3 +57,4 @@ fooddb-app/
 ├── README.md
 ├── package.json
 └── package-lock.json
+```
