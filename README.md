@@ -17,7 +17,6 @@ El sistema también facilita la comparación de alimentos y recetas en términos
 
 ---
 
-https://drive.google.com/file/d/19o2rnG7faQAHBFGzdVJDY4vF_AghscpA/view?usp=sharing
 
 ### Estructura del repositorio
 
