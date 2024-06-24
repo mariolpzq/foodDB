@@ -50,7 +50,7 @@ foodDB/
 
 #### Descripción de las carpetas
 
-- **db-api:** Contiene la implementación de la API del sistema.
+- **db-api:** Contiene la implementación de la API del sistema. Para más detalles sobre la configuración y ejecución de la API, consulta este [README](/db-api/README.md).
 - **db-scripts:** Contiene los scripts utilizados para la carga y gestión de datos del sistema, categorizados en:
   - **scripts ingredientes:** Scripts relacionados con las colecciones de ingredientes.
   - **scripts recetas:** Scripts relacionados con las colecciones de recetas.

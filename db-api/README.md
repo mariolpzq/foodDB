@@ -1,46 +1,73 @@
-# API para consulta en la base de datos de FoodDB
+# Guía de Ejecución de la API
 
-Esta API proporciona endpoints para consultar la base de datos de FoodDB.
+## Introducción
+
+Este documento proporciona instrucciones paso a paso para la configuración y ejecución de la API del sistema de información para la nutrición saludable. La API está implementada en Python utilizando el framework FastAPI y se conecta a una base de datos MongoDB.
+
+## Requisitos Previos
+
+Antes de iniciar la API, asegúrate de tener instalados los siguientes componentes:
+
+- Python 3.7 o superior
+- pip (gestor de paquetes de Python)
+- MongoDB
+- uvicorn
 
 ## Instalación
 
-1. Clona este repositorio:
+1. **Clonar el repositorio**
 
-2. Instala las dependencias:
+   Clona el repositorio en tu máquina local:
 
-    ```bash
-    pip install -r requirements.txt
-    ```
+   ```bash
+   git clone https://github.com/tu_usuario/foodDB.git
+   cd foodDB/db-api
+   ```
 
-3. Configura la conexión a la base de datos MongoDB. Define la variable de entorno `MONGODB_URL` con la URL de conexión.
+2. **Crear un entorno virtual**
 
-## Uso
+   Es recomendable crear un entorno virtual para gestionar las dependencias:
 
-La API proporciona los siguientes endpoints:
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate  # En Windows usa `venv\Scripts\activate`
+   ```
 
-### Consultar ingredientes de BEDCA
+3. **Instalar las dependencias**
 
-- **GET /bedca/**
+   Instala las dependencias necesarias para ejecutar la API:
 
-  Lista todos los ingredientes de BEDCA.
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-- **GET /bedca/{nombre}**
+## Configuración
 
-  Busca un ingrediente de BEDCA por su nombre en español o inglés.
+1. **Configurar la conexión a MongoDB**
 
-### Consultar recetas de la abuela
+   Exporta la URL de conexión a MongoDB en tu entorno. Asegúrate de tener MongoDB en ejecución y accesible en la URL especificada:
 
-- **GET /abuela/**
+   ```bash
+   export MONGODB_URL=mongodb://...
+   ```
 
-  Lista todas las recetas de la abuela.
+## Ejecución de la API
 
-- **GET /abuela/{titulo}**
-
-  Busca una receta de la abuela por su título.
-
-### Ejecutar la aplicación
-
-Para ejecutar la aplicación, utiliza el siguiente comando:
+Para iniciar la API, ejecuta el siguiente comando en tu terminal:
 
 ```bash
 uvicorn app:app --reload
+```
+
+Este comando iniciará el servidor de desarrollo de FastAPI con la recarga automática habilitada. La API estará disponible en `http://127.0.0.1:8000`.
+
+## Verificación
+
+Para verificar que la API está funcionando correctamente, puedes acceder a la documentación interactiva generada automáticamente por FastAPI en:
+
+- Documentación Swagger: `http://127.0.0.1:8000/docs`
+- Documentación Redoc: `http://127.0.0.1:8000/redoc`
+
+## Notas Adicionales
+
+- Puedes modificar la URL de conexión a MongoDB y otros parámetros de configuración según sea necesario en tu entorno de desarrollo.
