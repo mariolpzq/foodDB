@@ -31,6 +31,7 @@ with open(csv_file, 'r') as file:
                 
                 
             # Este dataset no contiene información relativa a la cantidad de sodio, por lo que no se puede calcular el semáforo de sal.
+            # ACTUALIZACIÓN: el dataset sí que contenía esta información. El script para actualizar la colección es inorganicosCofid.py
                     
             if row['sug'] != '':
                 sug = float(row['sug'])

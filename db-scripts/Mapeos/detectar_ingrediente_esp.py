@@ -26,7 +26,7 @@ collection_recetas = db['abuela']
 
 # Carga del modelo de lenguaje
 
-model = SentenceTransformer('hiiamsid/sentence_similarity_spanish_es')
+model = SentenceTransformer('hiiamsid/sentence_similarity_spanish_es') # MOdelo en español
 
 # Funciones para extraer ingrediente principal y detalles por separado
 
@@ -62,7 +62,7 @@ ingredient_details_encoding = model.encode(list(df['ingredient_details']))
 
 
 
-# Obtenemos los embeddings de los ingredientes de la base de datos
+# Obtenemos las recetas de la base de datos
 
 cursor_recetas = collection_recetas.find({}) # Obtener todas las recetas
 

@@ -37,7 +37,7 @@ def get_details(name):
     parts = name.split(',')
     return ','.join(parts[1:]).strip()
 
-# Carga de info nutricional de la base de datos
+# Carga de sabores de la base de datos
 
 cursor = collection_sabores.find({}) # Obtener todos los sabores
 
@@ -45,9 +45,6 @@ cursor = collection_sabores.find({}) # Obtener todos los sabores
 
 df = pd.DataFrame(list(cursor))
 
-# Extraer ingrediente principal y detalles
-
-#df['ingredient']
 # Convertimos el DataFrame a un diccionario
 
 dict_df = df.to_dict('records')
@@ -56,7 +53,7 @@ dict_df = df.to_dict('records')
 
 
 if os.path.exists('compounds_encoding.json') and os.path.exists('compounds_encoding.json'):
-    # Cargar las codificaciones de los ingredientes desde los archivos JSON
+    # Cargar las codificaciones de los sabores desde los archivos JSON
     with open('compounds_encoding.json', 'r') as f:
         compounds_encoding_list = json.load(f)
         compounds_ingredient_encoding = np.array(compounds_encoding_list)
@@ -75,16 +72,16 @@ else:
 
 
 
-# Obtenemos los embeddings de los ingredientes de la base de datos
+# Obtenemos los ingredientes de la base de datos
 
-cursor_ingredientes = collection_ingredientes.find({}) # Obtener todas las recetas
+cursor_ingredientes = collection_ingredientes.find({}) # Obtener todas los ingredientes
 
 
-# Recorremos todas las recetas
+# Recorremos todas las ingredientes
 
 print("Recorremos todos los ingredientes...")
 
-for ingrediente in cursor_ingredientes: # Recorrer todas las recetas
+for ingrediente in cursor_ingredientes: 
 
     mi_ingrediente = ingrediente['name_en']
     mi_ingrediente_main = model.encode([get_main_ingredient(mi_ingrediente)])
@@ -114,7 +111,7 @@ for ingrediente in cursor_ingredientes: # Recorrer todas las recetas
     else:
         max_similarity_positions_sorted = max_similarity_positions
 
-    # Imprimir el valor máximo de similitud y los alimentos principales correspondientes
+    # Imprimir el valor máximo de similitud y los sabores principales correspondientes
     print("Máxima similitud alcanzada:", max_similarity)
     print("\Sabores con máxima similitud (solo nos fijamos en lo que hay antes de la primera coma):")
     for pos in max_similarity_positions:

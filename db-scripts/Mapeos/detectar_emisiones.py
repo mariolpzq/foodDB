@@ -13,7 +13,6 @@ import json
 import os
 
 
-
 # Carga de la base de datos 
 
 MONGO_URI = 'mongodb://localhost:27022/'
@@ -37,7 +36,7 @@ def get_details(name):
     parts = name.split(',')
     return ','.join(parts[1:]).strip()
 
-# Carga de info nutricional de la base de datos
+# Carga de info de emisiones de la base de datos
 
 cursor = collection_emisiones.find({}) # Obtener todas las emisiones
 
@@ -45,9 +44,6 @@ cursor = collection_emisiones.find({}) # Obtener todas las emisiones
 
 df = pd.DataFrame(list(cursor))
 
-# Extraer ingrediente principal y detalles
-
-#df['name_en']
 # Convertimos el DataFrame a un diccionario
 
 dict_df = df.to_dict('records')
@@ -56,7 +52,7 @@ dict_df = df.to_dict('records')
 
 
 if os.path.exists('emissions_enconding.json') and os.path.exists('emissions_enconding.json'):
-    # Cargar las codificaciones de los ingredientes desde los archivos JSON
+    # Cargar las codificaciones de las emisiones desde los archivos JSON
     with open('emissions_enconding.json', 'r') as f:
         emissions_encoding_list = json.load(f)
         emissions_ingredient_encoding = np.array(emissions_encoding_list)
@@ -75,16 +71,16 @@ else:
 
 
 
-# Obtenemos los embeddings de los ingredientes de la base de datos
+# Obtenemos los ingredientes de la base de datos
 
 cursor_ingredientes = collection_ingredientes.find({}) # Obtener todas las recetas
 
 
-# Recorremos todas las recetas
+# Recorremos todas los ingredientes
 
 print("Recorremos todos los ingredientes...")
 
-for ingrediente in cursor_ingredientes: # Recorrer todas las recetas
+for ingrediente in cursor_ingredientes:
 
     mi_ingrediente = ingrediente['name_en']
     mi_ingrediente_main = model.encode([get_main_ingredient(mi_ingrediente)])
@@ -114,9 +110,9 @@ for ingrediente in cursor_ingredientes: # Recorrer todas las recetas
     else:
         max_similarity_positions_sorted = max_similarity_positions
 
-    # Imprimir el valor máximo de similitud y los alimentos principales correspondientes
+    # Imprimir el valor máximo de similitud y las emisiones principales correspondientes
     print("Máxima similitud alcanzada:", max_similarity)
-    print("\Sabores con máxima similitud (solo nos fijamos en lo que hay antes de la primera coma):")
+    print("\Emisiones con máxima similitud (solo nos fijamos en lo que hay antes de la primera coma):")
     for pos in max_similarity_positions:
         print(dict_df[pos]['name_en'])
 

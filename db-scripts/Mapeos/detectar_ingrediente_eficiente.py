@@ -66,7 +66,7 @@ else:
     with open('ingredient_details_encoding.json', 'w') as f:
         json.dump(ingredient_details_encoding_list, f)
 
-# Obtenemos los embeddings de los ingredientes de la base de datos
+# Obtenemos los ingredientes de la base de datos
 cursor_recetas = collection_recetas.find({})  # Obtener todas las recetas
 
 # Diccionario para almacenar pares ingrediente - ingredienteID
