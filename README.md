@@ -50,7 +50,7 @@ foodDB/
 
 #### Descripción de las carpetas
 
-- **db-api:** Contiene la implementación de la API del sistema. Para más detalles sobre la configuración y ejecución de la API, consulta este [README](/db-api/README.md).
+- **db-api:** Contiene la implementación de la API del sistema. Por razones de derechos de autor, los datos necesarios para la variable de entorno `MONGODB_URL` no están incluidos en el repositorio. A pesar de que puedes ejecutar el contenedor Docker con la imagen de MongoDB, la base de datos accesible desde la URL proporcionada no contendrá la información necesaria. Deberás obtener los datos localmente y configurar tu propia instancia de MongoDB con estos datos. Para más detalles sobre la configuración y ejecución de la API, consulta este [README](/db-api/README.md).
 - **db-scripts:** Contiene los scripts utilizados para la carga y gestión de datos del sistema, categorizados en:
   - **scripts ingredientes:** Scripts relacionados con las colecciones de ingredientes.
   - **scripts recetas:** Scripts relacionados con las colecciones de recetas.
