@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
                 });
                 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
                 setIsAuthenticated(true);
-                setUser(response.data); // Asegúrate de que esto incluye el rol del usuario
+                setUser(response.data); 
             } catch (error) {
                 console.error('Token no válido:', error);
                 setIsAuthenticated(false);

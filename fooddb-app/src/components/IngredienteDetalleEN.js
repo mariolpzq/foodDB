@@ -137,7 +137,7 @@ function IngredienteDetalleEN() {
       case 'salt':
         return 'Salt';
       default:
-        return key.charAt(0).toUpperCase() + key.slice(1); // Capitaliza el primer carácter
+        return key.charAt(0).toUpperCase() + key.slice(1); // Primera letra en mayúscula
     }
   };
 
