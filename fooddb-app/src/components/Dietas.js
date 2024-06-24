@@ -285,6 +285,16 @@ const Dietas = () => {
         <div className="diet-list">
           {dietas.map((dieta, index) => (
             <div key={index} className="diet-item">
+              {dieta.created_at && (
+                <p id="fecha-creacion-dieta">
+                  {idiomas.length === 1 && idiomas[0] === 'EN' ? "Created at " : "Creada el "}
+                  <strong>{new Date(dieta.created_at).toLocaleDateString('es-ES', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: '2-digit'
+                  })}</strong>
+                </p>
+              )}
               <div className="dish-row">
                 {dieta.appetizerID && recetaDetails[dieta.appetizerID] && (
                   <div className="dish">

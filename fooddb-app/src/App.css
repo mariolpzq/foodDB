@@ -649,7 +649,7 @@ form button:hover {
 
 .delete-button {
   position: absolute;
-  top: 50%;
+  top: 65%;
   right: 20px;
   transform: translateY(-50%);
   background-color: #dc3545;
@@ -853,4 +853,11 @@ form button:hover {
   padding: 5px 10px;
   border-radius: 10px;
   margin: 10px 10px;
+}
+
+
+#fecha-creacion-dieta{
+  text-align: left;
+  margin-left: 20px;
+  color: #F68080;
 }

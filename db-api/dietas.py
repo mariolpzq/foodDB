@@ -1,5 +1,6 @@
 import os
 from typing import Optional, List, Union
+from datetime import datetime
 
 from fastapi import FastAPI, Body, HTTPException, status, APIRouter
 from fastapi.responses import Response
@@ -70,6 +71,7 @@ async def create_dieta(dieta: DietModel, current_user: UserModel = Depends(get_c
         dieta_dict["dessertID"] = ObjectId(dieta_dict["dessertID"])
 
     dieta_dict["created_by"] = current_user.email
+    dieta_dict["created_at"] = datetime.now()
     dieta_dict["dietary_preferences"] = []
     dieta_id = await dietas_collection.insert_one(dieta_dict)
     

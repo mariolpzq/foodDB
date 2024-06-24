@@ -1,5 +1,6 @@
 import os
 from typing import Optional, List, Union
+from datetime import datetime
 
 from fastapi import FastAPI, Body, HTTPException, status, APIRouter
 from fastapi.responses import Response
@@ -604,7 +605,8 @@ class DietCompleteModel(BaseModel):
     main_dish: Optional[MealRECRecipeModel] = Field(None)
     dessert: Optional[MealRECRecipeModel] = Field(None)
     dietary_preferences: List[str] = Field(...)
-
+    created_at: datetime = Field(None)
+    
     class Config:
         allow_population_by_field_name = True
         json_encoders = {ObjectId: str}
