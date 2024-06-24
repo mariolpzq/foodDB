@@ -17,6 +17,8 @@ El sistema también facilita la comparación de alimentos y recetas en términos
 
 ---
 
+https://drive.google.com/file/d/19o2rnG7faQAHBFGzdVJDY4vF_AghscpA/view?usp=sharing
+
 ### Estructura del repositorio
 
 ```
@@ -55,5 +57,5 @@ foodDB/
   - **scripts ingredientes:** Scripts relacionados con las colecciones de ingredientes.
   - **scripts recetas:** Scripts relacionados con las colecciones de recetas.
   - **mapeos:** Contiene los scripts de mapeo de atributos entre colecciones. Supusieron la antesala al microservicio de mapeos implementado en la API.
-- **fooddb-app:** Contiene el código de la aplicación del sistema. Para más detalles sobre la instalación y ejecución de la aplicación, consulta este [README](/fooddb-app/README.md).
+- **fooddb-app:** Contiene el código de la aplicación del sistema. Puedes ver una demo de uso de la aplicación [aquí](https://drive.google.com/file/d/19o2rnG7faQAHBFGzdVJDY4vF_AghscpA/view?usp=sharing) Para más detalles sobre la instalación y ejecución de la aplicación, consulta este [README](/fooddb-app/README.md).
 

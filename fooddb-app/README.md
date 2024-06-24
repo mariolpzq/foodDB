@@ -2,6 +2,9 @@
 
 ## Descripción
 Esta es una aplicación construida con React.js que permite la elaboración y gestión de dietas y la consulta de la información almacenada en nuestra base de datos.
+
+Puedes ver una demo de uso de la aplicación [aquí](https://drive.google.com/file/d/19o2rnG7faQAHBFGzdVJDY4vF_AghscpA/view?usp=sharing)
+
 ## Requisitos
 Antes de comenzar, asegúrate de tener instalado lo siguiente:
 - [Node.js](https://nodejs.org/) (que incluye npm)
