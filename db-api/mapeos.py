@@ -351,18 +351,13 @@ async def map_sabores(request: MappingCompoundsRequest):
         compound_ingredient_field_name = str(request.compound_ingredient_field_name)
 
 
-        # Carga de info nutricional de la base de datos
+        # Carga de sabores de la base de datos
 
         cursor = collection_sabores.find({}) # Obtener todos los sabores
 
         # Crear un DataFrame con los datos de la base de datos
 
         df = pd.DataFrame(await cursor.to_list(length=None)) 
-
-        # Extraer ingrediente principal y detalles
-
-        #df['ingredient']
-        # Convertimos el DataFrame a un diccionario
 
         dict_df = df.to_dict('records')
 
@@ -372,14 +367,11 @@ async def map_sabores(request: MappingCompoundsRequest):
 
         # Obtenemos los embeddings de los ingredientes de la base de datos
 
-        cursor_ingredientes = collection_ingredientes.find({}) # Obtener todas las recetas
-
-
-        # Recorremos todas las recetas
+        cursor_ingredientes = collection_ingredientes.find({}) # Obtener todos los ingredientes
 
         print("Recorremos todos los ingredientes...")
 
-        async for ingrediente in cursor_ingredientes: # Recorrer todas las recetas
+        async for ingrediente in cursor_ingredientes: # Recorrer todas los ingredientes
 
             mi_ingrediente = ingrediente[ingredient_field_name]
             mi_ingrediente_main = model.encode([get_main_ingredient(mi_ingrediente)])
@@ -409,7 +401,7 @@ async def map_sabores(request: MappingCompoundsRequest):
             else:
                 max_similarity_positions_sorted = max_similarity_positions
 
-            # Imprimir el valor máximo de similitud y los alimentos principales correspondientes
+            # Imprimir el valor máximo de similitud y los sabores principales correspondientes
             print("Máxima similitud alcanzada:", max_similarity)
             print("\Sabores con máxima similitud (solo nos fijamos en lo que hay antes de la primera coma):")
             for pos in max_similarity_positions:
@@ -458,16 +450,11 @@ async def map_emisiones(request: MappingEmissionsRequest):
 
         df = pd.DataFrame(await cursor.to_list(length=None)) 
 
-        # Extraer ingrediente principal y detalles
-
-        #df['name_en']
         # Convertimos el DataFrame a un diccionario
 
         dict_df = df.to_dict('records')
 
         # Verificar si ya existen archivos JSON con las codificaciones
-
-
 
         print("Codificando emisiones...")
 
@@ -476,14 +463,11 @@ async def map_emisiones(request: MappingEmissionsRequest):
 
         # Obtenemos los embeddings de los ingredientes de la base de datos
 
-        cursor_ingredientes = collection_ingredientes.find({}) # Obtener todas las recetas
-
-
-        # Recorremos todas las recetas
+        cursor_ingredientes = collection_ingredientes.find({}) # Obtener todas los ingredientes
 
         print("Recorremos todos los ingredientes...")
 
-        async for ingrediente in cursor_ingredientes: # Recorrer todas las recetas
+        async for ingrediente in cursor_ingredientes:
 
             mi_ingrediente = ingrediente[ingredient_field_name]
             mi_ingrediente_main = model.encode([get_main_ingredient(mi_ingrediente)])

@@ -8,7 +8,6 @@ import motor.motor_asyncio
 
 # Inicialización de la conexión a la base de datos
 client = motor.motor_asyncio.AsyncIOMotorClient(os.environ["MONGODB_URL"])
-#db = client.foodDB
 db = client.tfg
 
 

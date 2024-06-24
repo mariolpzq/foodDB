@@ -4,7 +4,7 @@ from typing import List
 from pydantic import BaseModel
 
 from models import CompoundModel, CompoundCollection, IngredientCollection
-from bd import compounds_collection, ingredientes_collection   # Importa la colección de sabores desde bd.py
+from bd import compounds_collection, ingredientes_collection   
 
 router = APIRouter()
 

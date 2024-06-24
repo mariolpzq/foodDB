@@ -26,7 +26,7 @@ PyObjectId = Annotated[str, BeforeValidator(str)]
 
 # ---------------------------------------------------- COMPUESTOS ---------------------------------------------------- #
 
-class CompoundModel(BaseModel): # Se crea el modelo de los compuestos
+class CompoundModel(BaseModel): 
     """
     Container para un compuesto.
     """   
@@ -35,7 +35,7 @@ class CompoundModel(BaseModel): # Se crea el modelo de los compuestos
     ingredient : str = Field(...)
     compounds : List[str] = Field(...)
     
-    model_config = ConfigDict( # Configuración del modelo
+    model_config = ConfigDict( 
         populate_by_name=True,
         arbitrary_types_allowed=True,
         json_schema_extra={
@@ -163,7 +163,7 @@ class IngredientRecipeCollection(BaseModel):
     
 # ---------------------------------------------------- RECETAS ---------------------------------------------------- #
 
-class RecipeModel(BaseModel): # Se crea el modelo de la receta
+class RecipeModel(BaseModel): 
     """
     Container para una receta.
     """
@@ -313,7 +313,7 @@ class RecipeCollection(BaseModel):
 
     recetas: List[RecipeModel]
 
-class ShortRecipeModel(BaseModel): # Se crea el modelo de la receta
+class ShortRecipeModel(BaseModel): 
     """
     Container para una receta.
     """
@@ -416,10 +416,7 @@ class AbuelaModel(BaseModel): # Se crea el modelo de la receta de la abuela
     Container para una receta de la abuela.
     """   
     
-    # The primary key for the StudentModel, stored as a `str` on the instance.
-    # This will be aliased to `_id` when sent to MongoDB,
-    # but provided as `id` in the API requests and responses.
-    id: Optional[PyObjectId] = Field(alias="_id", default=None) # El alias es para que en la base de datos se guarde como _id
+    id: Optional[PyObjectId] = Field(alias="_id", default=None) 
     title : str = Field(...)
     url : str = Field(...)
     descripcion : str = Field(...)
