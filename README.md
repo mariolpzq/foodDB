@@ -55,5 +55,5 @@ foodDB/
   - **scripts ingredientes:** Scripts relacionados con las colecciones de ingredientes.
   - **scripts recetas:** Scripts relacionados con las colecciones de recetas.
   - **mapeos:** Contiene los scripts de mapeo de atributos entre colecciones. Supusieron la antesala al microservicio de mapeos implementado en la API.
-- **fooddb-app:** Contiene el código de la aplicación del sistema. Para más detalles sobre la instalación y ejecución de la aplicación, consulta este [README](/foodDB/fooddb-app/README.md).
+- **fooddb-app:** Contiene el código de la aplicación del sistema. Para más detalles sobre la instalación y ejecución de la aplicación, consulta este [README](/fooddb-app/README.md).
 
