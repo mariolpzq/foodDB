@@ -1,8 +1,8 @@
-# Guía de Ejecución de la API
+# Guía de ejecución de la API
 
 ## Introducción
 
-Este documento proporciona instrucciones paso a paso para la configuración y ejecución de la API del sistema de información para la nutrición saludable. La API está implementada en Python utilizando el framework FastAPI y se conecta a una base de datos MongoDB.
+Este documento proporciona instrucciones paso a paso para la configuración y ejecución de la API del nuestro sistema de información para nutrición saludable. La API está implementada en Python utilizando el framework FastAPI y se conecta a una base de datos MongoDB.
 
 ## Requisitos Previos
 
