@@ -1,82 +1,82 @@
-# Guía de Ejecución de la API
+# API Execution Guide
 
-## Introducción
+## Introduction
 
-Este documento proporciona instrucciones paso a paso para la configuración y ejecución de la API del sistema de información para la nutrición saludable. La API está implementada en Python utilizando el framework FastAPI y se conecta a una base de datos MongoDB.
+This document provides step-by-step instructions for setting up and running the API for the healthy nutrition information system. The API is implemented in Python using the FastAPI framework and connects to a MongoDB database.
 
-## Requisitos Previos
+## Prerequisites
 
-Antes de iniciar la API, asegúrate de tener instalados los siguientes componentes:
+Before starting the API, ensure you have the following components installed:
 
-- Python 3.7 o superior
-- pip (gestor de paquetes de Python)
+- Python 3.7 or higher
+- pip (Python package manager)
 - MongoDB
 - uvicorn
 
-## Instalación
+## Installation
 
-1. **Clonar el repositorio**
+1. **Clone the repository**
 
-   Clona el repositorio en tu máquina local:
+   Clone the repository to your local machine:
 
    ```bash
-   git clone https://github.com/tu_usuario/foodDB.git
+   git clone https://github.com/your_username/foodDB.git
    cd foodDB/db-api
    ```
+   
+2. **Create a virtual environment**
 
-2. **Crear un entorno virtual**
-
-   Es recomendable crear un entorno virtual para gestionar las dependencias:
+   It is recommended to create a virtual environment to manage dependencies:
 
    ```bash
    python3 -m venv venv
-   source venv/bin/activate  # En Windows usa `venv\Scripts\activate`
+   source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
    ```
 
-3. **Instalar las dependencias**
+3. **Install dependencies**
 
-   Instala las dependencias necesarias para ejecutar la API:
+   Install the required dependencies to run the API:
 
    ```bash
    pip install -r requirements.txt
    ```
 
-## Configuración
+## Configuration
 
-1. **Configurar la conexión a MongoDB**
+1. **Set up MongoDB connection**
 
-   Por razones de derechos de autor, los datos necesarios para la variable de entorno `MONGODB_URL` no están incluidos en el repositorio. A pesar de que puedes ejecutar el contenedor Docker con la imagen de MongoDB, la base de datos accesible desde la URL proporcionada no contendrá la información necesaria. Deberás obtener los datos localmente y configurar tu propia instancia de MongoDB con estos datos.
+   Due to copyright reasons, the necessary data for the MONGODB_URL environment variable is not included in the repository. Although you can run the Docker container with the MongoDB image, the database accessible from the provided URL will not contain the required information. You will need to obtain the data locally and set up your own MongoDB instance with this data.
 
-   Exporta la URL de conexión a MongoDB en tu entorno:
+   Export the MongoDB connection URL in your environment:
 
    ```bash
    export MONGODB_URL=mongodb://mongoadmin:4qJp8wDxA7@localhost:27022/
    ```
 
-   **Nota:** Debes configurar y cargar los datos en tu instancia local de MongoDB siguiendo las instrucciones de tu institución o proveedor de datos.
+   **Note:** You must set up and load the data into your local MongoDB instance according to the instructions from your institution or data provider.
 
-## Ejecución de la API
+## Running the API
 
-Para iniciar la API, ejecuta el siguiente comando en tu terminal:
+To start the API, run the following command in your terminal:
 
 ```bash
 uvicorn app:app --reload
 ```
 
-Este comando iniciará el servidor de desarrollo de FastAPI con la recarga automática habilitada. La API estará disponible en `http://127.0.0.1:8000`.
+This command will start the FastAPI development server with automatic reload enabled. The API will be available at  `http://127.0.0.1:8000`.
 
-## Verificación
+## Verification
 
-Para verificar que la API está funcionando correctamente, puedes acceder a la documentación interactiva generada automáticamente por FastAPI en:
+To verify that the API is working correctly, you can access the automatically generated interactive documentation by FastAPI at:
 
-- Documentación Swagger: `http://127.0.0.1:8000/docs`
-- Documentación Redoc: `http://127.0.0.1:8000/redoc`
+- Swagger Documentation: `http://127.0.0.1:8000/docs`
+- Redoc Documentation: `http://127.0.0.1:8000/redoc`
 
-## Notas Adicionales
+## Additional Notes
 
-- Asegúrate de que el puerto `27022` en el que está ejecutándose MongoDB no esté bloqueado por un firewall u otro servicio.
-- Puedes modificar la URL de conexión a MongoDB y otros parámetros de configuración según sea necesario en tu entorno de desarrollo.
+- Ensure that the `27022` port, where MongoDB is running, is not blocked by a firewall or another service.
+- You can modify the MongoDB connection URL and other configuration parameters as needed in your development environment.
 
-## Conclusión
+## Conclusion
 
-Siguiendo estos pasos, deberías tener la API del sistema de información para la nutrición saludable en funcionamiento en tu entorno local. Para cualquier problema o consulta, por favor revisa la documentación del proyecto o contacta al desarrollador del sistema.
+By following these steps, you should have the healthy nutrition information system's API running in your local environment. For any issues or questions, please check the project documentation or contact the system developer.

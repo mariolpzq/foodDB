@@ -1,49 +1,49 @@
-# Aplicación FoodDB
+# FoodDB Application
 
-## Descripción
-Esta es una aplicación construida con React.js que permite la elaboración y gestión de dietas y la consulta de la información almacenada en nuestra base de datos.
+## Description
+This is an application built with React.js that allows the creation and management of diets and querying the information stored in our database.
 
-Puedes ver una demo de uso de la aplicación [aquí](https://drive.google.com/file/d/19o2rnG7faQAHBFGzdVJDY4vF_AghscpA/view?usp=sharing)
+You can view a demo of the application [here](https://drive.google.com/file/d/19o2rnG7faQAHBFGzdVJDY4vF_AghscpA/view?usp=sharing)
 
-## Requisitos
-Antes de comenzar, asegúrate de tener instalado lo siguiente:
-- [Node.js](https://nodejs.org/) (que incluye npm)
+## Requirements
+Before starting, make sure you have the following installed:
+- [Node.js](https://nodejs.org/) (which includes npm)
 
-## Instalación
+## Installation
 
-1. **Clona el repositorio**:
+1. **Clone the repository**:
    ```sh
    git clone https://github.com/ugritai/foodDB
    ```
 
-2. **Navega al directorio del proyecto**:
+2. **Navigate to the project directory**:
     ```sh
-   cd tu-repositorio
+   cd your-repository
    ```
 
-3. **Instala las dependencias**:
+3. **Install dependencies**:
     ```sh
    npm install
    ```
 
-## Ejecución
+## Running
 
-1. **Inicia la aplicación**:
+1. **Start the application**:
     ```sh
    npm start
    ```
-   Esto iniciará el servidor de desarrollo y podrás ver la aplicación en tu navegador en `http://localhost:3000`.
+   This will start the development server, and you can view the application in your browser at `http://localhost:3000`.
 
-## Scripts disponibles
+## Available Scripts
 
-En el directorio del proyecto, puedes ejecutar los siguientes scripts:
+In the project directory, you can run the following scripts:
 
-- `npm start`: Inicia el servidor de desarrollo.
-- `npm run build`: Construye la aplicación para producción en la carpeta `build`.
+- `npm start`: Starts the development server.
+- `npm run build`: Builds the app for production into the `build` folder.
 
-## Estructura del proyecto
+## Project Structure
 
-Aquí hay una breve descripción de la estructura del proyecto:
+Here is a brief description of the project structure:
 
 ```
 fooddb-app/

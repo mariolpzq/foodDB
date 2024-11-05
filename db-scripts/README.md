@@ -1,35 +1,35 @@
-# Scripts para la base de datos
+# Database Scripts
 
-Este repositorio contiene los scripts para la gestión de datos relacionados con ingredientes, compuestos, emisiones y recetas. Aquí se detalla el proceso para incluir la información de los diferentes datasets utilizando los scripts proporcionados.
+This repository contains scripts for managing data related to ingredients, compounds, emissions, and recipes. Here, the process for including information from different datasets using the provided scripts is detailed.
 
-La ejecución de los scripts se ha realizado con el comando **python ./script.py**.
+Scripts are executed using the command **python ./script.py**.
 
-## Ingredientes, compuestos químicos y emisiones
+## Ingredients, Chemical Compounds, and Emissions
 
-En la carpeta "scripts_ingredientes" se ubica todo lo necesario para almacenar la información de los *datasets* de ingredientes, además de los de compuestos y emisiones. Para ello, encontramos tanto los scripts como carpetas que contienen los archivos .csv con la información de cada *dataset*. El orden recomendado de ejecución de los scripts es el siguiente:
+In the "scripts_ingredientes" folder, you will find everything needed to store information from the ingredients datasets, as well as compounds and emissions datasets. Here, we have both the scripts and folders containing the .csv files with the information for each dataset. The recommended order for executing the scripts is as follows:
 
-1. bedca.py: script para incluir el *dataset* de BEDCA en una colección llamada "bedca".
-2. cofid.py: script para incluir el *dataset* de CoFID en una colección llamada "cofid".
-3. fdc.py: script para incluir el *dataset* de Food Data Central en una colección llamada "fdc".
-4. emissions.py: script para incluir el *dataset* de Environment Impact of Food Production en una colección llamada "emissions".
-5. compounds.py: script para incluir el *dataset* del FlavorNetwork en una colección llamada "compounds".
-6. compounds_ingredients.py: este script es el que se usa para relacionar la información de los compuestos (colección "compounds") con una colección de ingredientes. Para determinar cuál es la colección de ingredientes que se quiere actualizar para incluir la información sobre los compuestos químicos se puede cambiar el valor de la variable *ingredientes* en la línea 10 del script.
+1. bedca.py: script to include the BEDCA dataset in a collection called "bedca".
+2. cofid.py: script to include the CoFID dataset in a collection called "cofid".
+3. fdc.py: script to include the Food Data Central dataset in a collection called "fdc".
+4. emissions.py: script to include the Environmental Impact of Food Production dataset in a collection called "emissions".
+5. compounds.py: script to include the FlavorNetwork dataset in a collection called "compounds".
+6. compounds_ingredients.py: this script is used to relate the compounds information (collection "compounds") with an ingredient collection. To determine which ingredient collection you want to update to include the chemical compounds information, you can change the value of the *ingredientes* variable in line 10 of the script.
 
-Cabe destacar que los nombres de las colecciones pueden personalizarse ajustando las variables correspondientes en cada uno de los scripts. En caso de desear combinar toda la información de ingredientes disponible, simplemente basta con utilizar el mismo nombre de colección al ejecutar los primeros tres scripts. De este modo, se creará una colección que contendrá la información de los tres datasets combinados. Posteriormente, esta colección puede ser procesada con el script número 6 para complementarla con información sobre compuestos químicos.
+It should be noted that the collection names can be customized by adjusting the corresponding variables in each of the scripts. If you wish to combine all the available ingredient information, simply use the same collection name when running the first three scripts. This way, a collection will be created containing the combined information of all three datasets. Subsequently, this collection can be processed with script number 6 to complement it with information about chemical compounds.
 
-## Recetas
+## Recipes
 
-En la carpeta "scripts_recetas" encontramos todos los elementos necesarios para gestionar la información de los *datasets* de recetas, incluyendo tanto los scripts como las carpetas que contienen los archivos .csv o .json correspondientes a cada dataset. A continuación, se enumeran los scripts disponibles en el orden recomendado de ejecución:
+In the "scripts_recetas" folder, you will find all the elements necessary for managing the recipe datasets, including the scripts and folders containing the .csv or .json files corresponding to each dataset. Below is a list of the available scripts in the recommended order of execution:
 
-1. abuela.py: script para incluir el *dataset* de Recetas de la Abuela en una colección llamada "abuela".
-2. recipeQA.py: script para incluir el *dataset* de RecipeQA en una colección llamada "recipeQA".
-3. recipe1m_originals.py: script diseñado para incorporar las recetas originales del conjunto de datos Recipe1M. Es importante destacar que estas recetas conservan el texto de los ingredientes en su estado original, lo que implica que incluyen cantidades y unidades dentro del propio texto. Esta información será necesaria para ejecutar el script 4.
-4. recipe1m.py: script para incluir el *dataset* de Recipe1M en una colección llamada "recipe1m". Este script realiza una búsqueda en la colección "recipe1m_originals", por lo que es necesario haber ejeucutado recipe1m_originals.py previamente.
-5. foodcom_interactions.py: script para incluir la información sobre interacciones de usuarios con recetas de Food.com en una colección llamada "food.com_inteactions". La inclusión de esta colección tiene como objetivo que sea más rápido añadir las interacciones a las recetas al ejecutar el script siguiente.
-6. foodcom.py: script para incluir el *dataset* de Food.com en una colección llamada "food.com". Este script realiza una búsqueda en la colección "food.com_interactions", por lo que es necesario haber ejecutado el script 5 previamente.
-7. mealREC.py: script para incluir el *dataset* de MealREC en una colección llamada "mealrec".
-8. recipeNLG.py: script para incluir el *dataset* de RecipeNLG en una colección llamada "recipenlg".
+1. abuela.py: script to include the "Recetas de la Abuela" dataset in a collection called "abuela".
+2. recipeQA.py: script to include the RecipeQA dataset in a collection called "recipeQA".
+3. recipe1m_originals.py: script designed to incorporate the original recipes from the Recipe1M dataset. It is important to note that these recipes retain the ingredient text in its original state, which means they include quantities and units within the text itself. This information is necessary to execute script 4.
+4. recipe1m.py: script to include the Recipe1M dataset in a collection called "recipe1m". This script performs a search in the "recipe1m_originals" collection, so you must have run recipe1m_originals.py beforehand.
+5. foodcom_interactions.py: script to include user interaction data with recipes from Food.com in a collection called "food.com_interactions". The purpose of including this collection is to make it faster to add interactions to recipes when executing the following script.
+6. foodcom.py: script to include the Food.com dataset in a collection called "food.com". This script performs a search in the "food.com_interactions" collection, so script 5 must be run beforehand.
+7. mealREC.py: script to include the MealREC dataset in a collection called "mealrec".
+8. recipeNLG.py: script to include the RecipeNLG dataset in a collection called "recipenlg".
 
 ---
 
-En cada una de las carpetas, además de los scripts, se incluye un archivo .txt que describe el esquema al que se ajusta la información de los diferentes datasets. Estos archivos proporcionan una guía sobre la estructura de los datos, aunque pueden haber variaciones debido al tratamiento específico de cada conjunto de datos.
+In each of the folders, besides the scripts, there is a .txt file describing the schema to which the information from the different datasets adheres. These files provide a guide to the data structure, although there may be variations due to the specific treatment of each dataset.
