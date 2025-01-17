@@ -66,3 +66,9 @@ app.include_router(dietas_router, prefix="/dietas", tags=["Dietas"])
 # ---------------------------------------------------- EMISIONES ---------------------------------------------------- #
 
 app.include_router(emisiones_router, prefix="/emisiones", tags=["Emisiones"])
+
+
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.environ.get("PORT", 8000))  # Toma el puerto de la variable de entorno PORT
+    uvicorn.run(app, host="0.0.0.0", port=port)  # Ejecuta la aplicación vinculada al puerto dinámico
