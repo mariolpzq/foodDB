@@ -46,4 +46,5 @@ typing-extensions==4.8.0
 uvicorn==0.28.0
     # via -r requirements.in
 python-jose
-passlib    
+passlib   
+python-multipart
