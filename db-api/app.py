@@ -17,7 +17,7 @@ from bson import ObjectId
 from sabores import router as compounds_router
 from ingredientes import router as ingredientes_router
 from recetas import router as recetas_router
-from mapeos import router as mapeos_router
+#from mapeos import router as mapeos_router
 #from auth import router as auth_router
 from auth import router as auth_router
 from dietas import router as dietas_router
@@ -53,7 +53,7 @@ app.include_router(compounds_router, prefix="/sabores", tags=["Sabores"])
 
 # ---------------------------------------------------- MAPEO ---------------------------------------------------- #
 
-app.include_router(mapeos_router, prefix="/mapeo", tags=["Mapeos"])
+#app.include_router(mapeos_router, prefix="/mapeo", tags=["Mapeos"])
 
 # ---------------------------------------------------- AUTENTICACIÓN ---------------------------------------------------- #
 
@@ -66,9 +66,3 @@ app.include_router(dietas_router, prefix="/dietas", tags=["Dietas"])
 # ---------------------------------------------------- EMISIONES ---------------------------------------------------- #
 
 app.include_router(emisiones_router, prefix="/emisiones", tags=["Emisiones"])
-
-
-if __name__ == "__main__":
-    import uvicorn
-    port = int(os.environ.get("PORT", 8000))  # Toma el puerto de la variable de entorno PORT
-    uvicorn.run(app, host="0.0.0.0", port=port)  # Ejecuta la aplicación vinculada al puerto dinámico
