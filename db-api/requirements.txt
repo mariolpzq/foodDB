@@ -48,6 +48,3 @@ uvicorn==0.28.0
 python-jose
 passlib   
 python-multipart
-pandas
-scikit-learn
-sentence-transformers

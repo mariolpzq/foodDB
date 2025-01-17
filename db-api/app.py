@@ -17,7 +17,7 @@ from bson import ObjectId
 from sabores import router as compounds_router
 from ingredientes import router as ingredientes_router
 from recetas import router as recetas_router
-from mapeos import router as mapeos_router
+#from mapeos import router as mapeos_router
 #from auth import router as auth_router
 from auth import router as auth_router
 from dietas import router as dietas_router
@@ -36,6 +36,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to the API"}
+
 # ---------------------------------------------------- INGREDIENTES ---------------------------------------------------- #
 
 # Todos los ingredientes
@@ -53,7 +57,7 @@ app.include_router(compounds_router, prefix="/sabores", tags=["Sabores"])
 
 # ---------------------------------------------------- MAPEO ---------------------------------------------------- #
 
-app.include_router(mapeos_router, prefix="/mapeo", tags=["Mapeos"])
+#app.include_router(mapeos_router, prefix="/mapeo", tags=["Mapeos"])
 
 # ---------------------------------------------------- AUTENTICACIÓN ---------------------------------------------------- #
 
