@@ -48,3 +48,4 @@ uvicorn==0.28.0
 python-jose
 passlib   
 python-multipart
+pandas
