@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
         const token = localStorage.getItem('token');
         if (token) {
             try {
-                const response = await axios.get('http://localhost:8000/auth/verify-token', {
+                const response = await axios.get('https://fooddb-up7u.onrender.com/auth/verify-token', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
     }, [checkAuth]);
 
     const login = async (username, password) => {
-        const response = await axios.post('http://localhost:8000/auth/token', {
+        const response = await axios.post('https://fooddb-up7u.onrender.com/auth/token', {
             username,
             password,
         }, {

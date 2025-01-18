@@ -19,7 +19,7 @@ function Recetas() {
       try {
         const token = localStorage.getItem('token');
         if (token) {
-          const response = await axios.get('http://localhost:8000/auth/users/me', { 
+          const response = await axios.get('https://fooddb-up7u.onrender.com/auth/users/me', { 
             headers: {
               'Authorization': `Bearer ${token}`
             }
@@ -49,7 +49,7 @@ function Recetas() {
             
             // Incluir recetas en inglés si el idioma está presente
             if (languages.includes('EN')) {
-              const englishResponse = await axios.get('http://localhost:8000/recetas/mealrec', {
+              const englishResponse = await axios.get('https://fooddb-up7u.onrender.com/recetas/mealrec', {
                 headers: {
                   'Authorization': `Bearer ${token}`
                 }
@@ -61,7 +61,7 @@ function Recetas() {
             if (languages.includes('ES')) {
               if (user.preferences.cuisines && user.preferences.cuisines.length > 0) {
                 const promises = user.preferences.cuisines.map((cuisine) =>
-                  axios.get(`http://localhost:8000/recetas/abuela/pais/${cuisine}`, {
+                  axios.get(`https://fooddb-up7u.onrender.com/recetas/abuela/pais/${cuisine}`, {
                     headers: {
                       'Authorization': `Bearer ${token}`
                     },
@@ -72,7 +72,7 @@ function Recetas() {
                 const spanishRecetas = responses.flatMap(res => res.data.recetas);
                 allRecetas = allRecetas.concat(spanishRecetas);
               } else {
-                const spanishResponse = await axios.get('http://localhost:8000/recetas/abuela/', {
+                const spanishResponse = await axios.get('https://fooddb-up7u.onrender.com/recetas/abuela/', {
                   headers: {
                     'Authorization': `Bearer ${token}`
                   },

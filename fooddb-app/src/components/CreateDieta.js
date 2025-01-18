@@ -110,7 +110,7 @@ const CreateDieta = () => {
             let allRecetas = [];
 
             if (languages.includes('EN')) {
-              const englishResponse = await axios.get('http://localhost:8000/recetas/mealrec', {
+              const englishResponse = await axios.get('https://fooddb-up7u.onrender.com/recetas/mealrec', {
                 headers: {
                   'Authorization': `Bearer ${token}`
                 }
@@ -121,7 +121,7 @@ const CreateDieta = () => {
             if (languages.includes('ES')) {
               if (user.preferences.cuisines && user.preferences.cuisines.length > 0) {
                 const promises = user.preferences.cuisines.map((cuisine) =>
-                  axios.get(`http://localhost:8000/recetas/abuela/pais/${cuisine}`, {
+                  axios.get(`https://fooddb-up7u.onrender.com/recetas/abuela/pais/${cuisine}`, {
                     headers: {
                       'Authorization': `Bearer ${token}`
                     },
@@ -132,7 +132,7 @@ const CreateDieta = () => {
                 const spanishRecetas = responses.flatMap(res => res.data.recetas);
                 allRecetas = allRecetas.concat(spanishRecetas);
               } else {
-                const spanishResponse = await axios.get('http://localhost:8000/recetas/abuela/', {
+                const spanishResponse = await axios.get('https://fooddb-up7u.onrender.com/recetas/abuela/', {
                   headers: {
                     'Authorization': `Bearer ${token}`
                   },
@@ -346,7 +346,7 @@ const CreateDieta = () => {
       const token = localStorage.getItem('token');
       if (token) {
         console.log('selectedRecipes:', selectedRecipes);
-        await axios.post('http://localhost:8000/dietas', selectedRecipes, {
+        await axios.post('https://fooddb-up7u.onrender.com/dietas', selectedRecipes, {
           headers: {
             'Authorization': `Bearer ${token}`
           }

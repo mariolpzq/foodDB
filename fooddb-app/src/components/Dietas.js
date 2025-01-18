@@ -80,7 +80,7 @@ const Dietas = () => {
       try {
         const token = localStorage.getItem('token');
         if (token) {
-          const response = await axios.get('http://localhost:8000/dietas', {
+          const response = await axios.get('https://fooddb-up7u.onrender.com/dietas', {
             headers: {
               'Authorization': `Bearer ${token}`
             }
@@ -101,7 +101,7 @@ const Dietas = () => {
       if (!token) return null;
 
       try {
-        const response = await axios.get(`http://localhost:8000/${source}/${recetaID}`, {
+        const response = await axios.get(`https://fooddb-up7u.onrender.com/${source}/${recetaID}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -148,7 +148,7 @@ const Dietas = () => {
     try {
       const token = localStorage.getItem('token');
       if (token) {
-        await axios.delete(`http://localhost:8000/dietas/${dietaId}`, {
+        await axios.delete(`https://fooddb-up7u.onrender.com/dietas/${dietaId}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }

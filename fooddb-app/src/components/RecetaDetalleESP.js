@@ -15,7 +15,7 @@ function RecetaDetalleESP() {
         const token = localStorage.getItem('token');
         let response;
 
-        response = await axios.get(`http://localhost:8000/recetas/abuela/${id}`, {
+        response = await axios.get(`https://fooddb-up7u.onrender.com/recetas/abuela/${id}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           },

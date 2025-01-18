@@ -174,7 +174,7 @@ function Register() {
             const restrictionsKcal = calculateRestrictionsKcal(dailyCaloricIntake, dietary_Preferences);
             const restrictionsGrams = calculateRestrictionsGrams(dailyCaloricIntake, dietary_Preferences);
 
-            const response = await axios.post('http://localhost:8000/auth/register', {
+            const response = await axios.post('https://fooddb-up7u.onrender.com/auth/register', {
                 name,
                 email,
                 password,

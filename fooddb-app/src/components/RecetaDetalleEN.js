@@ -15,7 +15,7 @@ function RecetaDetalleEN() {
         const token = localStorage.getItem('token');
         let response;
 
-        response = await axios.get(`http://localhost:8000/recetas/mealrec/${id}`, {
+        response = await axios.get(`https://fooddb-up7u.onrender.com/recetas/mealrec/${id}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           },

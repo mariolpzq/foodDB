@@ -12,13 +12,13 @@ function IngredienteDetalleESP() {
   useEffect(() => {
     const fetchIngrediente = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/ingredientes/${id}`, {
+        const response = await axios.get(`https://fooddb-up7u.onrender.com/ingredientes/${id}`, {
           withCredentials: true
         });
         setIngrediente(response.data);
 
         if (response.data.emissionsID) {
-          const emisionResponse = await axios.get(`http://localhost:8000/emisiones/${response.data.emissionsID}`, {
+          const emisionResponse = await axios.get(`https://fooddb-up7u.onrender.com/emisiones/${response.data.emissionsID}`, {
             withCredentials: true
           });
           setEmision(emisionResponse.data);
